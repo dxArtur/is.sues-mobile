@@ -1,6 +1,7 @@
 import { ImageBackground, Text, View, StyleSheet } from "react-native";
 import AuthButton from "../components/AuthButtons";
 import TextInput from "../components/TextInput"
+import Icon from "../components/Icon";
 
 export default function Index() {
     return (
@@ -44,6 +45,12 @@ export default function Index() {
                         twStyleButton={"text-white"}
                         placeholder="qual a sua função" />
                     
+                    <View className="w-full justify-start ">
+                        <Text>
+                            É um administrador?
+                        </Text>
+                        <Icon name="checkbox-blank-outline" type="MaterialCommunityIcons"/>
+                    </View>
 
                     <View className="w-5/6  mt-2">
                         <AuthButton twStylePlaceholder="text-white text-center" twStyleButton="border border-white bg-blue-800 opacity-100 shadow-lg shadow-black" title="Registrar" link="/index" />
