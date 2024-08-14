@@ -1,7 +1,7 @@
 import { ImageBackground, Text, View, StyleSheet } from "react-native";
-import AuthButton from "../components/AuthButtons";
-import TextInput from "../components/TextInput"
-import Icon from "../components/Icon";
+import AuthButton from "../components/auth/AuthButtons";
+import TextInput from "../components/common/TextInput"
+import Icon from "../components/common/Icon";
 
 export default function Index() {
     return (

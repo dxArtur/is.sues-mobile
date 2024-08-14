@@ -1,5 +1,5 @@
 import { ImageBackground, Pressable, Text, View, StyleSheet } from "react-native";
-import AuthButton from "../components/AuthButtons";
+import AuthButton from "../components/auth/AuthButtons";
 
 export default function Index() {
   return (
