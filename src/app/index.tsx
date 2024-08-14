@@ -5,7 +5,7 @@ export default function Index() {
   return (
     
       <ImageBackground
-        source={require('../../assets/images/bg1.png')} // Ajuste o caminho conforme necessário
+        source={require('../assets/images/bg1.png')} // Ajuste o caminho conforme necessário
         className="flex-1"
       >
       <View className="flex-1 justify-end items-start">
