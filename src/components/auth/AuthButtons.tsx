@@ -1,21 +1,27 @@
-import { Link } from "expo-router"
-import { Pressable, Text, PressableProps } from "react-native"
+import { Link } from "expo-router";
+import { Pressable, Text, PressableProps } from "react-native";
 
 interface AuthButtonProps extends PressableProps {
-    title: string
-    twStyleButton?: string 
-    twStylePlaceholder?: string
-    link: string
+    title: string;
+    twStyleButton?: string;
+    twStylePlaceholder?: string;
+    link?: string; // Tornando o link opcional
 }
 
-const AuthButton: React.FC<AuthButtonProps> = ({title, twStyleButton, twStylePlaceholder, link, ...rest}) => {
+const AuthButton: React.FC<AuthButtonProps> = ({ title, twStyleButton, twStylePlaceholder, link, ...rest }) => {
     return (
-        <Pressable className={`  rounded-md ${twStyleButton}`}>
-        <Link push href={link} className={`p-4 font-semibold text-2xl ${twStylePlaceholder}`}>
-            <Text>{title}</Text>
-        </Link>
+        <Pressable className={`rounded-md ${twStyleButton}`} {...rest}>
+            {link ? (
+                <Link href={link as any} className={`p-4 font-semibold text-2xl ${twStylePlaceholder}`}>
+                    <Text>{title}</Text>
+                </Link>
+            ) : (
+                <Text className={`p-4 font-semibold text-2xl ${twStylePlaceholder}`}>
+                    {title}
+                </Text>
+            )}
         </Pressable>
-    )
+    );
 }
 
-export default AuthButton
+export default AuthButton;

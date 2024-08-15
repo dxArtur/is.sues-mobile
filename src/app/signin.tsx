@@ -1,8 +1,24 @@
-import { ImageBackground, View, Text } from "react-native";
+import { useState } from "react";
+import { ImageBackground, Text, View, Alert } from "react-native";
 import AuthButton from "../components/auth/AuthButtons";
 import TextInput from "../components/common/TextInput";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { signIn } = useAuth();
+
+  async function handleLogin() {
+    try {
+      await signIn(email, password);
+      Alert.alert("Sucesso", "Login realizado com sucesso!");
+    } catch (error) {
+      Alert.alert("Erro", "Credenciais inválidas");
+      console.log(error);
+    }
+  }
+
   return (
     <ImageBackground
       source={require('../assets/images/bg1.png')}
@@ -20,6 +36,8 @@ export default function SignIn() {
           <TextInput
             twStyleButton="text-white"
             placeholder="digite seu email"
+            value={email}
+            onChangeText={setEmail}
           />
           <View style={{ width: '100%', justifyContent: 'flex-start' }}>
             <Text style={{ paddingLeft: 40, fontWeight: 'bold', color: 'white' }}>Senha</Text>
@@ -27,9 +45,12 @@ export default function SignIn() {
           <TextInput
             twStyleButton="text-white"
             placeholder="digite sua senha"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
           />
           <View style={{ width: '83%', marginTop: 8 }}>
-            <AuthButton twStylePlaceholder="text-white text-center" twStyleButton="border border-white bg-blue-800 opacity-100 shadow-lg shadow-black" title="Login" link="/index" />
+            <AuthButton twStylePlaceholder="text-white text-center" twStyleButton="border border-white bg-blue-800 opacity-100 shadow-lg shadow-black" title="Login" onPress={handleLogin} />
           </View>
         </View>
       </View>
