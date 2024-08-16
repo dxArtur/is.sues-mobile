@@ -1,63 +1,63 @@
-import { ImageBackground, Text, View, StyleSheet } from "react-native";
-import AuthButton from "../components/AuthButtons";
-import TextInput from "../components/TextInput"
-import Icon from "../components/Icon";
+import { ImageBackground, View, Text } from "react-native";
+import AuthButton from "../components/auth/AuthButtons";
+import TextInput from "../components/common/TextInput";
+import Icon from "../components/common/Icon";
 
-export default function Index() {
-    return (
-      
-        <ImageBackground
-            source={require('../../assets/images/bg1.png')} // Ajuste o caminho conforme necessÃ¡rio
-            className="flex-1"
-        >
-            <View className="flex-1 justify-end items-start">
-                <View className="w-full h-4/5 gap-2 items-center bg-gray-800 opacity-90 rounded-t-lg p-4 text-left">
-                    <View className="w-full justify-start">
-                        <AuthButton twStyleButton="" twStylePlaceholder="text-white" title="<-" link="/" />
-                    </View>
+export default function SignUp() {
+  return (
+    <ImageBackground
+      source={require('../assets/images/bg1.png')}
+      style={{ flex: 1 }}
+    >
+      <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'flex-start' }}>
+        <View style={{ width: '100%', height: '80%', gap: 8, alignItems: 'center', backgroundColor: 'rgba(128,128,128,0.9)', borderTopLeftRadius: 16, borderTopRightRadius: 16, padding: 16 }}>
+          <View style={{ width: '100%', justifyContent: 'flex-start' }}>
+            <AuthButton twStyleButton="" twStylePlaceholder="text-white" title="<-" link="/" />
+          </View>
 
-                    <Text className="drop-shadow-lg px-1 text-3xl font-semibold bg-blue-800 text-white">Seja bem vindo</Text>
-                    <View className="w-full justify-start ">
-                        <Text className="pl-10 drop-shadow-lg  font-semibold text-white drop-shadow-lg">nome</Text>
-                    </View>
-                    <TextInput
-                        twStyleButton={"text-white"}
-                        placeholder="digite seu nome" />
+          <Text style={{ paddingLeft: 4, fontSize: 24, fontWeight: 'bold', backgroundColor: '#1E3A8A', color: 'white' }}>Seja bem vindo</Text>
+          <View style={{ width: '100%', justifyContent: 'flex-start' }}>
+            <Text style={{ paddingLeft: 40, fontWeight: 'bold', color: 'white' }}>Nome</Text>
+          </View>
+          <TextInput
+            twStyleButton="text-white"
+            placeholder="digite seu nome"
+          />
 
-                    <View className="w-full justify-start ">
-                        <Text className="pl-10 drop-shadow-lg  font-semibold text-white drop-shadow-lg">email</Text>
-                    </View>
-                    <TextInput
-                        twStyleButton={"text-white"}
-                        placeholder="digite seu email" />
+          <View style={{ width: '100%', justifyContent: 'flex-start' }}>
+            <Text style={{ paddingLeft: 40, fontWeight: 'bold', color: 'white' }}>Email</Text>
+          </View>
+          <TextInput
+            twStyleButton="text-white"
+            placeholder="digite seu email"
+          />
 
-                    <View className="w-full justify-start ">
-                        <Text className="pl-10 drop-shadow-lg  font-semibold text-white drop-shadow-lg">departamento</Text>
-                    </View>
-                    <TextInput
-                        twStyleButton={"text-white"}
-                        placeholder="insira o token do departamento" />
+          <View style={{ width: '100%', justifyContent: 'flex-start' }}>
+            <Text style={{ paddingLeft: 40, fontWeight: 'bold', color: 'white' }}>Departamento</Text>
+          </View>
+          <TextInput
+            twStyleButton="text-white"
+            placeholder="insira o token do departamento"
+          />
 
-                    <View className="w-full justify-start ">
-                        <Text className="pl-10 drop-shadow-lg  font-semibold text-white drop-shadow-lg">Qual a sua funÃ§Ã£o</Text>
-                    </View>
-                    <TextInput
-                        twStyleButton={"text-white"}
-                        placeholder="qual a sua funÃ§Ã£o" />
-                    
-                    <View className="w-full justify-start ">
-                        <Text>
-                            Ã‰ um administrador?
-                        </Text>
-                        <Icon name="checkbox-blank-outline" type="MaterialCommunityIcons"/>
-                    </View>
+          <View style={{ width: '100%', justifyContent: 'flex-start' }}>
+            <Text style={{ paddingLeft: 40, fontWeight: 'bold', color: 'white' }}>Qual a sua função</Text>
+          </View>
+          <TextInput
+            twStyleButton="text-white"
+            placeholder="qual a sua função"
+          />
 
-                    <View className="w-5/6  mt-2">
-                        <AuthButton twStylePlaceholder="text-white text-center" twStyleButton="border border-white bg-blue-800 opacity-100 shadow-lg shadow-black" title="Registrar" link="/index" />
-                    </View>
-                </View>
-  
-            </View>
-        </ImageBackground>
-    )
-  }
+          <View style={{ width: '100%', justifyContent: 'flex-start' }}>
+            <Text style={{ color: 'white' }}>É um administrador?</Text>
+            <Icon name="checkbox-blank-outline" type="MaterialCommunityIcons" />
+          </View>
+
+          <View style={{ width: '83%', marginTop: 8 }}>
+            <AuthButton twStylePlaceholder="text-white text-center" twStyleButton="border border-white bg-blue-800 opacity-100 shadow-lg shadow-black" title="Registrar" link="/index" />
+          </View>
+        </View>
+      </View>
+    </ImageBackground>
+  );
+}
