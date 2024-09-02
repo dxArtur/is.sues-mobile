@@ -22,6 +22,12 @@ export default function Index() {
             link="/signup"
             style={styles.signUpButton}
           />
+          <AuthButton 
+            title="Create Issue" 
+            link="/create-issue"
+            twStyleButton="border border-green-500 shadow-lg shadow-green-500/50"
+            twStylePlaceholder="text-green-500 shadow-lg"
+          />
         </View>
       </View>
     </ImageBackground>
