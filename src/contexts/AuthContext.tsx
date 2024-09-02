@@ -59,7 +59,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         console.error('erro ao criar usuario')
       }
 
-      router.push('/signin')
+      const { token, user } = response.data
+      const userData: UsersDto = user
+      await AsyncStorage.setItem('@token', token)
+      await AsyncStorage.setItem('@department', userData.departmentId!)
+      setUser(user)
+      router.push('/home')
       
     } catch (error) {
       if (error instanceof Error) {

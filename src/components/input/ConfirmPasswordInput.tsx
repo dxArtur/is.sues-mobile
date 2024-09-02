@@ -10,7 +10,7 @@ interface ConfirmPasswordInputProps {
 const ConfirmPasswordInput: React.FC<ConfirmPasswordInputProps> = ({ value, onChange }) => {
   return (
     <TextInput
-      label="Confirmar Senha"
+      label="Confirmar a sua senha"
       value={value}
       onChangeText={onChange}
       secureTextEntry
