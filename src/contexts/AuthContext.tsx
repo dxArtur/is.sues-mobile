@@ -7,6 +7,7 @@ import { UsersDto } from '../dtos/UserDTO';
 type AuthContextData = {
   isAuthenticated: boolean;
   signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, name: string, occupation: string, password: string) => Promise<void>;
   signOut: () => void;
   user: UsersDto | null;
 };
@@ -29,10 +30,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         password,
       });
 
-      const { token, userAttempAuth } = response.data; // Ajustado aqui -- Israel
-      const userData: UsersDto = userAttempAuth; // Ajustado aqui -- Israel
-      
-      await AsyncStorage.setItem('@department', userData.departmentId!);
+      const { token, userAttempAuth } = response.data;
+      const userData: UsersDto = userAttempAuth;
+
+      // Armazena o departmentId apenas se ele existir -- Israel
+      if (userData.departmentId) {
+        await AsyncStorage.setItem('@department', userData.departmentId);
+      }
+
       await AsyncStorage.setItem('@token', token);
       setUser(userData);
 
@@ -48,6 +53,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
+  async function signUp(name: string, occupation: string , email: string, password: string) {
+    try {
+      const response = await axios.post('https://is-sues-omega.vercel.app/api/users', {
+        name, occupation, email, password
+      });
+
+      if (response.status !== 200) {
+        console.error('Erro ao criar usuário');
+      }
+
+      router.push('/signin');
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error('Erro ao se registrar:', error.message);
+        throw new Error('Erro ao fazer registro');
+      } else {
+        console.error('Erro desconhecido ao fazer registro:', error);
+        throw new Error('Erro desconhecido ao fazer registro');
+      }
+    }
+  }
+
   function signOut() {
     AsyncStorage.removeItem('@token');
     AsyncStorage.removeItem('@department');
@@ -56,7 +83,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, user }}>
+    <AuthContext.Provider value={{ isAuthenticated, signIn, signUp, signOut, user }}>
       {children}
     </AuthContext.Provider>
   );
