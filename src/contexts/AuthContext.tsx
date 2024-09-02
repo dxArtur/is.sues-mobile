@@ -9,7 +9,7 @@ type AuthContextData = {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, name: string, occupation: string, password: string) => Promise<void>;
   signOut: () => void;
-  user: any;
+  user: UsersDto | null;
 };
 
 export const AuthContext = createContext<AuthContextData | undefined>(undefined);
@@ -19,7 +19,7 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UsersDto | null>(null);
   const isAuthenticated = !!user;
   const router = useRouter();
 
@@ -30,21 +30,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         password,
       });
 
-      const { token, user } = response.data;
-      const userData: UsersDto = user
-      await AsyncStorage.setItem('@department', userData.departmentId!) 
+      const { token, userAttempAuth } = response.data; // Ajustado aqui -- Israel
+      const userData: UsersDto = userAttempAuth; // Ajustado aqui -- Israel
+      
+      await AsyncStorage.setItem('@department', userData.departmentId!);
       await AsyncStorage.setItem('@token', token);
-      setUser(user);
+      setUser(userData);
 
       router.push('/home');
     } catch (error) {
-        if (error instanceof Error) {
-            console.error('Erro ao fazer login:', error.message);
-            throw new Error('Erro ao fazer login');
-        } else {
-            console.error('Erro desconhecido ao fazer login:', error);
-            throw new Error('Erro desconhecido ao fazer login');
-        }
+      if (error instanceof Error) {
+        console.error('Erro ao fazer login:', error.message);
+        throw new Error('Erro ao fazer login');
+      } else {
+        console.error('Erro desconhecido ao fazer login:', error);
+        throw new Error('Erro desconhecido ao fazer login');
+      }
     }
   }
 
@@ -73,6 +74,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   function signOut() {
     AsyncStorage.removeItem('@token');
+    AsyncStorage.removeItem('@department');
     setUser(null);
     router.push('/signin');
   }
