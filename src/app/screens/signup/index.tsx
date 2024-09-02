@@ -7,11 +7,13 @@ import PasswordInput from '@/src/components/input/PasswordInput';
 import ConfirmPasswordInput from '@/src/components/input/ConfirmPasswordInput';
 import NameInput from '@/src/components/input/NameInput';
 import SigninButton from '@/src/components/Button/SigninButton'; // Reutilizando o botão de signin para signup
+import OccupationInput from '@/src/components/input/OccupationInput';
 
 
 const SignupScreen: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [occupation, setOccupation] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const { signUp } = useAuth()
@@ -23,7 +25,7 @@ const handleSignup = async () => {
       return;
     }
     try {
-      await signUp(name, email, password);
+      await signUp(name, email,  occupation, password);
     } catch (error) {
       Alert.alert("Erro", "Não foi possível cadastrar o usuário");
       console.log(error);
@@ -37,6 +39,7 @@ const handleSignup = async () => {
         <Text style={styles.subtitle}>Preencha os campos abaixo para se cadastrar</Text>
         <NameInput value={name} onChange={setName} />
         <EmailInput value={email} onChange={setEmail} />
+        <OccupationInput value={occupation} onChange={setOccupation}/>
         <PasswordInput value={password} onChange={setPassword} />
         <ConfirmPasswordInput value={confirmPassword} onChange={setConfirmPassword} />
         <SigninButton onPress={handleSignup} />
