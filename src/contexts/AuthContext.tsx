@@ -30,15 +30,15 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         password,
       });
 
-      const { token, userAttempAuth } = response.data;
-      const userData: UsersDto = userAttempAuth;
+      const { token, userAttempAuth } = response.data; // Ajustado aqui -- Israel
+      const userData: UsersDto = userAttempAuth; // Ajustado aqui -- Israel
 
-      // Armazena o departmentId apenas se ele existir -- Israel
-      if (userData.departmentId) {
+       // Armazena o departmentId apenas se ele existir -- Israel
+       if (userData.departmentId) {
         await AsyncStorage.setItem('@department', userData.departmentId);
       }
-
       await AsyncStorage.setItem('@token', token);
+      
       setUser(userData);
 
       router.push('/home');
@@ -57,21 +57,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     try {
       const response = await axios.post('https://is-sues-omega.vercel.app/api/users', {
         name, occupation, email, password
-      });
+      })
 
       if (response.status !== 200) {
-        console.error('Erro ao criar usuário');
+        console.error('erro ao criar usuario')
       }
 
-      router.push('/signin');
+      router.push('/signin')
+      
     } catch (error) {
       if (error instanceof Error) {
         console.error('Erro ao se registrar:', error.message);
         throw new Error('Erro ao fazer registro');
-      } else {
+    } else {
         console.error('Erro desconhecido ao fazer registro:', error);
         throw new Error('Erro desconhecido ao fazer registro');
-      }
+    }
     }
   }
 
