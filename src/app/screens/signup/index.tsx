@@ -33,8 +33,8 @@ const handleSignup = async () => {
     try {
       await signUp(name, email, occupation, password, isAdmin);
     } catch (error) {
-      Alert.alert("Erro", "Não foi possível cadastrar o usuário");
-      console.log(error);
+        console.log(error);
+        Alert.alert("Erro", "Não foi possível cadastrar o usuário");
     }
   };
 

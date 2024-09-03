@@ -7,7 +7,7 @@ import { UsersDto } from '../dtos/UserDTO';
 type AuthContextData = {
   isAuthenticated: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, name: string, occupation: string, password: string, isAdmin: boolean) => Promise<void>;
+  signUp: (email: string, name: string, occupation: string, password: string, adm: boolean) => Promise<void>;
   signOut: () => void;
   user: UsersDto | null;
 };
@@ -49,28 +49,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
-  async function signUp(name: string, occupation: string , email: string, password: string, isAdmin: boolean) {
+  async function signUp(name: string, occupation: string , email: string, password: string, adm: boolean) {
+    console.log(name, email, password, occupation, adm)
     try {
       const response = await axios.post('https://is-sues-omega.vercel.app/api/users', {
-        name, occupation, email, password, isAdmin
+        name, occupation, email, password, adm
       })
 
-      console.log(response)
 
-      if (response.status !== 200) {
-        console.log(response)
+      if (response.status === 200) {
+        router.push('/signin') 
       }
-
-      const { token, user } = response.data
-      const userData: UsersDto = user
-      await AsyncStorage.setItem('@token', token)
-      setUser(user)
-      router.push('/home')
       
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error('Erro ao fazer requisição:', error.response?.data || error.message);
+      }
       if (error instanceof Error) {
         console.log(error)
-        console.error('Erro ao se registrar:', error.message);
+        console.error('Erro ao se registrar:', error.name);
         throw new Error('Erro ao fazer registro');
     } else {
         console.error('Erro desconhecido ao fazer registro:', error);
