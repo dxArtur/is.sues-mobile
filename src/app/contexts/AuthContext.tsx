@@ -1,8 +1,9 @@
 import React, { createContext, useState, ReactNode, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { UsersDto } from '../dtos/UserDTO';
-import api from '../api/apiClient';
+import api from '../../api/apiClient';
+import { UsersDto } from '../../dtos/UserDTO';
+import authenticateUser from '../../api/apiAuth';
 
 type AuthContextData = {
   isAuthenticated: boolean;
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         await AsyncStorage.setItem('@department', userData.departmentId);
       }
       await AsyncStorage.setItem('@token', token);
+
       
       setUser(userData);
 

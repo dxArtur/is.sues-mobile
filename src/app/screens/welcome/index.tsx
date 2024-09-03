@@ -12,7 +12,6 @@ const WelcomeScreen: React.FC = () => {
 const navigation = useNavigation()
 
   const handleSignin = () => {
-    // Implement navigation to signin screen
     
   };
 
@@ -31,13 +30,13 @@ const navigation = useNavigation()
             link='/screens/signin'
             title="Já é um usuário?"
             backgroundColor="#98ff98"
-            textColor="#006400"
+            textColor="#003366"
           />
           <WelcomeButton
             link='/screens/signup'
             title="Sou novo na empresa"
             backgroundColor="#e0e0e0"
-            textColor="#006400"
+            textColor="#2E3A43"
           />
           <WelcomeLink
             title="Traga a sua empresa para o Is.sues"

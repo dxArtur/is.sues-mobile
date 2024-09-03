@@ -1,8 +1,8 @@
 import React from 'react';
 import { PaperProvider } from 'react-native-paper';
 import { Slot } from 'expo-router';
-import { AuthProvider } from './src/contexts/AuthContext';
-import { IssuesProvider } from './src/contexts/IssuesContext';
+import { AuthProvider } from './src/app/contexts/AuthContext';
+import { IssuesProvider } from './src/app/contexts/IssuesContext';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +15,5 @@ const App: React.FC = () => {
     </AuthProvider>
   );
 };
-
 
 export default App;

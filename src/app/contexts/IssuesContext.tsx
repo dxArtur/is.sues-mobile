@@ -1,8 +1,8 @@
 import React, { createContext, useState, ReactNode, useContext, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
-import { getIssues } from '../api/issues'
-import { Issue } from '../dtos/IssueDTO'
+import { getIssues } from '../../api/issues'
+import { Issue } from '../../dtos/IssueDTO'
 
 type IssuesContextData = {
     issues: Issue[];
@@ -15,7 +15,7 @@ type IssuesProviderProps = {
     children: ReactNode;
 }
 
-export const IssuesProvider = ({ children }: IssuesProviderProps) => {
+export const IssuesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [issues, setIssues] = useState<Issue[]>([])
 
     
@@ -40,8 +40,6 @@ export const IssuesProvider = ({ children }: IssuesProviderProps) => {
             {children}
         </IssuesContext.Provider>
     )
-
-
 }
 
 
