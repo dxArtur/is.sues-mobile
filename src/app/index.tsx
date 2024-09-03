@@ -1,12 +1,17 @@
 import React from 'react';
 import {PaperProvider } from 'react-native-paper'
 import WelcomeScreen from './screens/welcome';
+import AppNavigator from './navigation/AppNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import { AuthProvider } from './contexts/AuthContext';
 
 const App: React.FC = () => {
   return (
-    <PaperProvider>
-      <WelcomeScreen />
-    </PaperProvider>
+    <AuthProvider>
+      <PaperProvider>
+        <AppNavigator />
+      </PaperProvider>
+    </AuthProvider>
   );
 };
 

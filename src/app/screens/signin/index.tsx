@@ -3,7 +3,7 @@ import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
 import React, { useState } from 'react';
 import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
-import { useAuth } from '../../../contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { Text } from 'react-native-paper';
 
 const SigninScreen: React.FC = () => {
