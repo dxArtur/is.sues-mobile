@@ -1,8 +1,8 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
-import WelcomeHeader from '../components/common/WelcomeHeader';
-import WelcomeButton from '../components/common/WelcomeButton';
-import WelcomeLink from '../components/common/WelcomeLink';
+import WelcomeHeader from '@/src/components/common/WelcomeHeader';
+import WelcomeButton from '@/src/components/common/WelcomeButton';
+import WelcomeLink from '@/src/components/common/WelcomeLink';
 import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
 
@@ -16,10 +16,6 @@ const navigation = useNavigation()
     
   };
 
-  const handleSignup = () => {
-    // Implement navigation to signup screen
-    console.log('Signup pressed');
-  };
 
   const handleCompanyIssues = () => {
     // Implement navigation to company issues screen
@@ -36,14 +32,12 @@ const navigation = useNavigation()
             title="Já é um usuário?"
             backgroundColor="#98ff98"
             textColor="#006400"
-            onPress={handleSignin}
           />
           <WelcomeButton
-            link='/Signup'
+            link='/screens/signup'
             title="Sou novo na empresa"
             backgroundColor="#e0e0e0"
             textColor="#006400"
-            onPress={handleSignup}
           />
           <WelcomeLink
             title="Traga a sua empresa para o Is.sues"

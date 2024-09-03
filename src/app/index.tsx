@@ -1,6 +1,6 @@
 import React from 'react';
-import WelcomeScreen from '../screens/WelcomeScreen';
 import {PaperProvider } from 'react-native-paper'
+import WelcomeScreen from './screens/welcome';
 
 const App: React.FC = () => {
   return (

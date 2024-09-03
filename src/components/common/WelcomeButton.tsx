@@ -3,7 +3,6 @@ import React from 'react';
 import { Pressable, Text, StyleSheet, View } from 'react-native';
 
 interface WelcomeButtonProps {
-  onPress: () => void;
   title: string;
   backgroundColor?: string;
   textColor?: string;
@@ -11,9 +10,9 @@ interface WelcomeButtonProps {
 
 }
 
-const WelcomeButton: React.FC<WelcomeButtonProps> = ({ onPress, title, backgroundColor, textColor, link }) => {
+const WelcomeButton: React.FC<WelcomeButtonProps> = ({  title, backgroundColor, textColor, link }) => {
   return (
-    <Pressable onPress={onPress} style={[styles.button, { backgroundColor }]}>
+    <Pressable  style={[styles.button, { backgroundColor }]}>
         <Link href={link}>
             <Text style={[styles.buttonText, { color: textColor || '#fff' }]}>{title}</Text>
         </Link>
