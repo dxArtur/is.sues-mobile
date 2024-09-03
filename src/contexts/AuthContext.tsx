@@ -1,5 +1,4 @@
 import React, { createContext, useState, ReactNode, useContext } from 'react';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { UsersDto } from '../dtos/UserDTO';
