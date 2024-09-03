@@ -6,17 +6,23 @@ import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
 import ConfirmPasswordInput from '@/src/components/input/ConfirmPasswordInput';
 import NameInput from '@/src/components/input/NameInput';
-import SigninButton from '@/src/components/Button/SigninButton'; // Reutilizando o botão de signin para signup
 import OccupationInput from '@/src/components/input/OccupationInput';
+import SignupButton from '@/src/components/Button/SignupButton';
+import Checkbox from '@/src/components/common/Checkbox';
 
 
 const SignupScreen: React.FC = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [occupation, setOccupation] = useState('');
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const { signUp } = useAuth()
+
+    const handleCheckboxPress = () => {
+        setIsAdmin(!isAdmin)
+      };
 
 
 const handleSignup = async () => {
@@ -25,7 +31,7 @@ const handleSignup = async () => {
       return;
     }
     try {
-      await signUp(name, email,  occupation, password);
+      await signUp(name, email, occupation, password, isAdmin);
     } catch (error) {
       Alert.alert("Erro", "Não foi possível cadastrar o usuário");
       console.log(error);
@@ -42,7 +48,19 @@ const handleSignup = async () => {
         <OccupationInput value={occupation} onChange={setOccupation}/>
         <PasswordInput value={password} onChange={setPassword} />
         <ConfirmPasswordInput value={confirmPassword} onChange={setConfirmPassword} />
-        <SigninButton onPress={handleSignup} />
+        <View style={styles.checkboxContainer}>
+        <Text style={styles.checkboxLabel}>
+          Você é um administrador?
+        </Text>
+        <Checkbox
+          status={isAdmin ? 'checked' : 'unchecked'}
+          onPress={handleCheckboxPress}
+          color="#6200ee"
+          uncheckedColor="#000000"
+        />
+        
+      </View>
+        <SignupButton onPress={handleSignup} />
       </View>
     </SafeAreaView>
   );
@@ -69,6 +87,16 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     marginBottom: 25,
   },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+
+  checkboxLabel: {
+    marginLeft: 8,
+    fontSize: 16,
+  }
 });
 
 export default SignupScreen

@@ -13,7 +13,6 @@ const OccupationInput: React.FC<OccupationInputProps> = ({ value, onChange }) =>
       label="Qual a sua função"
       value={value}
       onChangeText={onChange}
-      secureTextEntry
       style={styles.input}
       placeholderTextColor='#6b7280'
     />

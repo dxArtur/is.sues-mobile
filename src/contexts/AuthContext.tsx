@@ -7,7 +7,7 @@ import { UsersDto } from '../dtos/UserDTO';
 type AuthContextData = {
   isAuthenticated: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, name: string, occupation: string, password: string) => Promise<void>;
+  signUp: (email: string, name: string, occupation: string, password: string, isAdmin: boolean) => Promise<void>;
   signOut: () => void;
   user: UsersDto | null;
 };
@@ -49,25 +49,27 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   }
 
-  async function signUp(name: string, occupation: string , email: string, password: string) {
+  async function signUp(name: string, occupation: string , email: string, password: string, isAdmin: boolean) {
     try {
       const response = await axios.post('https://is-sues-omega.vercel.app/api/users', {
-        name, occupation, email, password
+        name, occupation, email, password, isAdmin
       })
 
+      console.log(response)
+
       if (response.status !== 200) {
-        console.error('erro ao criar usuario')
+        console.log(response)
       }
 
       const { token, user } = response.data
       const userData: UsersDto = user
       await AsyncStorage.setItem('@token', token)
-      await AsyncStorage.setItem('@department', userData.departmentId!)
       setUser(user)
       router.push('/home')
       
     } catch (error) {
       if (error instanceof Error) {
+        console.log(error)
         console.error('Erro ao se registrar:', error.message);
         throw new Error('Erro ao fazer registro');
     } else {
