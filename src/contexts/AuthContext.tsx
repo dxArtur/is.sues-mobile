@@ -32,9 +32,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
       const { token, userAttempAuth } = response.data; // Ajustado aqui -- Israel
       const userData: UsersDto = userAttempAuth; // Ajustado aqui -- Israel
-      
-      await AsyncStorage.setItem('@department', userData.departmentId!);
+
+       // Armazena o departmentId apenas se ele existir -- Israel
+       if (userData.departmentId) {
+        await AsyncStorage.setItem('@department', userData.departmentId);
+      }
       await AsyncStorage.setItem('@token', token);
+      
       setUser(userData);
 
       router.push('/home');
@@ -48,6 +52,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     }
   }
+
 
   async function signUp(name: string, occupation: string , email: string, password: string, isAdmin: boolean) {
     try {
