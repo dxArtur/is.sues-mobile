@@ -8,7 +8,7 @@ import api from '../api/apiClient';
 type AuthContextData = {
   isAuthenticated: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, name: string, occupation: string, password: string, isAdmin: boolean) => Promise<void>;
+  signUp: (email: string, name: string, occupation: string, password: string, adm: boolean) => Promise<void>;
   signOut: () => void;
   user: UsersDto | null;
 };
@@ -53,8 +53,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       }
     }
   }
-
-
   async function signUp(name: string, occupation: string, email: string, password: string, isAdmin: boolean) {
     try {
         const response = await api.post('/users', { // Usando api ao invés de axios
