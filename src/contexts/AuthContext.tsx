@@ -3,6 +3,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 import { UsersDto } from '../dtos/UserDTO';
+import api from '../api/apiClient';
 
 type AuthContextData = {
   isAuthenticated: boolean;
@@ -25,7 +26,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   async function signIn(email: string, password: string) {
     try {
-      const response = await axios.post('https://is-sues-omega.vercel.app/api/signin', {
+      const response = await api.post('/signin', { // Usando api ao invés de axios
         email,
         password,
       });
@@ -54,34 +55,32 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }
 
 
-  async function signUp(name: string, occupation: string , email: string, password: string, isAdmin: boolean) {
+  async function signUp(name: string, occupation: string, email: string, password: string, isAdmin: boolean) {
     try {
-      const response = await axios.post('https://is-sues-omega.vercel.app/api/users', {
-        name, occupation, email, password, isAdmin
-      })
+        const response = await api.post('/users', { // Usando api ao invés de axios
+          name,
+          occupation,
+          email,
+          password,
+          adm: isAdmin,
+        });
 
-      console.log(response)
+        if (response.status !== 200) {
+            console.log("Response status:", response.status);
+            console.log("Response data:", response.data);
+        }
+        router.push('/signin');
 
-      if (response.status !== 200) {
-        console.log(response)
-      }
-
-      const { token, user } = response.data
-      const userData: UsersDto = user
-      await AsyncStorage.setItem('@token', token)
-      setUser(user)
-      router.push('/home')
-      
     } catch (error) {
-      if (error instanceof Error) {
-        console.log(error)
-        console.error('Erro ao se registrar:', error.message);
-        throw new Error('Erro ao fazer registro');
-    } else {
-        console.error('Erro desconhecido ao fazer registro:', error);
-        throw new Error('Erro desconhecido ao fazer registro');
-    }
-    }
+        if (error instanceof Error) {
+            console.log(error);
+            console.error('Erro ao se registrar:', error.message);
+            throw new Error('Erro ao fazer registro');
+        } else {
+            console.error('Erro desconhecido ao fazer registro:', error);
+            throw new Error('Erro desconhecido ao fazer registro');
+        }
+    } 
   }
 
   function signOut() {
