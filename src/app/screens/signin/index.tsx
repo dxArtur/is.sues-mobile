@@ -18,12 +18,12 @@ const SigninScreen: React.FC = () => {
       Alert.alert("Erro", "Credenciais inválidas");
       console.log(error);
     }
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
-        <Text style={styles.title}>Que bom tê-lo de volta </Text>
+        <Text style={styles.title}>Que bom tê-lo de volta</Text>
         <Text style={styles.subtitle}>Preencha os campos para entrar no is.sues</Text>
         <View style={styles.buttonsContainer}>
           <EmailInput value={email} onChange={setEmail} />

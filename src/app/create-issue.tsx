@@ -12,6 +12,10 @@ export default function CreateIssueScreen() {
   const { user } = useAuth();
 
   async function handleCreateIssue() {
+    if (!user || !user.id) { 
+      Alert.alert("Erro", "Usuário não autenticado.");
+      return;
+    }
     try {
       const issueData: IssueData = {
         title,

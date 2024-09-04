@@ -1,8 +1,8 @@
-/*export interface IssueData {
+export interface IssueData {
     title: string;
     description: string;
     departmentId: string;
-    authorId: string;
+    authorId?: string;
   }
   
   
@@ -21,4 +21,3 @@
   
     return await response.json();
   }
-  */

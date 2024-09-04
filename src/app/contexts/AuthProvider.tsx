@@ -16,10 +16,10 @@ interface AuthContextData {
 //export const AuthContext = createContext<AuthContextData | undefined>(undefined);
 export const AuthContext = createContext({} as AuthContextData);
 
-type AuthProviderProps = {
-  children: ReactNode;
-};
 
+interface AuthProviderProps {
+  children: React.ReactNode;
+}
 export const AuthProviderContext = ({ children }: AuthProviderProps) => {
   const [tokenState, setTokenState] = useState<string | null>(null);
   const [user, setUser] = useState<UsersDto | null>(null);

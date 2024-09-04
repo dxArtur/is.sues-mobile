@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { TextInput as PaperTextInput } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
