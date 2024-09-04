@@ -8,10 +8,10 @@ import PasswordInput from '@/src/components/input/PasswordInput';
 import { useNavigation } from '@react-navigation/native';
 import { AppNavigationProp } from '../../navigation/types';
 
-const SigninScreen: React.FC = () => { // Usando const com export default
+const SigninScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn } = useAuth(); // Hook de autenticação
+  const { signIn } = useAuth(); //Hook de autenticação
   const navigation = useNavigation<AppNavigationProp>(); // Hook de navegação
 
   const handleSignin = async () => {

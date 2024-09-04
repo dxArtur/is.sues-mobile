@@ -1,4 +1,4 @@
-import { useState } from "react";
+/*import { useState } from "react";
 import { ImageBackground, Text, View, Alert } from "react-native";
 import AuthButton from "../components/auth/AuthButtons";
 import TextInput from "../components/common/TextInput";
@@ -89,4 +89,4 @@ export default function CreateIssueScreen() {
       </View>
     </ImageBackground>
   );
-}
+}*/

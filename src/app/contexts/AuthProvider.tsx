@@ -1,6 +1,5 @@
-import React, { createContext, useState, ReactNode, useEffect, useContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
 import api from '../../api/apiClient';
 import { UsersDto } from '../../dtos/UserDTO';
 
@@ -13,18 +12,20 @@ interface AuthContextData {
   signOut: () => void;
 }
 
-//export const AuthContext = createContext<AuthContextData | undefined>(undefined);
-export const AuthContext = createContext({} as AuthContextData);
+
+export const AuthContext = createContext<AuthContextData | undefined>(undefined);
+//export const AuthContext = createContext({} as AuthContextData);
 
 
 interface AuthProviderProps {
   children: React.ReactNode;
 }
 export const AuthProviderContext = ({ children }: AuthProviderProps) => {
+//export function AuthProviderContext({ children }: AuthProviderProps) {
   const [tokenState, setTokenState] = useState<string | null>(null);
   const [user, setUser] = useState<UsersDto | null>(null);
+  const [loading, setLoading] = useState(true);
   const isAuthenticated = !!user;
-  const router = useRouter();
 
   useEffect(() => {
     async function loadStoredUser() {
@@ -34,6 +35,7 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
       if (storedUser && token) {
         setUser(JSON.parse(storedUser));
       }
+      setLoading(false);
     }
     loadStoredUser();
   }, []);
@@ -77,8 +79,6 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
         console.log("Response data:", response.data);
         throw new Error('Erro ao se registrar. Tente novamente.');
       }
-
-      router.push('/screens/signin');
     } catch (error) {
       if (error instanceof Error) {
         console.error('Erro ao se registrar:', error.message);
@@ -95,15 +95,11 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
     AsyncStorage.removeItem('@user');
     setTokenState(null);
     setUser(null);
-    router.push('/screens/signin');
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated,tokenState, signIn, signUp, signOut, user }}>
-      {children}
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, tokenState, signIn, signUp, signOut }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
-
-
-export const useAuth = () => useContext(AuthContext);

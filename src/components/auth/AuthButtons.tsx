@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+/*import { Link } from "expo-router";
 import { Pressable, Text, PressableProps } from "react-native";
 
 interface AuthButtonProps extends PressableProps {
@@ -22,6 +22,6 @@ const AuthButton: React.FC<AuthButtonProps> = ({ title, twStyleButton, twStylePl
             )}
         </Pressable>
     );
-}
+}*/
 
-export default AuthButton;
+//export default AuthButton;

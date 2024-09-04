@@ -4,17 +4,10 @@ import WelcomeHeader from '@/src/components/common/WelcomeHeader';
 import WelcomeButton from '@/src/components/common/WelcomeButton';
 import WelcomeLink from '@/src/components/common/WelcomeLink';
 import { useNavigation } from '@react-navigation/native';
-import { router } from 'expo-router';
-
+import { AppNavigationProp } from '../../navigation/types';
 
 const WelcomeScreen: React.FC = () => {
-
-const navigation = useNavigation()
-
-  const handleSignin = () => {
-    
-  };
-
+  const navigation = useNavigation<AppNavigationProp>(); // Hook de navegação
 
   const handleCompanyIssues = () => {
     // Implement navigation to company issues screen
@@ -27,20 +20,19 @@ const navigation = useNavigation()
         <WelcomeHeader />
         <View style={styles.buttonsContainer}>
           <WelcomeButton
-            link='/screens/signin'
             title="Já é um usuário?"
             backgroundColor="#98ff98"
             textColor="#003366"
+            onPress={() => navigation.navigate('Login')} // Navega para a tela de login
           />
           <WelcomeButton
-            link='/screens/signup'
             title="Sou novo na empresa"
             backgroundColor="#e0e0e0"
             textColor="#2E3A43"
+            onPress={() => navigation.navigate('Register')} // Navega para a tela de cadastro
           />
           <WelcomeLink
             title="Traga a sua empresa para o Is.sues"
-            // textColor="#FF5722"
             onPress={handleCompanyIssues}
           />
         </View>

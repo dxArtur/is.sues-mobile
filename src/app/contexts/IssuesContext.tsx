@@ -1,6 +1,5 @@
 import React, { createContext, useState, ReactNode, useContext, useEffect } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useRouter } from 'expo-router'
 import { getIssues } from '../../api/issues'
 import { Issue } from '../../dtos/IssueDTO'
 
