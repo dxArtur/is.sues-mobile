@@ -51,7 +51,6 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
       await AsyncStorage.setItem('@token', token);
       setTokenState(token);
       setUser(userData);
-      router.push('/screens/home');
     } catch (error) {
       if (error instanceof Error) {
         console.error('Erro ao fazer login:', error.message);
@@ -105,3 +104,6 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
     </AuthContext.Provider>
   );
 };
+
+
+export const useAuth = () => useContext(AuthContext);

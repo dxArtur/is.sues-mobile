@@ -5,18 +5,24 @@ import { useAuth } from '../../hooks/useAuth';
 import SigninButton from '@/src/components/Button/SigninButton';
 import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
+import { useNavigation } from '@react-navigation/native';
+import { AppNavigationProp } from '../../navigation/types';
 
-const SigninScreen: React.FC = () => {
+const SigninScreen: React.FC = () => { // Usando const com export default
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn } = useAuth();
+  const { signIn } = useAuth(); // Hook de autenticação
+  const navigation = useNavigation<AppNavigationProp>(); // Hook de navegação
 
   const handleSignin = async () => {
     try {
       await signIn(email, password);
+      navigation.navigate('Home'); // Navegação após login bem-sucedido
     } catch (error) {
       Alert.alert("Erro", "Credenciais inválidas");
       console.log(error);
+      console.log(email);
+      console.log(password);
     }
   };
 

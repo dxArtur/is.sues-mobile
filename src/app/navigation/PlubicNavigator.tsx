@@ -1,31 +1,19 @@
-import signup from "@/src/app/screens/signup";
-import signin from '@/src/app/screens/signin'
-import welcome from '@/src/app/screens/welcome'
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from "@react-navigation/native";
-
+import Signup from "@/src/app/screens/signup";
+import Signin from '@/src/app/screens/signin';
+import Welcome from '@/src/app/screens/welcome';
 
 const Stack = createNativeStackNavigator();
 
-const PulbicNavigator: React.FC = () => {
+const PublicNavigator: React.FC = () => {
   return (
-        <Stack.Navigator screenOptions={{headerShown:false}}>
-            <Stack.Screen 
-                name='Welcome' 
-                component={welcome}
-            />
-            <Stack.Screen 
-                name='Login' 
-                component={signin}
-            />
-
-            <Stack.Screen 
-                name='Register' 
-                component={signup}
-            />
-        
-        </Stack.Navigator>
-  )
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Welcome" component={Welcome} />
+      <Stack.Screen name="Login" component={Signin} />
+      <Stack.Screen name="Register" component={Signup} />
+    </Stack.Navigator>
+  );
 };
 
-export default PulbicNavigator
+export default PublicNavigator;
