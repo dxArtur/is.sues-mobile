@@ -1,19 +1,14 @@
-// import React from 'react';
-// import { useAuth } from '@/src/app/contexts/AuthContext';
-// import { Redirect } from 'expo-router';
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from '../screens/home';
 
-// interface PrivateRouteProps {
-//   children: React.ReactNode;
-// }
+const PrivateStack = createNativeStackNavigator();
 
-// export default function PrivateRoute({ children }: PrivateRouteProps) {
-//   const { user } = useAuth();
+export function PrivateRoutes() {
+  return (
+    <PrivateStack.Navigator>
+      <PrivateStack.Screen name="Home" component={HomeScreen} />
+    </PrivateStack.Navigator>
+  );
+}
 
-//   if (!user) {
-//     // Se o usuário não estiver autenticado, redireciona para a tela App.tsx
-//     return <Redirect href="/signin" />;
-//   }
-
-  
-//   return <>{children}</>;
-// }

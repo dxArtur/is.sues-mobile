@@ -1,6 +1,7 @@
+
 import React from 'react';
-import { TextInput, StyleSheet } from 'react-native';
 import { TextInput as PaperTextInput } from 'react-native-paper';
+import { StyleSheet } from 'react-native';
 
 interface EmailInputProps {
   value: string;
@@ -14,10 +15,8 @@ const EmailInput: React.FC<EmailInputProps> = ({ value, onChange }) => {
       value={value}
       onChangeText={onChange}
       style={styles.input}
-      keyboardType='email-address'
-      autoComplete='email'
-      autoCapitalize='none'
-      textColor=''
+      keyboardType="email-address"
+      autoComplete="email"
     />
   );
 };
@@ -28,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EmailInput
+export default EmailInput;

@@ -1,19 +1,14 @@
 import React from 'react';
-import { PaperProvider } from 'react-native-paper';
-import { Slot } from 'expo-router';
-import { AuthProvider } from './src/app/contexts/AuthContext';
-import { IssuesProvider } from './src/app/contexts/IssuesContext';
+import { AuthProviderContext } from './src/app/contexts/AuthProvider';
+import { Routes } from './src/app/routes';
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <IssuesProvider>
-        <PaperProvider>
-          <Slot />
-        </PaperProvider>
-      </IssuesProvider>
-    </AuthProvider>
+    <AuthProviderContext>
+      <Routes />
+    </AuthProviderContext>
   );
 };
 
 export default App;
+

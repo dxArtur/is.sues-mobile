@@ -45,7 +45,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import { useAuth } from '@/src/app/contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 // import { useIssues } from '@/src/app/contexts/IssuesContext'
 import { Issue } from '@/src/dtos/IssueDTO';
 

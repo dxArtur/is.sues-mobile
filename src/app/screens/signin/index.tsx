@@ -1,32 +1,32 @@
+import React, { useState } from 'react';
+import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
+import { useAuth } from '../../hooks/useAuth';
 import SigninButton from '@/src/components/Button/SigninButton';
 import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
-import React, { useState } from 'react';
-import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
-import { useAuth } from '../../contexts/AuthContext';
-import { Text } from 'react-native-paper';
 
 const SigninScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn } = useAuth()
+  const { signIn } = useAuth();
 
   const handleSignin = async () => {
-      try {
-        await signIn(email, password)
-      } catch (error) {
-        Alert.alert("Erro", "Credenciais inválidas");
-        console.log(error);
-      }
+    try {
+      await signIn(email, password);
+    } catch (error) {
+      Alert.alert("Erro", "Credenciais inválidas");
+      console.log(error);
+    }
   }
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.innerContainer}>
-        <Text style={styles.title}>Que bom tê-lo de volta</Text>
+        <Text style={styles.title}>Que bom tê-lo de volta </Text>
         <Text style={styles.subtitle}>Preencha os campos para entrar no is.sues</Text>
         <View style={styles.buttonsContainer}>
-          <EmailInput value={email} onChange={setEmail}/>
+          <EmailInput value={email} onChange={setEmail} />
           <PasswordInput value={password} onChange={setPassword} />
           <SigninButton onPress={handleSignin} />
         </View>
