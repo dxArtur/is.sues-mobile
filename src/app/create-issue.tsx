@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ImageBackground, Text, View, Alert } from "react-native";
 import AuthButton from "../components/auth/AuthButtons";
 import TextInput from "../components/common/TextInput";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "./contexts/AuthContext";
 import { CreateIssue, IssueData } from '../api/apiService'; 
 
 export default function CreateIssueScreen() {

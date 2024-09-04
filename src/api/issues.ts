@@ -1,9 +1,17 @@
+import { Issue } from "../dtos/IssueDTO";
 import api from "./apiClient"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export const getIssues = async () => {
+export const getIssues = async (): Promise<Issue[]> => {
     try {
-        const issues = await api.get('/issues')
+        const token = await AsyncStorage.getItem('@token');
+        
+        const issues = await api.get('/issues', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
         return issues.data
     } catch (error) {
         throw error
