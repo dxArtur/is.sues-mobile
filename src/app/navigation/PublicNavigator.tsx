@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+/*import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SigninScreen from '@/src/app/screens/signin';
 import SignupScreen from '@/src/app/screens/signup';
 import WelcomeScreen from '@/src/app/screens/welcome';
@@ -15,4 +15,4 @@ const PublicNavigator: React.FC = () => {
   );
 };
 
-export default PublicNavigator;
+export default PublicNavigator;*/

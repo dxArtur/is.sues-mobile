@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/home';
 import ProfileScreen from '../screens/profile';
@@ -15,4 +15,4 @@ const PrivateStackNavigator: React.FC = () => {
   );
 };
 
-export default PrivateStackNavigator;
+export default PrivateStackNavigator;*/

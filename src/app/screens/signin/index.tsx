@@ -6,7 +6,7 @@ import SigninButton from '@/src/components/Button/SigninButton';
 import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
 import { useNavigation } from '@react-navigation/native';
-import { AppNavigationProp } from '../../navigation/types';
+import { AppNavigationProp } from '../../navigation/StackNavigator';
 
 const SigninScreen: React.FC = () => {
   const [email, setEmail] = useState('');

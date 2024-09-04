@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProviderContext } from '../contexts/AuthProvider';
 import AppNavigator from './AppNavigator';
@@ -13,4 +13,4 @@ const MainNavigator: React.FC = () => {
   );
 };
 
-export default MainNavigator;
+export default MainNavigator;*/
