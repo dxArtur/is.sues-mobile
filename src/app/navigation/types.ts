@@ -1,4 +1,4 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+/*import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type RootStackParamList = {
   Welcome: undefined;
@@ -8,4 +8,4 @@ type RootStackParamList = {
   Profile: { userId: string };
 };
 
-export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;*/

@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/home';
 
@@ -10,4 +10,4 @@ export function PrivateRoutes() {
       <PrivateStack.Screen name="Home" component={HomeScreen} />
     </PrivateStack.Navigator>
   );
-}
+}*/

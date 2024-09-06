@@ -1,13 +1,13 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View,Button } from 'react-native';
 import WelcomeHeader from '@/src/components/common/WelcomeHeader';
 import WelcomeButton from '@/src/components/common/WelcomeButton';
 import WelcomeLink from '@/src/components/common/WelcomeLink';
 import { useNavigation } from '@react-navigation/native';
-import { AppNavigationProp } from '../../navigation/StackNavigator';
+//import { AppNavigationProp } from '../../navigation/StackNavigator';
 
 const WelcomeScreen: React.FC = () => {
-  const navigation = useNavigation<AppNavigationProp>(); // Hook de navegação
+  const navigation = useNavigation(); // Hook de navegação
 
   const handleCompanyIssues = () => {
     // Implement navigation to company issues screen
@@ -23,8 +23,7 @@ const WelcomeScreen: React.FC = () => {
             title="Já é um usuário?"
             backgroundColor="#98ff98"
             textColor="#003366"
-            //onPress={() => navigation.navigate('Login')} // Navega para a tela de login
-            onPress={() => {navigation.navigate("Login");}}
+            onPress={() => navigation.navigate('Login')} // Navega para a tela de login
           />
           <WelcomeButton
             title="Sou novo na empresa"

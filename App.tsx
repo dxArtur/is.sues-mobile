@@ -1,11 +1,14 @@
 import React from 'react';
 import AppNavigator from './src/app/navigation/StackNavigator'; 
 import { AuthProviderContext } from './src/app/contexts/AuthProvider';
+import { IssuesProvider } from './src/app/contexts/IssuesContext'
 
 export default function App () {
   return (
     <AuthProviderContext>
+      <IssuesProvider>
       <AppNavigator />
+      </IssuesProvider>
     </AuthProviderContext>
   );
 }//;
