@@ -1,24 +1,30 @@
+import React, { useState } from 'react';
+import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Text } from 'react-native-paper';
+import { useAuth } from '../../hooks/useAuth';
 import SigninButton from '@/src/components/Button/SigninButton';
 import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
-import React, { useState } from 'react';
-import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
-import { useAuth } from '../../contexts/AuthContext';
-import { Text } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { AppNavigationProp } from '../../navigation/StackNavigator';
 
 const SigninScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn } = useAuth()
+  const { signIn } = useAuth(); //Hook de autenticação
+  const navigation = useNavigation<AppNavigationProp>(); // Hook de navegação
 
   const handleSignin = async () => {
-      try {
-        await signIn(email, password)
-      } catch (error) {
-        Alert.alert("Erro", "Credenciais inválidas");
-        console.log(error);
-      }
-  }
+    try {
+      await signIn(email, password);
+      navigation.navigate('Home'); // Navegação após login bem-sucedido
+    } catch (error) {
+      Alert.alert("Erro", "Credenciais inválidas");
+      console.log(error);
+      console.log(email);
+      console.log(password);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,7 +32,7 @@ const SigninScreen: React.FC = () => {
         <Text style={styles.title}>Que bom tê-lo de volta</Text>
         <Text style={styles.subtitle}>Preencha os campos para entrar no is.sues</Text>
         <View style={styles.buttonsContainer}>
-          <EmailInput value={email} onChange={setEmail}/>
+          <EmailInput value={email} onChange={setEmail} />
           <PasswordInput value={password} onChange={setPassword} />
           <SigninButton onPress={handleSignin} />
         </View>

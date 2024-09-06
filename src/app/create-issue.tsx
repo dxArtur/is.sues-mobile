@@ -1,8 +1,8 @@
-import { useState } from "react";
+/*import { useState } from "react";
 import { ImageBackground, Text, View, Alert } from "react-native";
 import AuthButton from "../components/auth/AuthButtons";
 import TextInput from "../components/common/TextInput";
-import { useAuth } from "./contexts/AuthContext";
+import { useAuth } from "./hooks/useAuth";
 import { CreateIssue, IssueData } from '../api/apiService'; 
 
 export default function CreateIssueScreen() {
@@ -12,6 +12,10 @@ export default function CreateIssueScreen() {
   const { user } = useAuth();
 
   async function handleCreateIssue() {
+    if (!user || !user.id) { 
+      Alert.alert("Erro", "Usuário não autenticado.");
+      return;
+    }
     try {
       const issueData: IssueData = {
         title,
@@ -85,4 +89,4 @@ export default function CreateIssueScreen() {
       </View>
     </ImageBackground>
   );
-}
+}*/

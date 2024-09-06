@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
-import { useAuth } from '../../contexts/AuthContext'; // Certifique-se de que este caminho está correto
+import { useAuth } from '../../hooks/useAuth'; // Certifique-se de que este caminho está correto
 import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
 import ConfirmPasswordInput from '@/src/components/input/ConfirmPasswordInput';
@@ -31,7 +31,7 @@ const handleSignup = async () => {
       return;
     }
     try {
-      await signUp(name, email, occupation, password, isAdmin);
+      await signUp(name, occupation, email, password, isAdmin);
     } catch (error) {
         console.log(error);
         Alert.alert("Erro", "Não foi possível cadastrar o usuário");

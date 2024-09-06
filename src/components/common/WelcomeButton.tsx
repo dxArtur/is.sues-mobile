@@ -1,24 +1,20 @@
-import { Link } from 'expo-router';
 import React from 'react';
-import { Pressable, Text, StyleSheet, View } from 'react-native';
+import { Pressable, Text, StyleSheet } from 'react-native';
 
 interface WelcomeButtonProps {
   title: string;
   backgroundColor?: string;
   textColor?: string;
-  link: string
-
+  onPress: () => void;
 }
-
-const WelcomeButton: React.FC<WelcomeButtonProps> = ({  title, backgroundColor, textColor, link }) => {
+const WelcomeButton: React.FC<WelcomeButtonProps> = ({ title, backgroundColor = '#000', textColor = '#fff', onPress }) => {
   return (
-    <Pressable  style={[styles.button, { backgroundColor }]}>
-        <Link href={link}>
-            <Text style={[styles.buttonText, { color: textColor || '#fff' }]}>{title}</Text>
-        </Link>
+    <Pressable style={[styles.button, { backgroundColor }]} onPress={onPress}>
+      <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
     </Pressable>
   );
 };
+
 
 const styles = StyleSheet.create({
   button: {
