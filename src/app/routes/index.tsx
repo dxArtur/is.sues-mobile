@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthRoutes } from './routes.publics';
 import { PrivateRoutes } from './routes.privates';
@@ -12,4 +12,4 @@ export function Routes() {
       {tokenState ? <PrivateRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   );
-}
+}*/

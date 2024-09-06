@@ -1,5 +1,4 @@
 import React from 'react';
-import { AuthProviderContext } from '../contexts/AuthProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAuth } from '../hooks/useAuth';
@@ -11,15 +10,16 @@ import WelcomeScreen from '../screens/welcome';
 
 const Stack = createNativeStackNavigator();
 
-type RootStackParamList = {
+/*type RootStackParamList = {
   Welcome: undefined;
   Login: undefined;
   Register: undefined;
   Home: undefined;
   Profile: { userId: string };
-};
+};*/
 
-export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+//export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 // Rotas Privadas
 const AppStack: React.FC = () => {
@@ -35,9 +35,9 @@ const AppStack: React.FC = () => {
 // Rotas Públicas
 const AuthStack: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Welcome" component={WelcomeScreen} />
+    <Stack.Navigator initialRouteName='Welcome' screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={SigninScreen} />
+      <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Register" component={SignupScreen} />
       <Stack.Screen name="AppStack" component={AppStack} />
     </Stack.Navigator>
@@ -46,14 +46,19 @@ const AuthStack: React.FC = () => {
 
 //const AppNavigator: React.FC = () => {
 export default function AppNavigator () {//
-  const { user } = useAuth();
+  const { tokenState } = useAuth();
 
-  return (
-    <AuthProviderContext>
+  /*return (
       <NavigationContainer>
-        {user ? <AppStack /> : <AuthStack />} {/* Exibe rotas privadas se autenticado, caso contrário rotas públicas */}
+        {user ? <AppStack /> : <AuthStack />}
       </NavigationContainer>
-    </AuthProviderContext>
+  );*/
+  return (
+    <NavigationContainer>
+      {
+        !!tokenState ? <AppStack /> : <AuthStack />
+      }
+    </NavigationContainer>
   );
 }//;
 

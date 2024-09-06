@@ -6,13 +6,12 @@ import SigninButton from '@/src/components/Button/SigninButton';
 import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
 import { useNavigation } from '@react-navigation/native';
-import { AppNavigationProp } from '../../navigation/StackNavigator';
 
 const SigninScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signIn } = useAuth(); //Hook de autenticação
-  const navigation = useNavigation<AppNavigationProp>(); // Hook de navegação
+  const navigation = useNavigation(); // Hook de navegação
 
   const handleSignin = async () => {
     try {
