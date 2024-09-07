@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAuth } from '../hooks/useAuth';
 import HomeScreen from '../screens/home';
@@ -8,7 +9,8 @@ import SigninScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import WelcomeScreen from '../screens/welcome';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
+const Tab = createBottomTabNavigator()
 
 /*type RootStackParamList = {
   Welcome: undefined;
@@ -24,11 +26,11 @@ const Stack = createNativeStackNavigator();
 // Rotas Privadas
 const AppStack: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="AuthStack" component={AuthStack} />
-    </Stack.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="AuthStack" component={AuthStack} />
+    </Tab.Navigator>
   );
 };
 
