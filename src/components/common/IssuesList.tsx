@@ -1,14 +1,15 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import React from 'react';
 import { Issue } from '@/src/dtos/IssueDTO';
+import IssueItem from './Issue';
 
 
 interface IssuesListProps {
     issues: Issue[];
-    renderIssues: ({ item }: { item: Issue }) => JSX.Element;
-}
+  }
 
-const IssuesList: React.FC<IssuesListProps> = ({ issues, renderIssues }) => {
+const IssuesList: React.FC<IssuesListProps> = ({ issues }) => {
+    const renderIssues = ({ item }: { item: Issue }) => <IssueItem item={item} />
 
     return (
         <FlatList

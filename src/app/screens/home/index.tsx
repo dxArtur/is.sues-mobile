@@ -1,82 +1,104 @@
-import { View, Text, Button, FlatList, Pressable, ListRenderItem, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 import { useAuth } from '../../hooks/useAuth';
 import { useIssues } from '../../contexts/IssuesContext';
-import React from 'react';
-import { Issue } from '../../../dtos/IssueDTO';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '@/src/components/common/HeaderHomePage';
 import IssuesList from '@/src/components/common/IssuesList';
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons';
+import { getDepartmentName } from '@/src/api/department';
 
 export default function Home() {
   const { signOut, user } = useAuth();
-  const {issues, loadIssues} = useIssues()
+  const { issues, loadIssues } = useIssues();
+  const [departmentName, setDepartmentName] = useState<string>('Carregando...');
+ 
 
-  React.useEffect(()=>{
-    loadIssues()
-  }, [loadIssues])
-
-  const renderIssues = ({item}: {item: Issue}) => {
-    return <View>
-      <Pressable
-        onPress={() => { } }
-      >
-        <Text>
-          {item.description}
-        </Text>
-      </Pressable>
-    </View>;
+  const fetchDepartmentName = async () => {
+    try {
+      const name = await getDepartmentName(user?.departmentId!);
+      setDepartmentName(name);
+    } catch (error) {
+      setDepartmentName('Erro ao carregar');
+      console.error('Erro ao carregar o nome do departamento:', error);
+    }
   }
+
+  useEffect(() => {
+    fetchDepartmentName()
+    loadIssues();
+  }, [user?.departmentId, loadIssues]);
+
+
+  
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header userName={user?.name!} userPhoto={''}/>
-      <View style={styles.section}>
-        <View style={styles.titleSection}>
-          <Text style={styles.titleSectionName}>Issues</Text>
-          <Text style={styles.titleSectionStatus}> abertas</Text>
+      <Header userName={user?.name!} userPhoto={''} />
+      <View style={[styles.section, { flexDirection: 'row', padding: 10 }]}>
+        <MaterialIcons style={styles.departmentIcon} name="maps-home-work" size={40} color="white" />
+        <View>
+          <Text style={styles.titleSectionName}>Departamento</Text>
+          <Text style={styles.titleSectionStatus}>{departmentName}</Text>
         </View>
-        <MaterialIcons name="keyboard-arrow-down" size={20} color="gray" />
-        <IssuesList issues={issues} renderIssues={renderIssues} />
       </View>
-      
-      <Button title="Sair" onPress={signOut} />
+      <View style={[styles.section, { padding: 10 }]}>
+        <View style={styles.headerSection}>
+          <View style={styles.titleSection}>
+            <Text style={styles.titleSectionName}>Issues</Text>
+            <Text style={styles.titleSectionStatus}> abertas</Text>
+          </View>
+          <View style={styles.iconInfoSection}>
+            <MaterialIcons name="keyboard-arrow-down" size={20} color="gray" />
+          </View>
+        </View>
+        <IssuesList issues={issues} />
+      </View>
     </SafeAreaView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
     padding: 24,
     justifyContent: 'center',
-    backgroundColor: '#f0f8ff',
-    gap:6,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight:'bold',
+    backgroundColor: '#f5f5f5',
+    gap: 6,
   },
   section: {
-    flexDirection:'row',
-    gap:10,
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
-    padding:4,
-    paddingLeft:10,
-    borderRadius:5,
+    flexDirection: 'column',
+    gap: 10,
+    backgroundColor: '#f8f8f8',
+    padding: 4,
+    paddingLeft: 10,
+    borderRadius: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
   },
-  titleSection: {
-    
-    flexDirection:'row'
+  headerSection: {
+    flexDirection: 'row',
+    gap: 10,
   },
-  titleSectionName:{
-    color:'#808080',
-    fontWeight:'light'
+  titleSection: {
+    paddingLeft: 6,
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  titleSectionName: {
+    color: '#808080',
+    fontWeight: 'light',
   },
   titleSectionStatus: {
-    fontWeight:'bold'
-  }
-})
+    fontWeight: 'bold',
+  },
+  departmentIcon: {
+    backgroundColor: '#dcdcdc',
+    borderRadius: 10,
+    padding: 4,
+  },
+  iconInfoSection: {
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'gray',
+  },
+});

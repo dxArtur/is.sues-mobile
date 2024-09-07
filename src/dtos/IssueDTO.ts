@@ -2,5 +2,7 @@ export type Issue = {
     id: string;
     title: string;
     description: string;
-    status: string;
+    status: boolean;
+    authorId: string;
+    createdAt: string;
 }
