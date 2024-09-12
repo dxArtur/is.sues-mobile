@@ -1,14 +1,31 @@
 import React from 'react';
+import { useFonts } from "expo-font";
 import AppNavigator from './src/app/navigation/StackNavigator'; 
 import { AuthProviderContext } from './src/app/contexts/AuthProvider';
 import { IssuesProvider } from './src/app/contexts/IssuesContext'
+import { CompanyProvider } from './src/app/contexts/CompanyContext';
 
 export default function App () {
+  const [fontsLoaded, error] = useFonts({
+    "PlusJakartaSans-Medium": require("./src/assets/fonts/PlusJakartaSans-Medium.ttf"),
+    "PlusJakartaSans-SemiBold": require("./src/assets/fonts/PlusJakartaSans-SemiBold.ttf"),
+    "PlusJakartaSans-Bold": require("./src/assets/fonts/PlusJakartaSans-Bold.ttf"),
+    "SFProText-Semibold": require("./src/assets/fonts/SFProText-Semibold.otf"),
+    "Inter-Regular": require("./src/assets/fonts/Inter-Regular.ttf"),
+    "Inter-SemiBold": require("./src/assets/fonts/Inter-SemiBold.ttf"),
+    "Inter-Bold": require("./src/assets/fonts/Inter-Bold.ttf"),
+  });
+
+  if (!fontsLoaded && !error) {
+    return null;
+  }
   return (
     <AuthProviderContext>
-      <IssuesProvider>
-      <AppNavigator />
-      </IssuesProvider>
+      <CompanyProvider>
+        <IssuesProvider>
+          <AppNavigator />
+        </IssuesProvider>
+      </CompanyProvider>
     </AuthProviderContext>
   );
 }//;
