@@ -7,12 +7,13 @@ import Header from '@/src/components/common/HeaderHomePage';
 import IssuesList from '@/src/components/common/IssuesList';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getDepartmentName } from '@/src/api/department';
+import { useNavigation } from '@react-navigation/native'; // Adiciona o hook de navegação
 
 export default function Home() {
   const { signOut, user } = useAuth();
   const { issues, loadIssues } = useIssues();
   const [departmentName, setDepartmentName] = useState<string>('Carregando...');
- 
+  const navigation = useNavigation(); // Hook de navegação
 
   const fetchDepartmentName = async () => {
     try {
@@ -22,15 +23,20 @@ export default function Home() {
       setDepartmentName('Erro ao carregar');
       console.error('Erro ao carregar o nome do departamento:', error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchDepartmentName()
+    fetchDepartmentName();
     loadIssues();
   }, [user?.departmentId, loadIssues]);
 
-
-  
+  // Função para navegar para a tela de criação de empresa
+  const handleCreateCompany = () => {
+    navigation.navigate('CriarEmpresa'); // Navega para a tela de criação de empresa
+  };
+  const handleSearchCompany = () => {
+    navigation.navigate('BuscarEmpresas');
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,6 +60,10 @@ export default function Home() {
         </View>
         <IssuesList issues={issues} />
       </View>
+
+      {/* Botão para testar a navegação para a criação de empresas */}
+      <Button title="Criar Empresa" onPress={handleCreateCompany} />
+      <Button title="Buscar Empresa" onPress={handleSearchCompany} />
     </SafeAreaView>
   );
 }
