@@ -43,6 +43,7 @@ export default function CompanyIndex() {
         <HeaderCompany
             name={company?.name!}
             description = {company?.description!}
+            onPress={handleEditCompany}
         />
 
       {company ? (
