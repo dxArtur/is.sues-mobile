@@ -1,13 +1,13 @@
 import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
 
-interface WelcomeButtonProps {
+interface AuthButtonProps {
   title: string;
   backgroundColor?: string;
   textColor?: string;
   onPress: () => void;
 }
-const WelcomeButton: React.FC<WelcomeButtonProps> = ({ title, backgroundColor = '#000', textColor = '#fff', onPress }) => {
+const AuthButton: React.FC<AuthButtonProps> = ({ title, backgroundColor = '#000', textColor = '#fff', onPress }) => {
   return (
     <Pressable style={[styles.button, { backgroundColor }]} onPress={onPress}>
       <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: 14,
   },
 });
 
-export default WelcomeButton;
+export default AuthButton;

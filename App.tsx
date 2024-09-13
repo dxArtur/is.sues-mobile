@@ -3,10 +3,15 @@ import { useFonts } from "expo-font";
 import AppNavigator from './src/app/navigation/StackNavigator'; 
 import { AuthProviderContext } from './src/app/contexts/AuthProvider';
 import { IssuesProvider } from './src/app/contexts/IssuesContext'
+import {PaperProvider, useTheme } from 'react-native-paper';
+import theme from './src/styles/theme';
+import { ThemeProvider } from './src/app/contexts/ThemeContext';
+
 import { CompanyProvider } from './src/app/contexts/CompanyContext';
 import { DepartmentProvider } from './src/app/contexts/DepartmentContext';
 
 export default function App () {
+
   const [fontsLoaded, error] = useFonts({
     "PlusJakartaSans-Medium": require("./src/assets/fonts/PlusJakartaSans-Medium.ttf"),
     "PlusJakartaSans-SemiBold": require("./src/assets/fonts/PlusJakartaSans-SemiBold.ttf"),

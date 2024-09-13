@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
-import { Text } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 import { useAuth } from '../../hooks/useAuth';
 import SigninButton from '@/src/components/Button/SigninButton';
 import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
 import { useNavigation } from '@react-navigation/native';
+import AuthButton from '@/src/components/Button/AuthButton';
 
 const SigninScreen: React.FC = () => {
+  const { colors } = useTheme()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { signIn } = useAuth(); //Hook de autenticação
@@ -33,7 +35,12 @@ const SigninScreen: React.FC = () => {
         <View style={styles.buttonsContainer}>
           <EmailInput value={email} onChange={setEmail} />
           <PasswordInput value={password} onChange={setPassword} />
-          <SigninButton onPress={handleSignin} />
+          <AuthButton
+            title="Entrar"
+            backgroundColor={"#98ff98"} //"#98ff98"
+            textColor="#003366"
+            onPress={handleSignin} // Navega para a tela de cadastro
+          />
         </View>
       </View>
     </SafeAreaView>

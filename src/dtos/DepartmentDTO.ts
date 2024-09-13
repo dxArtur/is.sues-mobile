@@ -6,4 +6,4 @@ export interface DepartmentDto {
     labels?: string[] | null;
     users?: string[] | null;
   }
-  
+

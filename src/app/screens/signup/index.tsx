@@ -9,6 +9,7 @@ import NameInput from '@/src/components/input/NameInput';
 import OccupationInput from '@/src/components/input/OccupationInput';
 import SignupButton from '@/src/components/Button/SignupButton';
 import Checkbox from '@/src/components/common/Checkbox';
+import AuthButton from '@/src/components/Button/AuthButton';
 
 
 const SignupScreen: React.FC = () => {
@@ -60,7 +61,12 @@ const handleSignup = async () => {
         />
         
       </View>
-        <SignupButton onPress={handleSignup} />
+      <AuthButton
+            title="Cadastrar"
+            backgroundColor="#98ff98"
+            textColor="#003366"
+            onPress={handleSignup} // Navega para a tela de cadastro
+          />
       </View>
     </SafeAreaView>
   );
