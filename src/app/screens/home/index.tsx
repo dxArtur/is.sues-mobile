@@ -8,6 +8,7 @@ import IssuesList from '@/src/components/common/IssuesList';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getDepartmentName } from '@/src/api/department';
 import { useNavigation } from '@react-navigation/native'; // Adiciona o hook de navegação
+import { getCompanyName } from '@/src/api/apiCompany';
 
 export default function Home() {
   const { signOut, user } = useAuth();
@@ -44,9 +45,12 @@ export default function Home() {
       <View style={[styles.section, { flexDirection: 'row', padding: 10 }]}>
         <MaterialIcons style={styles.departmentIcon} name="maps-home-work" size={40} color="white" />
         <View>
-          <Text style={styles.titleSectionName}>Departamento</Text>
+          <Text style={styles.titleSectionName}>{user?.adm ? 'Líder do ' : 'Membro do '}</Text>
           <Text style={styles.titleSectionStatus}>{departmentName}</Text>
         </View>
+      </View>
+      <View style={[styles.section, { padding: 10 }]}>
+      <Text style={styles.titleSectionName}>Colaborador na</Text>
       </View>
       <View style={[styles.section, { padding: 10 }]}>
         <View style={styles.headerSection}>

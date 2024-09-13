@@ -1,12 +1,12 @@
-import { DepartmentDto } from "../dtos/DepartmentDTO";
+import { CompanyDto } from "../dtos/CompanyDTO";
 import api from "./apiClient"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export const getDepartmentName = async (departmentId:string): Promise<string> =>{
+export const getCompanyName = async (departmentId:string): Promise<string> =>{
     try {
         const token = await AsyncStorage.getItem('@token');
-        const response = await api.get(`/departments/${departmentId}`,
+        const response = await api.get(`/company/${departmentId}`,
         {
             headers: {
                 Authorization: `Bearer: ${token}`
@@ -20,18 +20,18 @@ export const getDepartmentName = async (departmentId:string): Promise<string> =>
 }
 }
 
-export const getCompanyDepartment = async (departmentId:string): Promise<string> =>{
+export const getCompany= async (companyId:string): Promise<CompanyDto> =>{
     try {
         const token = await AsyncStorage.getItem('@token');
-        const response = await api.get(`/departments/${departmentId}`,
+        const response = await api.get(`/company/${companyId}`,
         {
             headers: {
                 Authorization: `Bearer: ${token}`
             }
         }
     )
-    const departmentCompany:DepartmentDto = response.data
-    const company = departmentCompany.companyId
+    const company = response.data
+    console.log(company)
     return company
 } catch (error) {
     throw error

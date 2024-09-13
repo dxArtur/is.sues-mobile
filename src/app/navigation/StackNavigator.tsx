@@ -8,6 +8,7 @@ import ProfileScreen from '../screens/profile';
 import SigninScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import WelcomeScreen from '../screens/welcome';
+import CompanyScreen from '../screens/company/index' 
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 
 
@@ -74,6 +75,14 @@ const AppStack: React.FC = () => {
             <FontAwesome name="home" size={24} color={color} />
           ),
           tabBarLabel: 'Home',
+        }}
+      />
+      <Tab.Screen name="company" component={CompanyScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="building" size={22} color={color} />
+          ),
+          tabBarLabel: 'Empresa',
         }}
       />
       <Tab.Screen

@@ -3,26 +3,14 @@ import { useFonts } from "expo-font";
 import AppNavigator from './src/app/navigation/StackNavigator'; 
 import { AuthProviderContext } from './src/app/contexts/AuthProvider';
 import { IssuesProvider } from './src/app/contexts/IssuesContext'
-<<<<<<< HEAD
 import {PaperProvider, useTheme } from 'react-native-paper';
 import theme from './src/styles/theme';
 import { ThemeProvider } from './src/app/contexts/ThemeContext';
 
-
-export default function App () {
-
-  return (
-    <ThemeProvider theme={theme}>
-      <AuthProviderContext>
-        <IssuesProvider>
-        <AppNavigator />
-        </IssuesProvider>
-      </AuthProviderContext>
-    </ThemeProvider>
-=======
 import { CompanyProvider } from './src/app/contexts/CompanyContext';
 
 export default function App () {
+
   const [fontsLoaded, error] = useFonts({
     "PlusJakartaSans-Medium": require("./src/assets/fonts/PlusJakartaSans-Medium.ttf"),
     "PlusJakartaSans-SemiBold": require("./src/assets/fonts/PlusJakartaSans-SemiBold.ttf"),
@@ -44,7 +32,6 @@ export default function App () {
         </IssuesProvider>
       </CompanyProvider>
     </AuthProviderContext>
->>>>>>> 193ff3eb2722baa1fa66a334fa20230d815a84e3
   );
 }//;
 

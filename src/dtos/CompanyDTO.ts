@@ -7,4 +7,5 @@ export interface CompanyDto {
     longitude?: number;
     description?: string|null;
     departments?: String[];
+    headId: string
 }
