@@ -3,10 +3,13 @@ import { SafeAreaView, StyleSheet, View,Button } from 'react-native';
 import WelcomeHeader from '@/src/components/common/WelcomeHeader';
 import WelcomeButton from '@/src/components/common/WelcomeButton';
 import WelcomeLink from '@/src/components/common/WelcomeLink';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useTheme } from '@react-navigation/native';
 //import { AppNavigationProp } from '../../navigation/StackNavigator';
 
+
 const WelcomeScreen: React.FC = () => {
+  
+
   const navigation = useNavigation(); // Hook de navegação
 
   const handleCompanyIssues = () => {
@@ -21,20 +24,20 @@ const WelcomeScreen: React.FC = () => {
         <View style={styles.buttonsContainer}>
           <WelcomeButton
             title="Já é um usuário?"
-            backgroundColor="#98ff98"
+            backgroundColor={"#98ff98"} //"#98ff98"
             textColor="#003366"
             onPress={() => navigation.navigate('Login')} // Navega para a tela de login
           />
           <WelcomeButton
-            title="Sou novo na empresa"
+            title="Quero cadastrar minha empresa"
             backgroundColor="#e0e0e0"
             textColor="#2E3A43"
             onPress={() => navigation.navigate('Register')} // Navega para a tela de cadastro
           />
-          <WelcomeLink
+          {/* <WelcomeLink
             title="Traga a sua empresa para o Is.sues"
             onPress={handleCompanyIssues}
-          />
+          /> */}
         </View>
       </View>
     </SafeAreaView>

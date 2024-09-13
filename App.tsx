@@ -2,14 +2,21 @@ import React from 'react';
 import AppNavigator from './src/app/navigation/StackNavigator'; 
 import { AuthProviderContext } from './src/app/contexts/AuthProvider';
 import { IssuesProvider } from './src/app/contexts/IssuesContext'
+import {PaperProvider, useTheme } from 'react-native-paper';
+import theme from './src/styles/theme';
+import { ThemeProvider } from './src/app/contexts/ThemeContext';
+
 
 export default function App () {
+
   return (
-    <AuthProviderContext>
-      <IssuesProvider>
-      <AppNavigator />
-      </IssuesProvider>
-    </AuthProviderContext>
+    <ThemeProvider theme={theme}>
+      <AuthProviderContext>
+        <IssuesProvider>
+        <AppNavigator />
+        </IssuesProvider>
+      </AuthProviderContext>
+    </ThemeProvider>
   );
 }//;
 
