@@ -6,10 +6,11 @@ import { FontAwesome5 } from '@expo/vector-icons';
 
 interface HeaderCompanyProps {
   name: string;
-  description: string
+  description: string;
+  onPress: () => void;
 }
 
-const Header: React.FC<HeaderCompanyProps> = ({name, description}) => {
+const Header: React.FC<HeaderCompanyProps> = ({name, description, onPress}) => {
     const { signOut, user } = useAuth();
   return (
     <View style={styles.container}>
@@ -20,7 +21,7 @@ const Header: React.FC<HeaderCompanyProps> = ({name, description}) => {
       
       
       
-      <Pressable style={{}}>
+      <Pressable onPress={onPress}>
         <FontAwesome5 name="edit" size={24} color="black" />
       </Pressable>
     </View>
