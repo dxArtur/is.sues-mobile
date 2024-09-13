@@ -3,18 +3,29 @@ import api from "./apiClient"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-export const getCompanyName = async (departmentId:string): Promise<string> =>{
+export const getCompanyByDep = async (departmentId:string): Promise<CompanyDto> =>{
     try {
         const token = await AsyncStorage.getItem('@token');
-        const response = await api.get(`/company/${departmentId}`,
+        const departament = await api.get(`/departments/${departmentId}`,
         {
             headers: {
                 Authorization: `Bearer: ${token}`
             }
         }
+
     )
-    const departmentName = response.data.name
-    return departmentName
+
+    const response = await api.get(`/company/${departament.data.companyId}`,
+        {
+            headers: {
+                Authorization: `Bearer: ${token}`
+            }
+        }
+
+    )
+
+    const company:CompanyDto = response.data
+    return company
 } catch (error) {
     throw error
 }
@@ -31,7 +42,6 @@ export const getCompany= async (companyId:string): Promise<CompanyDto> =>{
         }
     )
     const company = response.data
-    console.log(company)
     return company
 } catch (error) {
     throw error

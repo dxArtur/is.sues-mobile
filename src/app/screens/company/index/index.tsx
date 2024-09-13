@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   infoSection: { 
     flexDirection: 'row',
-    backgroundColor: '#f5f5f5',
+    //backgroundColor: '#f5f5f5',
     
   },
   infoText: {
