@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAuth } from '../hooks/useAuth';
 import HomeScreen from '../screens/home';
 import ProfileScreen from '../screens/profile';
@@ -9,24 +9,36 @@ import SigninScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import WelcomeScreen from '../screens/welcome';
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
-import verifyAdmin from '@/src/api/apiUser';
 
 
-const Stack = createNativeStackNavigator()
-const Tab = createBottomTabNavigator()
 
-/*type RootStackParamList = {
-  Welcome: undefined;
-  Login: undefined;
-  Register: undefined;
-  Home: undefined;
-  Profile: { userId: string };
-};*/
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+/* 
+// Rotas Privadas com navegação empilhada
+const HomeStack: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="CriarEmpresa" component={HomeScreen} />
+      <Stack.Screen name="BuscarEmpresas" component={HomeScreen} />
+      <Stack.Screen name="DetalhesDaEmpresa" component={HomeScreen} />
+      <Stack.Screen name="EditarEmpresa" component={HomeScreen} />
+      
+    </Stack.Navigator>
+  );
+};
 
+const ProfileStack: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      
+    </Stack.Navigator>
+  );
+}; */
 
-//export type AppNavigationProp = NativeStackNavigationProp<RootStackParamList>;
-
-// Rotas Privadas
+// Rotas Privadas com navegação por abas
 const AppStack: React.FC = () => {
   
     
@@ -97,31 +109,20 @@ const AppStack: React.FC = () => {
 // Rotas Públicas
 const AuthStack: React.FC = () => {
   return (
-    <Stack.Navigator initialRouteName='Welcome' screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Login" component={SigninScreen} />
+    <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
+      <Stack.Screen name="Login" component={SigninScreen} />
       <Stack.Screen name="Register" component={SignupScreen} />
-      <Stack.Screen name="AppStack" component={AppStack} />
     </Stack.Navigator>
   );
 };
 
-//const AppNavigator: React.FC = () => {
-export default function AppNavigator () {//
+// Definindo qual Stack exibir
+export default function AppNavigator() {
   const { tokenState } = useAuth();
-
-  /*return (
-      <NavigationContainer>
-        {user ? <AppStack /> : <AuthStack />}
-      </NavigationContainer>
-  );*/
   return (
     <NavigationContainer>
-      {
-        !!tokenState ? <AppStack /> : <AuthStack />
-      }
+      {!!tokenState ? <AppStack /> : <AuthStack />}
     </NavigationContainer>
   );
-}//;
-
-//export default AppNavigator;
+}
