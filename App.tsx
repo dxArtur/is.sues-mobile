@@ -4,6 +4,7 @@ import AppNavigator from './src/app/navigation/StackNavigator';
 import { AuthProviderContext } from './src/app/contexts/AuthProvider';
 import { IssuesProvider } from './src/app/contexts/IssuesContext'
 import { CompanyProvider } from './src/app/contexts/CompanyContext';
+import { DepartmentProvider } from './src/app/contexts/DepartmentContext';
 
 export default function App () {
   const [fontsLoaded, error] = useFonts({
@@ -22,9 +23,11 @@ export default function App () {
   return (
     <AuthProviderContext>
       <CompanyProvider>
-        <IssuesProvider>
-          <AppNavigator />
-        </IssuesProvider>
+        <DepartmentProvider>
+          <IssuesProvider>
+            <AppNavigator />
+          </IssuesProvider>
+        </DepartmentProvider>
       </CompanyProvider>
     </AuthProviderContext>
   );

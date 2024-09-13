@@ -12,6 +12,7 @@ import CriarEmpresa from '../screens/company/create'; // Tela de criação de em
 import BuscarEmpresas from '../screens/company/search';
 import DetalhesDaEmpresaDescrio from '../screens/company/detail';
 import EditarEmpresa from '../screens/company/edit';
+import CriarDepartamento from '../screens/department/create';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,6 +26,7 @@ const HomeStack: React.FC = () => {
       <Stack.Screen name="BuscarEmpresas" component={BuscarEmpresas} />
       <Stack.Screen name="DetalhesDaEmpresa" component={DetalhesDaEmpresaDescrio} />
       <Stack.Screen name="EditarEmpresa" component={EditarEmpresa} />
+      <Stack.Screen name="CriarDepartamento" component={CriarDepartamento} />
       {/* Adicione outras rotas do Stack aqui */}
     </Stack.Navigator>
   );

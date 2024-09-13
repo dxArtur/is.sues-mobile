@@ -11,6 +11,7 @@ export declare global {
       BuscarEmpresas: undefined;
       DetalhesDaEmpresa: { id: string };
       EditarEmpresa: { id: string };
+      CriarDepartment: undefined;
       Profile: { userId: string };
     }
   }
