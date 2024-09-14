@@ -7,7 +7,7 @@ export declare global {
       Login: undefined;
       Register: undefined;
       Home: undefined;
-      CriarEmpresa: undefined;
+      CriarEmpresa: { headid: string };
       BuscarEmpresas: undefined;
       DetalhesDaEmpresa: { id: string };
       EditarEmpresa: { id: string };

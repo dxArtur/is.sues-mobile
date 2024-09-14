@@ -19,58 +19,82 @@ import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/ve
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// Rotas Privadas com navegação empilhada
+// Stack para a aba Home
 const HomeStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="CriarEmpresa" component={CriarEmpresa} />
       <Stack.Screen name="BuscarEmpresas" component={BuscarEmpresas} />
       <Stack.Screen name="DetalhesDaEmpresa" component={DetalhesDaEmpresaDescrio} />
       <Stack.Screen name="EditarEmpresa" component={EditarEmpresa} />
       <Stack.Screen name="CriarDepartamento" component={CriarDepartamento} />
-      {/* Adicione outras rotas do Stack aqui */}
     </Stack.Navigator>
   );
 };
 
+// Stack para a aba Empresa
+const CompanyStack: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="BuscarEmpresas" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="company" component={CompanyScreen} />
+    </Stack.Navigator>
+  );
+};
+
+// Stack para a aba de criar issues
+const CreateIssueStack: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="newIssue" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="newIssue" component={ProfileScreen} />
+    </Stack.Navigator>
+  );
+};
+
+// Stack para a aba de issues do usuário
+const MyIssuesStack: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="MyIssues" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MyIssues" component={ProfileScreen} />
+    </Stack.Navigator>
+  );
+};
+
+// Stack para a aba Perfil
 const ProfileStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      
     </Stack.Navigator>
   );
 };
 
-// Rotas Privadas com navegação por abas
+// Definição do AppStack com abas e suas stacks
 const AppStack: React.FC = () => {
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#003366', // Cor do ícone e texto da aba ativa
-        tabBarInactiveTintColor: '#8e8e8e', // Cor do ícone e texto da aba inativa
+        tabBarActiveTintColor: '#003366', // Cor da aba ativa
+        tabBarInactiveTintColor: '#8e8e8e', // Cor da aba inativa
         tabBarStyle: {
-          backgroundColor: '#ffffff', // Cor de fundo da barra de abas
-          borderTopWidth: 0, // Remover a borda superior para um design mais limpo
+          backgroundColor: '#ffffff',
+          borderTopWidth: 0,
           elevation: 0,
-          marginTop: 6,
-          // Remover a sombra para um estilo plano
         },
         tabBarLabelStyle: {
           textAlign: 'center',
-          fontSize: 12, // Tamanho da fonte dos rótulos
-          fontWeight: '400', // Peso da fonte
-          marginBottom: 4, // Espaço abaixo do texto
+          fontSize: 12,
+          fontWeight: '400',
+          marginBottom: 4,
         },
         tabBarIconStyle: {
-          marginBottom: 0, // Espaço abaixo do ícone
+          marginBottom: 0,
         },
       }}
-
     >
-      <Tab.Screen name="Home" component={HomeScreen}
+      <Tab.Screen
+        name="HomeStack"
+        component={HomeStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="home" size={24} color={color} />
@@ -78,7 +102,9 @@ const AppStack: React.FC = () => {
           tabBarLabel: 'Home',
         }}
       />
-      <Tab.Screen name="company" component={CompanyScreen}
+      <Tab.Screen
+        name="CompanyStack"
+        component={CompanyStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="building" size={22} color={color} />
@@ -87,24 +113,28 @@ const AppStack: React.FC = () => {
         }}
       />
       <Tab.Screen
-        name="newIssue"
-        component={ProfileScreen}
+        name="CreateIssueStack"
+        component={CreateIssueStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="plus-square-o" size={24} color={color} />
           ),
-          tabBarLabel: 'Criar issues',
+          tabBarLabel: 'Criar Issues',
         }}
       />
-      <Tab.Screen name="MyIssues" component={ProfileScreen}
+      <Tab.Screen
+        name="MyIssuesStack"
+        component={MyIssuesStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="tasks" size={24} color={color} />
           ),
-          tabBarLabel: 'Minhas issues',
+          tabBarLabel: 'Minhas Issues',
         }}
       />
-      <Tab.Screen name="Profile" component={ProfileScreen}
+      <Tab.Screen
+        name="ProfileStack"
+        component={ProfileStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" size={24} color={color} />
@@ -123,6 +153,7 @@ const AuthStack: React.FC = () => {
       <Stack.Screen name="Welcome" component={WelcomeScreen} />
       <Stack.Screen name="Login" component={SigninScreen} />
       <Stack.Screen name="Register" component={SignupScreen} />
+      <Stack.Screen name="CriarEmpresa" component={CriarEmpresa} />
     </Stack.Navigator>
   );
 };
