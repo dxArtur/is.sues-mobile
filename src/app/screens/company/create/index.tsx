@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { View, Alert, Text, TouchableOpacity } from 'react-native';
+import { useRoute, RouteProp, useNavigation, StackActions, CommonActions } from '@react-navigation/native';
 import { Image } from 'expo-image';
-import { useNavigation } from '@react-navigation/native';
 import TextInput1 from "@/src/components/company/TextInput1";
 import Modal2 from '@/src/components/company/Modal2';
 import Button1 from "@/src/components/company/Button1";
 import { useCompany } from '@/src/app/hooks/useCompany';
 import styles from "./styles";
 import { CompanyDto } from '@/src/dtos/CompanyDTO';
+
+type CriarEmpresaRouteProp = RouteProp<ReactNavigation.RootParamList, 'CriarEmpresa'>;
 
 const CriarEmpresa = () => {
   const [name, setName] = useState('');
@@ -17,23 +19,35 @@ const CriarEmpresa = () => {
   const [longitude, setLongitude] = useState('');
   const [description, setDescription] = useState('');
 
+  const route = useRoute<CriarEmpresaRouteProp>();
+  const { headid } = route.params;
+
   const { createCompany } = useCompany(); 
   const navigation = useNavigation(); // Hook de navegação
 
+  // Função para criar a empresa
   const handleCreateCompany = async () => {
+    // Cria o objeto CompanyDto com os dados da empresa e o headid
     const companyData: CompanyDto = {
       name,
       email,
       password,
+      headid: headid, // Adiciona o headid ao objeto da empresa
       ...(latitude ? { latitude: parseFloat(latitude) } : {}),
       ...(longitude ? { longitude: parseFloat(longitude) } : {}),
-      ...(description ? { description } : {})
+      ...(description ? { description } : {}),
     };
 
     try {
       await createCompany(companyData);
       Alert.alert('Sucesso', 'Empresa criada com sucesso!');
-      navigation.navigate('BuscarEmpresas'); // Redireciona para a página de Buscar Empresas
+      // Limpa o histórico de navegação e redireciona para a tela de Welcome
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'Welcome' }],
+        })
+      );
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao criar a empresa');
       console.error(error);
@@ -43,16 +57,6 @@ const CriarEmpresa = () => {
   return (
     <View style={styles.criarEmpresa}>
       <View style={[styles.modal, styles.modalFlexBox]}>
-        {/* <View style={styles.appBar}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              style={styles.component1Icon}
-              contentFit="cover"
-              source={require("@/src/assets/images/component-1.png")} // Essa é a seta
-            />
-          </TouchableOpacity>
-          <Text style={styles.jobDetails}>Criar Empresa</Text>
-        </View> */}
         <Modal2
           jobDetails="Criar Empresa"
           component1={require("@/src/assets/images/component-11.png")}

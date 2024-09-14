@@ -8,7 +8,7 @@ interface AuthContextData {
   user: UsersDto | null;
   isAuthenticated: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (name: string, occupation: string, email: string, password: string, adm: boolean) => Promise<void>;
+  signUp: (name: string, occupation: string, email: string, password: string, adm: boolean) => Promise<UsersDto | void>; 
   signOut: () => void;
 }
 
@@ -74,7 +74,11 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
         adm: isAdmin,
       });
 
-      if (response.status !== 200) {
+      if (response.status === 200) {
+        const createdUser: UsersDto = response.data; // Captura o usuário criado
+        console.log(response.data);
+        return createdUser; // Retorna o usuário para uso posterior
+      } else {
         console.log("Response status:", response.status);
         console.log("Response data:", response.data);
         throw new Error('Erro ao se registrar. Tente novamente.');

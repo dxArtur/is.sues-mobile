@@ -32,6 +32,7 @@ export const CompanyProvider: React.FC<{ children: ReactNode }> = ({ children })
     try {
       const response = await api.post('/company/new', companyData);
       setCompanies([...companies, response.data]); // Adicionar nova empresa ao estado
+      console.log(response.data);
       Alert.alert('Sucesso', 'Empresa criada com sucesso!');
     } catch (error) {
       console.error('Erro ao criar empresa:', error);

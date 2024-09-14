@@ -38,6 +38,9 @@ export default function Home() {
   const handleSearchCompany = () => {
     navigation.navigate('BuscarEmpresas');
   };
+  const handleCreateDepartment = () => {
+    navigation.navigate('CriarDepartamento');
+  }; 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -68,6 +71,7 @@ export default function Home() {
       {/* Botão para testar a navegação para a criação de empresas */}
       <Button title="Criar Empresa" onPress={handleCreateCompany} />
       <Button title="Buscar Empresa" onPress={handleSearchCompany} />
+      <Button title="Criar Departamento" onPress={handleCreateDepartment} />
     </SafeAreaView>
   );
 }

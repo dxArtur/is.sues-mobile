@@ -1,8 +1,9 @@
 export interface DepartmentDto {
-    id: string;
+    id?: string;
     name: string;
     companyId: string;
-    issues?: String[]|null;
-    labels?: String[]|null;
-    users?: String[]|null;
+    issues?: string[] | null;
+    labels?: string[] | null;
+    users?: string[] | null;
   }
+

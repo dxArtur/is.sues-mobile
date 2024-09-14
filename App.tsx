@@ -8,6 +8,7 @@ import theme from './src/styles/theme';
 import { ThemeProvider } from './src/app/contexts/ThemeContext';
 
 import { CompanyProvider } from './src/app/contexts/CompanyContext';
+import { DepartmentProvider } from './src/app/contexts/DepartmentContext';
 
 export default function App () {
 
@@ -27,9 +28,11 @@ export default function App () {
   return (
     <AuthProviderContext>
       <CompanyProvider>
-        <IssuesProvider>
-          <AppNavigator />
-        </IssuesProvider>
+        <DepartmentProvider>
+          <IssuesProvider>
+            <AppNavigator />
+          </IssuesProvider>
+        </DepartmentProvider>
       </CompanyProvider>
     </AuthProviderContext>
   );

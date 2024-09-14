@@ -10,6 +10,7 @@ import OccupationInput from '@/src/components/input/OccupationInput';
 import SignupButton from '@/src/components/Button/SignupButton';
 import Checkbox from '@/src/components/common/Checkbox';
 import AuthButton from '@/src/components/Button/AuthButton';
+import { useNavigation } from '@react-navigation/native';
 
 
 const SignupScreen: React.FC = () => {
@@ -23,7 +24,8 @@ const SignupScreen: React.FC = () => {
 
     const handleCheckboxPress = () => {
         setIsAdmin(!isAdmin)
-      };
+    };
+    const navigation = useNavigation();
 
 
 const handleSignup = async () => {
@@ -32,7 +34,11 @@ const handleSignup = async () => {
       return;
     }
     try {
-      await signUp(name, occupation, email, password, isAdmin);
+      const user = await signUp(name, occupation, email, password, isAdmin);
+      if (user?.id) {
+        // Redireciona para a tela de criar empresa, passando o userId como headId
+        navigation.navigate('CriarEmpresa', { headid: user.id });
+      }     
     } catch (error) {
         console.log(error);
         Alert.alert("Erro", "Não foi possível cadastrar o usuário");
