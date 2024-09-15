@@ -13,15 +13,17 @@ type RootStackParamList = {
     IssueDetails: { issue: Issue };
   };
   
-  type IssueDetailsRouteProp = RouteProp<RootStackParamList, 'IssueDetails'>;
   
-  type Props = {
-    route: IssueDetailsRouteProp;
-  };
+type IssueDetailsRouteProp = RouteProp<RootStackParamList, 'IssueDetails'>;
+
+type Props = {
+  route: IssueDetailsRouteProp;
+};
+
   
-  const IssueDetails  = ({ route }) => {
+  const IssueDetails  = ({ route }:Props) => {
     const [authorName, setAuthorName] = useState<string>('Carregando...');
-    const { issue:issue } = route.params;
+    const { issue } = route.params;
 
     useEffect(() => {
         async function fetchUserName() {
@@ -33,18 +35,29 @@ type RootStackParamList = {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{flexDirection:'row', gap: 10, alignContent:'flex-start' , marginTop:32}}>
-            <Pressable  >
-                <Text >
-                    action
-                </Text>
-            </Pressable>
-            <Pressable>
-                <Text >
-                    action
-                </Text>
-            </Pressable>
-            </View>
+            {issue.status ? (
+                <View style={styles.actionIssue}>
+                    <Pressable style={styles.doneIssue} onPress={()=>{}}  >
+                        <Text style={[styles.buttonText]}>
+                            Concluir issue
+                        </Text>
+                    </Pressable>
+                    <Pressable style={styles.dropIssue} onPress={()=>{}}  >
+                        <Text style={styles.buttonText}>
+                            Abandonar issue
+                        </Text>
+                    </Pressable>
+                </View>
+            ) : (
+                <View style={styles.actionIssue}>
+                    <Pressable style={styles.button} onPress={()=>{}}  >
+                        <Text style={styles.buttonText}>
+                            Assumir issue
+                        </Text>
+                    </Pressable>
+                </View>
+            )}
+            
             <View style={styles.issue}>
             <Text >
             aberta em {issue.createdAt}
@@ -103,6 +116,13 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'gray',
       },
+      actionIssue: {
+        flexDirection:'row',
+        gap: 10,
+        alignContent:'flex-start',
+        marginTop:32,
+        margin:8
+    },
       titleIssueContainer: {
         margin: 4,
         gap: 8,
@@ -150,5 +170,40 @@ const styles = StyleSheet.create({
         backgroundColor:'#a5d6a7',
         fontWeight:'bold',
         borderRadius:10
-      }
+      },
+
+      button: {
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        marginVertical: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colors.primary
+      },
+      buttonText: {
+        fontWeight: 'bold',
+        fontSize: 14,
+        color: colors.Secondary
+      },
+
+      dropIssue: {
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        marginVertical: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor:'red'
+      },
+
+      doneIssue: {
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        marginVertical: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor:'green'
+      },
 })

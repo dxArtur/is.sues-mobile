@@ -39,25 +39,33 @@ export default function CompanyIndex() {
     navigation.navigate('VisualizarEmpresa'); // Navega para a tela de visualização de empresa
   };
 
+  const handleCreateCompany = () => {
+    navigation.navigate('CriarEmpresa'); // Navega para a tela de criação de empresa
+  };
+
+  const handleSearchCompany = () => {
+    navigation.navigate('BuscarEmpresas');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
         
-        <View style={[{ flexDirection: 'row', padding: 10,justifyContent:'space-between' }]}>
-          <Pressable style={{backgroundColor:colors.backgroundSecundary}}>
-            <MaterialIcons style={{}} name="maps-home-work" size={40} color="gray" />
+        <View style={styles.actions}>
+          <Pressable style={[styles.actionButton]} onPress={handleCreateCompany}>
+            <MaterialIcons style={{}} name="maps-home-work" size={32} color="gray" />
             <View style={{flexDirection:'row', alignItems:'center',}}>
-              <Text style={styles.titleSectionName}>criar</Text>
-              <Text style={styles.titleSectionNameStatus}> empresa</Text>
+              <Text style={styles.actionName}>criar</Text>
+              <Text style={[styles.actionName, {fontWeight:'bold'}]}> empresa</Text>
             </View>
           </Pressable>
-          <Pressable style={{alignItems:'center', backgroundColor:colors.backgroundSecundary, borderBottomWidth:2, borderRadius:5, borderColor: colors.borderPrincipal}}>
-            <MaterialIcons style={{}} name="search" size={40} color="gray" />
+          <Pressable style={[styles.actionButton]}  onPress={handleSearchCompany}>
+            <MaterialIcons style={{}} name="search" size={32} color="gray" />
               <View style={{flexDirection:'row', alignItems:'center',}}>
-                <Text style={styles.titleSectionName}>pesquisar</Text>
-                <Text style={styles.titleSectionNameStatus}> empresa</Text>
+                <Text style={styles.actionName}>pesquisar</Text>
+                <Text style={[styles.actionName, {fontWeight:'bold'}]}> empresa</Text>
               </View>
-        </Pressable>
-      </View>
+          </Pressable>
+        </View>
 
       {company ? (
         
@@ -74,7 +82,7 @@ export default function CompanyIndex() {
         </View>
             <View style={styles.infoSection}>
                 <FontAwesome5 style={{marginLeft:15}} name="user-tie" size={24} color="gray" />
-                <Text style={[styles.infoText, {fontWeight:'bold'}]}>{company.headId}</Text>
+                <Text style={[styles.infoText, {fontWeight:'bold'}]}>{company.headid}</Text>
             </View>
         </View>
       ) : (
@@ -101,10 +109,16 @@ const styles = StyleSheet.create({
 
     
   container: {
+    flexDirection:'column',
     padding: 24,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.backgroundPrincipal,
     justifyContent: 'center',
     gap: 6
+  },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin:6,
   },
   section: {
     flexDirection: 'column',
@@ -137,6 +151,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
+
+  actionName: {
+    color: '#808080',
+    fontWeight: 'light',
+    fontSize:14
+  },
+
+  actionButton: {
+    flexDirection: 'row',
+    alignItems:'center',
+    backgroundColor: colors.backgroundSecundary,
+    borderBottomWidth:2,
+    borderBottomColor: colors.borderPrincipal,
+    borderRadius:5,
+    gap:10,
+    margin:4,
+    padding:6
+  },
+
 
   titleSectionName: {
     color: '#808080',
