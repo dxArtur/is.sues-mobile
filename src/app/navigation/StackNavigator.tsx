@@ -33,10 +33,19 @@ const HomeStack: React.FC = () => {
 };
 
 // Stack para a aba Empresa
-const CompanyStack: React.FC = () => {
+/*const CompanyStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="BuscarEmpresas" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="company" component={CompanyScreen} />
+    </Stack.Navigator>
+  );
+};*/
+const CompanyStack: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="DetalhesDaEmpresa" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="DetalhesDaEmpresa" component={DetalhesDaEmpresaDescrio} />
+      <Stack.Screen name="EditarEmpresa" component={EditarEmpresa} />
+      <Stack.Screen name="CriarDepartamento" component={CriarDepartamento} />
     </Stack.Navigator>
   );
 };
