@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   section: {
     flexDirection: 'column',
     gap: 10,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#fff', //'#f8f8f8',
     padding: 4,
     paddingLeft: 10,
     borderRadius: 5,

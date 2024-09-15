@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, Pressable } from 'react-native';
 import { useAuth } from '../../../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native'; // Hook de navegação
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -8,6 +8,7 @@ import { getCompanyDepartment } from '@/src/api/department';
 import { getCompany } from '@/src/api/apiCompany';
 import { CompanyDto } from '@/src/dtos/CompanyDTO';
 import HeaderCompany from '@/src/components/common/HeaderCompany';
+import { colors } from '@/src/styles/colors';
 
 export default function CompanyIndex() {
   const { user } = useAuth();
@@ -40,14 +41,32 @@ export default function CompanyIndex() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <HeaderCompany
+        
+        <View style={[{ flexDirection: 'row', padding: 10,justifyContent:'space-between' }]}>
+          <Pressable style={{backgroundColor:colors.backgroundSecundary}}>
+            <MaterialIcons style={{}} name="maps-home-work" size={40} color="gray" />
+            <View style={{flexDirection:'row', alignItems:'center',}}>
+              <Text style={styles.titleSectionName}>criar</Text>
+              <Text style={styles.titleSectionNameStatus}> empresa</Text>
+            </View>
+          </Pressable>
+          <Pressable style={{alignItems:'center', backgroundColor:colors.backgroundSecundary, borderBottomWidth:2, borderRadius:5, borderColor: colors.borderPrincipal}}>
+            <MaterialIcons style={{}} name="search" size={40} color="gray" />
+              <View style={{flexDirection:'row', alignItems:'center',}}>
+                <Text style={styles.titleSectionName}>pesquisar</Text>
+                <Text style={styles.titleSectionNameStatus}> empresa</Text>
+              </View>
+        </Pressable>
+      </View>
+
+      {company ? (
+        
+        <View style={styles.section}>
+          <HeaderCompany
             name={company?.name!}
             description = {company?.description!}
             onPress={handleEditCompany}
         />
-
-      {company ? (
-        <View style={styles.section}>
         <View style={styles.infoSection}>
           <Text style={styles.titleSectionName}>{'principal'}</Text>
           <Text style={[styles.titleSectionName, {fontWeight:'bold'}]}>{' responsável'}</Text>
@@ -124,7 +143,12 @@ const styles = StyleSheet.create({
     fontWeight: 'light',
     fontSize:16
   },
-  
+   
+  titleSectionNameStatus: {
+    color: '#808080',
+    fontWeight: 'bold',
+    fontSize:16,
+  },
   
   
   loadingText: {

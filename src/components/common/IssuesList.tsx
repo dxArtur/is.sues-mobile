@@ -2,6 +2,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import React from 'react';
 import { Issue } from '@/src/dtos/IssueDTO';
 import IssueItem from './Issue';
+import { colors } from '@/src/styles/colors';
 
 
 interface IssuesListProps {
@@ -25,7 +26,7 @@ const style = StyleSheet .create({
         flex: 1,
         backgroundColor: '#f5f5f5',
         borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
+        borderBottomColor: colors.borderPrincipal,
     },
     title: {
         fontSize:18,

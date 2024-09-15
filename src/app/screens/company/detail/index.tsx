@@ -9,6 +9,7 @@ import JobDetail from "@/src/components/company/JobDetail";
 import Button1 from "@/src/components/company/Button1";
 import styles from "./styles";
 import { CompanyDto } from "@/src/dtos/CompanyDTO";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // Tipagem para a rota
 type DetalhesDaEmpresaRouteProp = RouteProp<ReactNavigation.RootParamList, 'DetalhesDaEmpresa'>;
@@ -43,7 +44,7 @@ const DetalhesDaEmpresaDescrio = () => {
   const showMap = company.latitude && company.longitude;
 
   return (
-    <View style={styles.detalhesDaEmpresaDescri}>
+    <SafeAreaView style={styles.detalhesDaEmpresaDescri}>
       <Modal2
         jobDetails="Detalhes da Empresa"
         component1={require("@/src/assets/images/component-11.png")}
@@ -108,7 +109,7 @@ const DetalhesDaEmpresaDescrio = () => {
           </Text>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

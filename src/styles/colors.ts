@@ -9,8 +9,10 @@
 
     
 export const colors = {
-  light: {
-    primary: "#98ff98",
-    Secondary: "#003366"
-  }
+    primary: "#98ff98", //verde limao
+    Secondary: "#003366", //azul marinho
+    backgroundPrincipal: "#f5f5f5", //white
+    backgroundSecundary: "#f8f8f8", //white
+    borderPrincipal: '#ddd'
+  
 }

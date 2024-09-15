@@ -3,6 +3,9 @@ import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Octicons } from '@expo/vector-icons';
 import { getAuthorIssue } from '@/src/api/issues';
 import { Issue } from '@/src/dtos/IssueDTO';
+import { colors } from '@/src/styles/colors';
+import { useNavigation } from '@react-navigation/native'; 
+
 
 interface IssueItemProps {
   item: Issue;
@@ -10,6 +13,8 @@ interface IssueItemProps {
 
 const IssueItem: React.FC<IssueItemProps> = ({ item }) => {
   const [authorName, setAuthorName] = useState<string>('Carregando...');
+  const navigation = useNavigation();
+
 
   useEffect(() => {
     async function fetchUserName() {
@@ -19,8 +24,12 @@ const IssueItem: React.FC<IssueItemProps> = ({ item }) => {
     fetchUserName();
   }, [item.authorId]);
 
+  const handleViewIssue = () => {
+    navigation.navigate('DetailIssues', { issue: item }); // Navega para a tela de criação de empresa
+  };
+
   return (
-    <Pressable onPress={() => { }}>
+    <Pressable onPress={handleViewIssue}>
       <View style={styles.issue}>
         <Text style={styles.issueInfo}>
           aberta em {item.createdAt}
@@ -48,12 +57,12 @@ const IssueItem: React.FC<IssueItemProps> = ({ item }) => {
 
 const styles = StyleSheet.create({
   issue: {
-    backgroundColor: '#f2f2f2',
+    backgroundColor: colors.backgroundSecundary, //'#f8f8f8', //'#f2f2f2',
     padding: 4,
     paddingLeft: 10,
     borderRadius: 5,
     borderBottomWidth: 2,
-    borderBottomColor: '#ddd',
+    borderBottomColor: colors.borderPrincipal, //'#ddd',
   },
   issueTitle: {
     fontSize: 16,
@@ -75,7 +84,7 @@ const styles = StyleSheet.create({
     marginLeft: 2,
     marginRight: 6,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: colors.borderPrincipal,
     flex: 1,
   },
   footerIssue: {

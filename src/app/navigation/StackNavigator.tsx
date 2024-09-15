@@ -8,6 +8,7 @@ import ProfileScreen from '../screens/profile';
 import SigninScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import WelcomeScreen from '../screens/welcome';
+import IssueDetailScreen from '../screens/issues/detail';
 import CriarEmpresa from '../screens/company/create'; // Tela de criação de empresa
 import BuscarEmpresas from '../screens/company/search';
 import DetalhesDaEmpresaDescrio from '../screens/company/detail';
@@ -15,6 +16,10 @@ import EditarEmpresa from '../screens/company/edit';
 import CriarDepartamento from '../screens/department/create';
 import CompanyScreen from '../screens/company/index' 
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
+
+
+
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,6 +33,7 @@ const HomeStack: React.FC = () => {
       <Stack.Screen name="DetalhesDaEmpresa" component={DetalhesDaEmpresaDescrio} />
       <Stack.Screen name="EditarEmpresa" component={EditarEmpresa} />
       <Stack.Screen name="CriarDepartamento" component={CriarDepartamento} />
+      <Stack.Screen name="DetailIssues" component={IssueDetailScreen} />
     </Stack.Navigator>
   );
 };
@@ -59,6 +65,14 @@ const MyIssuesStack: React.FC = () => {
   );
 };
 
+/* const DetailIssueStack: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="DetailIssues" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="DetailIssues" component={IssueDetailScreen} />
+    </Stack.Navigator>
+  );
+}; */
+
 // Stack para a aba Perfil
 const ProfileStack: React.FC = () => {
   return (
@@ -80,6 +94,7 @@ const AppStack: React.FC = () => {
           backgroundColor: '#ffffff',
           borderTopWidth: 0,
           elevation: 0,
+          marginTop:8,
         },
         tabBarLabelStyle: {
           textAlign: 'center',
