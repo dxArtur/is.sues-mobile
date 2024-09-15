@@ -5,27 +5,87 @@ import { useAuth } from '../../hooks/useAuth';
 import SigninButton from '@/src/components/Button/SigninButton';
 import EmailInput from '@/src/components/input/EmailInput';
 import PasswordInput from '@/src/components/input/PasswordInput';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, CommonActions } from '@react-navigation/native';
 import AuthButton from '@/src/components/Button/AuthButton';
 
 const SigninScreen: React.FC = () => {
   const { colors } = useTheme()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { signIn } = useAuth(); //Hook de autenticação
+  const { signIn, signOut,  user, companyId } = useAuth(); //Hook de autenticação
   const navigation = useNavigation(); // Hook de navegação
 
+  // const handleSignin = async () => {
+  //   try {
+  //     const { userData, companyId } = await signIn(email, password); // Executa o login e aguarda o retorno
+  //     console.log("Resultado do signin:", userData);
+      
+  //     // Verifica se o usuário foi retornado corretamente
+  //     if (!userData?.id) {
+  //       throw new Error("Usuário não encontrado após login");
+  //     }
+  
+  //     console.log("ID do usuário:", userData.id);
+  //     console.log("companyId:", companyId);
+  //     console.log("departmentId:", userData.departmentId);
+  
+  //     // Verifica se o usuário está associado a uma empresa ou departamento
+  //     if (companyId) {
+  //       // Se o usuário é chefe de uma empresa
+  //       navigation.navigate('Home'); // Navega para a página Home
+  //     } else if (userData.departmentId) {
+  //       // Se o usuário está associado a um departamento
+  //       navigation.navigate('Home'); // Também navega para Home
+  //     } else {
+  //       // Caso o usuário não tenha empresa ou departamento, redireciona para criar empresa
+  //       console.log("Usuário não tem empresa nem departamento. Redirecionando para CriarEmpresa.");
+  //       navigation.navigate('CriarEmpresa', { headid: userData.id }); // Passa o headid para a criação da empresa
+  //     }
+  //   } catch (error) {
+  //     Alert.alert("Erro", "Credenciais inválidas");
+  //     console.log("Erro ao fazer login:", error);
+  //     console.log("Credenciais:", { email, password });
+  //   }
+  // }; 
   const handleSignin = async () => {
     try {
-      await signIn(email, password);
-      navigation.navigate('Home'); // Navegação após login bem-sucedido
+      const { userData, companyId } = await signIn(email, password); // Executa o login e aguarda o retorno
+  
+      console.log("Resultado do signin:", userData);
+      console.log("ID do usuário:", userData.id);
+      console.log("companyId:", companyId);
+      console.log("departmentId:", userData.departmentId);
+
+      const userid = userData.id;
+  
+      // Verifica se o usuário está associado a uma empresa ou departamento
+      if (companyId && companyId !== null) {
+        // Se o usuário é chefe de uma empresa
+        console.log("Usuário é chefe de uma empresa. Redirecionando para Home.");
+        navigation.navigate('Home'); // Navega para a página Home
+      } else if (userData.departmentId && userData.departmentId !== null) {
+        // Se o usuário está associado a um departamento
+        console.log("Usuário está associado a um departamento. Redirecionando para Home.");
+        navigation.navigate('Home'); // Também navega para Home
+      } else {
+        // Caso o usuário não tenha empresa ou departamento, redireciona para criar empresa
+        console.log("Usuário não tem empresa nem departamento. Redirecionando para CriarEmpresa.");
+        // Passa o headid para a criação da empresa
+        signOut();
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: 'CriarEmpresa', params: { headid: userid } }],
+          })
+        );
+      }
     } catch (error) {
       Alert.alert("Erro", "Credenciais inválidas");
-      console.log(error);
-      console.log(email);
-      console.log(password);
+      console.log("Erro ao fazer login:", error);
+      console.log("Credenciais:", { email, password });
     }
   };
+   
 
   return (
     <SafeAreaView style={styles.container}>
