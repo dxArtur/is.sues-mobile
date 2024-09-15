@@ -159,11 +159,47 @@ const AuthStack: React.FC = () => {
 };
 
 // Definindo qual Stack exibir
-export default function AppNavigator() {
+/*export default function AppNavigator() {
   const { tokenState } = useAuth();
   return (
     <NavigationContainer>
       {!!tokenState ? <AppStack /> : <AuthStack />}
+    </NavigationContainer>
+  );
+}*/
+// Definindo qual Stack exibir
+export default function AppNavigator() {
+  const { user, tokenState, companyId } = useAuth();
+
+  if (!tokenState) {
+    // Se o usuário não estiver autenticado, exibe a AuthStack
+    return (
+      <NavigationContainer>
+        <AuthStack />
+      </NavigationContainer>
+    );
+  }
+
+  // Verifica se o usuário tem `companyId` ou `departmentId`
+  if (!companyId && !user?.departmentId) {
+    // Redireciona para a tela de criar empresa se o usuário não estiver associado a uma empresa ou departamento
+    return (
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen 
+            name="CriarEmpresa" 
+            component={CriarEmpresa} 
+            initialParams={{ headid: user?.id }} // Passa o headid aqui
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
+  // Se o usuário está autenticado e tem `companyId` ou `departmentId`, exibe o AppStack
+  return (
+    <NavigationContainer>
+      <AppStack />
     </NavigationContainer>
   );
 }
