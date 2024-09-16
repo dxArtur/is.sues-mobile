@@ -16,6 +16,7 @@ import EditarEmpresa from '../screens/company/edit';
 import CriarDepartamento from '../screens/department/create';
 import CompanyScreen from '../screens/company/index' 
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
+import MyIssuesScreen from '../screens/issues/myIssues';
 
 
 
@@ -60,7 +61,7 @@ const CreateIssueStack: React.FC = () => {
 const MyIssuesStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="MyIssues" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="MyIssues" component={ProfileScreen} />
+      <Stack.Screen name="MyIssues" component={MyIssuesScreen} />
     </Stack.Navigator>
   );
 };

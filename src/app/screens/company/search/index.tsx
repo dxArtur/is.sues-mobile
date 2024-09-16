@@ -7,6 +7,7 @@ import FrameComponent from "@/src/components/company/FrameComponent"; // Compone
 import Button1 from "@/src/components/company/Button1";
 import Modal2 from "@/src/components/company/Modal2";
 import styles from "./styles";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const BuscarEmpresas = () => {
   const { companies, loadCompanies } = useCompany(); // Hook para acessar as empresas
@@ -43,7 +44,7 @@ const BuscarEmpresas = () => {
   };
 
   return (
-    <View style={styles.buscarEmpresas}>
+    <SafeAreaView style={styles.buscarEmpresas}>
       {/* <View style={styles.appBar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
@@ -106,7 +107,7 @@ const BuscarEmpresas = () => {
           </View>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

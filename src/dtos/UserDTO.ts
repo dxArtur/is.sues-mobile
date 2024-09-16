@@ -1,3 +1,5 @@
+import { Issue } from "./IssueDTO";
+
 export interface UsersDto {
     id?: string;
     name: string;
@@ -7,5 +9,5 @@ export interface UsersDto {
     adm: boolean;
     photo?: string;
     departmentId?: string;
-    issues?: string[];
+    issues?: Issue[];
   }

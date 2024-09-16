@@ -9,9 +9,11 @@ import { getCompany } from '@/src/api/apiCompany';
 import { CompanyDto } from '@/src/dtos/CompanyDTO';
 import HeaderCompany from '@/src/components/common/HeaderCompany';
 import { colors } from '@/src/styles/colors';
+import { CompanyProvider } from '@/src/app/contexts/CompanyContext';
 
 export default function CompanyIndex() {
   const { user } = useAuth();
+  CompanyProvider
   const [company, setCompany] = useState<CompanyDto | null>(null);
   const navigation = useNavigation(); // Hook de navegação
 

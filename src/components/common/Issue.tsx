@@ -101,14 +101,23 @@ const styles = StyleSheet.create({
     fontWeight:'thin',
     color: 'gray',
 },
-  statusInProgress: {},
+  statusInProgress: {
+    padding:4,
+    fontSize:16,
+    color: colors.Secondary,
+    backgroundColor: '#00bcd4',
+    fontWeight:'bold',
+    borderRadius:10,
+    paddingHorizontal:10
+  },
   statusOpen:{
     padding:4,
     fontSize:16,
     color:'#004d40',
     backgroundColor:'#a5d6a7',
     fontWeight:'bold',
-    borderRadius:10
+    borderRadius:10,
+    paddingHorizontal:10
   }
 });
 
