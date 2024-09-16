@@ -143,7 +143,7 @@ const DetalhesDaEmpresaDescrio = () => {
           </Text>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

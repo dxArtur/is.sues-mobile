@@ -3,6 +3,7 @@ export type Issue = {
     title: string;
     description: string;
     status: boolean;
+    isAssigned: boolean;
     authorId: string;
     createdAt: string;
 }
