@@ -73,6 +73,11 @@ const styles = StyleSheet.create({
     height: 812,
     overflow: "hidden",
   },
+  map: {
+    width: '100%',
+    height: 200,
+    marginTop: 5,
+  },
 });
 
 export default styles;

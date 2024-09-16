@@ -9,7 +9,7 @@ export declare global {
       Home: undefined;
       CriarEmpresa: { headid: string };
       BuscarEmpresas: undefined;
-      DetalhesDaEmpresa: { id: string };
+      DetalhesDaEmpresa;
       EditarEmpresa: { id: string };
       CriarDepartment: undefined;
       Profile: { userId: string };
