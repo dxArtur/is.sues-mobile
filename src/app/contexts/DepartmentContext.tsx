@@ -2,6 +2,7 @@ import React, { createContext, useState, ReactNode } from 'react';
 import api from '@/src/api/apiClient';
 import { DepartmentDto } from '@/src/dtos/DepartmentDTO';
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface DepartmentContextData {
   departments: DepartmentDto[];
@@ -20,17 +21,34 @@ export const DepartmentProvider: React.FC<{ children: ReactNode }> = ({ children
   // Carregar todos os departamentos
   const loadDepartments = async () => {
     try {
-      const response = await api.get('/departments/all');
+      const token = await AsyncStorage.getItem('@token'); // Recupera o token do AsyncStorage
+      if (!token) throw new Error("Token não encontrado");
+
+      const response = await api.get('/departments/all', {
+        headers: {
+          Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+        },
+      });
       setDepartments(response.data);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Erro ao carregar departamentos:', error);
+      if (error.response?.status === 401) {
+        Alert.alert('Erro de Autenticação', 'Você precisa estar logado para acessar os departamentos.');
+      }
     }
   };
 
   // Criar um novo departamento
   const createDepartment = async (departmentData: DepartmentDto) => {
     try {
-      const response = await api.post('/departments/new', departmentData);
+      const token = await AsyncStorage.getItem('@token'); // Recupera o token do AsyncStorage
+      if (!token) throw new Error("Token não encontrado");
+
+      const response = await api.post('/departments/new', departmentData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+        },
+      });
       setDepartments([...departments, response.data]);
       Alert.alert('Sucesso', 'Departamento criado com sucesso!');
     } catch (error) {
@@ -38,11 +56,17 @@ export const DepartmentProvider: React.FC<{ children: ReactNode }> = ({ children
       Alert.alert('Erro', 'Não foi possível criar o departamento.');
     }
   };
-
   // Buscar um departamento pelo ID
   const getDepartmentById = async (id: string): Promise<DepartmentDto | undefined> => {
     try {
-      const response = await api.get(`/departments/${id}`);
+      const token = await AsyncStorage.getItem('@token'); // Recupera o token do AsyncStorage
+      if (!token) throw new Error("Token não encontrado");
+
+      const response = await api.get(`/departments/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+        },
+      });
       return response.data;
     } catch (error) {
       console.error(`Erro ao buscar o departamento de ID ${id}:`, error);
@@ -53,7 +77,14 @@ export const DepartmentProvider: React.FC<{ children: ReactNode }> = ({ children
   // Atualizar um departamento
   const updateDepartment = async (id: string, updatedData: Partial<DepartmentDto>) => {
     try {
-      await api.put(`/departments/${id}`, updatedData);
+      const token = await AsyncStorage.getItem('@token'); // Recupera o token do AsyncStorage
+      if (!token) throw new Error("Token não encontrado");
+
+      await api.put(`/departments/${id}`, updatedData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+        },
+      });
       Alert.alert('Sucesso', 'Departamento atualizado com sucesso!');
       await loadDepartments(); // Recarregar a lista de departamentos após a atualização
     } catch (error) {
@@ -65,7 +96,14 @@ export const DepartmentProvider: React.FC<{ children: ReactNode }> = ({ children
   // Deletar um departamento
   const deleteDepartment = async (id: string) => {
     try {
-      await api.delete(`/departments/${id}`);
+      const token = await AsyncStorage.getItem('@token'); // Recupera o token do AsyncStorage
+      if (!token) throw new Error("Token não encontrado");
+
+      await api.delete(`/departments/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Inclui o token no cabeçalho da requisição
+        },
+      });
       setDepartments(departments.filter(dept => dept.id !== id));
       Alert.alert('Sucesso', 'Departamento deletado com sucesso!');
     } catch (error) {
