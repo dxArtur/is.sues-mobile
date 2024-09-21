@@ -9,12 +9,13 @@ import SigninScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import WelcomeScreen from '../screens/welcome';
 import IssueDetailScreen from '../screens/issues/detail';
-import CriarEmpresa from '../screens/company/create'; // Tela de criação de empresa
-import BuscarEmpresas from '../screens/company/search';
+import CriarEmpresa from '../screens/company/create';
 import DetalhesDaEmpresaDescrio from '../screens/company/detail';
+import CompanyManagementScreen from '../screens/company/manage';
 import EditarEmpresa from '../screens/company/edit';
 import CriarDepartamento from '../screens/department/create';
-import CompanyScreen from '../screens/company/index' 
+import EditarDepartamentos from '../screens/department/edit';
+import DeletarDepartamentos from '../screens/department/delete';
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import MyIssuesScreen from '../screens/issues/myIssues';
 
@@ -30,7 +31,6 @@ const HomeStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="BuscarEmpresas" component={BuscarEmpresas} />
       <Stack.Screen name="DetalhesDaEmpresa" component={DetalhesDaEmpresaDescrio} />
       <Stack.Screen name="EditarEmpresa" component={EditarEmpresa} />
       <Stack.Screen name="CriarDepartamento" component={CriarDepartamento} />
@@ -38,21 +38,15 @@ const HomeStack: React.FC = () => {
     </Stack.Navigator>
   );
 };
-
-// Stack para a aba Empresa
-/*const CompanyStack: React.FC = () => {
-  return (
-    <Stack.Navigator initialRouteName="BuscarEmpresas" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="company" component={CompanyScreen} />
-    </Stack.Navigator>
-  );
-};*/
 const CompanyStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="DetalhesDaEmpresa" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="DetalhesDaEmpresa" component={DetalhesDaEmpresaDescrio} />
       <Stack.Screen name="EditarEmpresa" component={EditarEmpresa} />
       <Stack.Screen name="CriarDepartamento" component={CriarDepartamento} />
+      <Stack.Screen name="EditarDepartamentos" component={EditarDepartamentos} />
+      <Stack.Screen name="DeletarDepartamentos" component={DeletarDepartamentos} />
+      <Stack.Screen name="ManageCompany" component={CompanyManagementScreen} />
     </Stack.Navigator>
   );
 };

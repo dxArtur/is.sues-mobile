@@ -1,20 +1,36 @@
-import React, { useState } from "react";
-import { Text, View, Alert, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Text, View, Alert, SafeAreaView } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { useDepartment } from "@/src/app/hooks/useDepartment"; // Hook de departamento
 import TextInput1 from "@/src/components/company/TextInput1";
 import Button1 from "@/src/components/company/Button1";
+import Modal2 from "@/src/components/company/Modal2";
 import styles from "./styles";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CriarDepartamento = () => {
   const [name, setName] = useState('');
-  const [companyId, setCompanyId] = useState(''); // Input para receber o ID da empresa
+  const [companyId, setCompanyId] = useState('');
 
   const { createDepartment } = useDepartment();
   const navigation = useNavigation();
 
+  useEffect(() => {
+    const fetchCompanyId = async () => {
+      const storedCompanyId = await AsyncStorage.getItem('@companyId');
+      if (storedCompanyId) {
+        setCompanyId(storedCompanyId);
+      } else {
+        Alert.alert('Erro', 'ID da empresa não encontrado.');
+      }
+    };
+    fetchCompanyId();
+  }, []);
+
   const handleCreateDepartment = async () => {
+    console.log(name);
+    console.log(companyId);
     if (!name || !companyId) {
       Alert.alert('Erro', 'O nome do departamento e o ID da empresa são obrigatórios.');
       return;
@@ -24,42 +40,50 @@ const CriarDepartamento = () => {
 
     try {
       await createDepartment(departmentData);
+      console.log(departmentData);
       navigation.goBack();
     } catch (error) {
       console.error(error);
+      Alert.alert('Erro', 'Ocorreu um erro ao criar o departamento.');
     }
   };
 
   return (
-    <View style={styles.criarDepartamento}>
-      <View style={styles.modal}>
-        <View style={styles.appBar}>
-          <Text style={styles.jobDetails}>Criar Departamento</Text>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Image
-              style={styles.component1Icon}
-              contentFit="cover"
-              source={require("@/src/assets/images/component-1.png")}
-            />
-          </TouchableOpacity>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.screenContainer}>
+        <Modal2
+            jobDetails="Criar Departamento"
+            component1={require("@/src/assets/images/component-11.png")}
+            showSearchBar={false}
+            component1IconLeft={93}
+            cardano2={require("@/src/assets/images/cardano-21.png")}
+            showFrameView={false}
+          />
+        <View style={styles.container}>
+        <View style={styles.form}>
+        <Text style={styles.label}>Nome do departamento</Text>
+          <TextInput1
+            value={name}
+            onChangeText={setName}
+            text="Nome do Departamento"
+            textInputWidth="unset"
+            textInputAlignSelf="stretch"
+            textInputBackgroundColor="#f5f5f5"
+            textInputBorderColor="#765ac6"
+            textInputPaddingVertical="unset"
+          />
+          <Button1
+            text="Criar Departamento"
+            onPress={handleCreateDepartment}
+            buttonPosition="relative"
+            buttonTop={10}
+            buttonWidth="90%"
+            buttonAlignSelf="center"
+          />
         </View>
-
-        <TextInput1
-          value={name}
-          onChangeText={setName}
-          text="Nome do Departamento"
-        />
-        <TextInput1
-          value={companyId}
-          onChangeText={setCompanyId}
-          text="ID da Empresa"
-        />
-        <Button1
-          text="Criar"
-          onPress={handleCreateDepartment}
-        />
+        </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

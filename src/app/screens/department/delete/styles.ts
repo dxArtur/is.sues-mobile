@@ -1,0 +1,32 @@
+import { StyleSheet } from "react-native";
+import { FontSize, FontFamily, Color, Border, Padding, Gap } from "@/GlobalStyles";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Color.base1,
+    padding: Padding.p_5xl,
+    paddingTop: Padding.p_45xl, // Para não ficar atrás da status bar
+  },
+  title: {
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.plusJakartaSansBold,
+    color: Color.colorMidnightblue,
+    textAlign: "center",
+    marginBottom: Gap.gap_md,
+    marginTop: Gap.gap_lg,
+  },
+  departmentItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: Padding.p_sm,
+    borderBottomWidth: 1,
+    borderBottomColor: '#d9d9d9',
+  },
+  departmentText: {
+    fontSize: FontSize.size_base,
+  },
+});
+
+export default styles;

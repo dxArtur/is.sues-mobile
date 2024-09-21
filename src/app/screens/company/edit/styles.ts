@@ -2,40 +2,39 @@ import { StyleSheet } from "react-native";
 import { Gap, FontFamily, FontSize, Padding, Color } from "@/GlobalStyles";
 
 const styles = StyleSheet.create({
-  informaOsDetalhes: {
-    fontSize: FontSize.bodyTextSReg_size,
-    letterSpacing: -0.2,
-    fontFamily: FontFamily.bodyTextSReg,
-    color: Color.text20LightBg,
-    textAlign: "left",
-    alignSelf: "stretch",
+  screenContainer: {
+    flexGrow: 1,
+    paddingBottom: 20,
+    paddingTop: 10,
+    backgroundColor: Color.base3,
   },
-  heading: {
-    width: 375,
-    paddingHorizontal: Padding.p_5xl,
-    paddingVertical: 0,
-  },
-  input: {
-    gap: Gap.gap_md,
-    alignSelf: "stretch",
+  label: {
+    fontSize: FontSize.size_base,
+    fontFamily: FontFamily.plusJakartaSansMedium,
+    color: Color.colorMidnightblue,
+    marginBottom: 5,
+    marginTop: 10,
   },
   form: {
-    alignSelf: "stretch",
+    marginHorizontal: Padding.p_5xl,
   },
   container: {
-    top: 154,
-    left: 0,
-    alignItems: "center",
-    gap: Gap.gap_lg,
-    position: "absolute",
-  },
-  editarEmpresa: {
-    backgroundColor: Color.base1,
+    top:50,
+    paddingTop: 20,
     flex: 1,
-    width: "100%",
-    height: 812,
-    overflow: "hidden",
+    justifyContent: 'space-between',
+  },
+  mapContainer: {
+    marginTop: 10,
+    marginBottom: 20,
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
   },
 });
 
-export default styles;  
+export default styles;

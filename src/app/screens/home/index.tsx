@@ -30,14 +30,6 @@ export default function Home() {
     loadIssues();
   }, [user?.departmentId, loadIssues]);
 
-  // Função para navegar para a tela de criação de empresa
-  const handleSearchCompany = () => {
-    navigation.navigate('BuscarEmpresas');
-  };
-  const handleCreateDepartment = () => {
-    navigation.navigate('CriarDepartamento');
-  }; 
-
   return (
     <SafeAreaView style={styles.container}>
       <Header userName={user?.name!} userPhoto={''} />
@@ -63,10 +55,6 @@ export default function Home() {
         </View>
         <IssuesList issues={issues} />
       </View>
-
-      {/* Botão para testar a navegação para a criação de empresas */}
-      <Button title="Buscar Empresa" onPress={handleSearchCompany} />
-      <Button title="Criar Departamento" onPress={handleCreateDepartment} />
     </SafeAreaView>
   );
 }
