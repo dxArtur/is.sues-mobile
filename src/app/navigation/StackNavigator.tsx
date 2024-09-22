@@ -16,6 +16,13 @@ import EditarEmpresa from '../screens/company/edit';
 import CriarDepartamento from '../screens/department/create';
 import EditarDepartamentos from '../screens/department/edit';
 import DeletarDepartamentos from '../screens/department/delete';
+import CriarFuncionario from '../screens/usermanager/create';
+import EditarFuncionario from '../screens/usermanager/edit';
+import SelecionarFuncionarioParaEditar from '../screens/usermanager/select';
+import DeletarFuncionario from '../screens/usermanager/delete';
+import CriarLabel from '../screens/label/create';
+import EditarLabel from '../screens/label/edit';
+import DeletarLabel from '../screens/label/delete';
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import MyIssuesScreen from '../screens/issues/myIssues';
 
@@ -46,6 +53,13 @@ const CompanyStack: React.FC = () => {
       <Stack.Screen name="CriarDepartamento" component={CriarDepartamento} />
       <Stack.Screen name="EditarDepartamentos" component={EditarDepartamentos} />
       <Stack.Screen name="DeletarDepartamentos" component={DeletarDepartamentos} />
+      <Stack.Screen name="CriarFuncionario" component={CriarFuncionario} />
+      <Stack.Screen name="EditarFuncionario" component={EditarFuncionario} />
+      <Stack.Screen name="SelecionarFuncionarioParaEditar" component={SelecionarFuncionarioParaEditar} />
+      <Stack.Screen name="DeletarFuncionario" component={DeletarFuncionario} />
+      <Stack.Screen name="CriarLabel" component={CriarLabel} />
+      <Stack.Screen name="EditarLabel" component={EditarLabel} />
+      <Stack.Screen name="DeletarLabel" component={DeletarLabel} />
       <Stack.Screen name="ManageCompany" component={CompanyManagementScreen} />
     </Stack.Navigator>
   );

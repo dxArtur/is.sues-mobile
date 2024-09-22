@@ -9,6 +9,7 @@ import { ThemeProvider } from './src/app/contexts/ThemeContext';
 
 import { CompanyProvider } from './src/app/contexts/CompanyContext';
 import { DepartmentProvider } from './src/app/contexts/DepartmentContext';
+import { LabelProvider } from './src/app/contexts/LabelContext';
 
 export default function App () {
 
@@ -30,7 +31,9 @@ export default function App () {
       <CompanyProvider>
         <DepartmentProvider>
           <IssuesProvider>
-            <AppNavigator />
+            <LabelProvider>
+              <AppNavigator />
+            </LabelProvider>
           </IssuesProvider>
         </DepartmentProvider>
       </CompanyProvider>

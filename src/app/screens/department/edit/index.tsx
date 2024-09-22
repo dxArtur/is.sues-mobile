@@ -47,14 +47,12 @@ const EditarDepartamentos = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
+        <View style={styles.container}>
       <Modal2
         jobDetails="Editar Departamentos"
         component1={require("@/src/assets/images/component-11.png")}
-        showSearchBar={false}
         component1IconLeft={93}
-        cardano2={require("@/src/assets/images/cardano-22.png")}
-        showFrameView={false}
       />
       
       <Text style={styles.title}>Selecione um Departamento para Editar</Text>
@@ -97,6 +95,7 @@ const EditarDepartamentos = () => {
           />
         </View>
       )}
+      </View>
     </SafeAreaView>
   );
 };

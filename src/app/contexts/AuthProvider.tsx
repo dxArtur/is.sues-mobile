@@ -9,8 +9,11 @@ interface AuthContextData {
   isAuthenticated: boolean;
   companyId: string | null;
   signIn: (email: string, password: string) => Promise<{ userData: UsersDto, companyId: string | null }>;
-  signUp: (name: string, occupation: string, email: string, password: string, adm: boolean) => Promise<UsersDto | void>; 
+  signUp: (name: string, occupation: string, email: string, password: string, adm: boolean, departmentId: string | null) => Promise<UsersDto | void>; 
   signOut: () => void;
+  updateUser: (id: string, name: string, occupation: string, email: string, departmentId: string) => Promise<void>; 
+  getEmployeeById: (id: string) => Promise<UsersDto | null>;
+  deleteEmployee: (id: string) => Promise<void>;
 }
 
 
@@ -95,7 +98,7 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
     return { userData: {} as UsersDto, companyId: null };
   }  
 
-  async function signUp(name: string, occupation: string, email: string, password: string, isAdmin: boolean) {
+  async function signUp(name: string, occupation: string, email: string, password: string, isAdmin: boolean, departmentId: string | null) {
     try {
       const response = await api.post('/users', {
         name,
@@ -103,11 +106,11 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
         email,
         password,
         adm: isAdmin,
+        departmentId,
       });
 
       if (response.status === 200) {
         const createdUser: UsersDto = response.data; // Captura o usuário criado
-        console.log(response.data);
         return createdUser; // Retorna o usuário para uso posterior
       } else {
         console.log("Response status:", response.status);
@@ -125,6 +128,44 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
     }
   }
 
+  const updateUser = async (id: string, name: string, occupation: string, email: string, departmentId: string) => {
+    try {
+      // Envia a atualização para a API
+      await api.put(`/users/${id}`, {
+        name,
+        occupation,
+        email,
+        departmentId,
+      });
+
+  
+    } catch (error: any) {
+      console.error("Erro ao atualizar o funcionário:", error.response ? error.response.data : error.message);
+      throw new Error('Ocorreu um erro ao atualizar o funcionário. Tente novamente.');
+    }
+  };
+  const getEmployeeById = async (id: string): Promise<UsersDto | null> => {
+    try {
+      const response = await api.get(`/users/${id}`);
+      if (response.status === 200) {
+        return response.data as UsersDto;
+      }
+      return null;
+    } catch (error) {
+      console.error(`Erro ao buscar o funcionário com ID ${id}:`, error);
+      return null;
+    }
+  };
+
+  const deleteEmployee = async (id: string): Promise<void> => {
+    try {
+      await api.delete(`/users/${id}`); // Chamada para deletar o funcionário pela API
+    } catch (error: any) {
+      console.error(`Erro ao deletar o funcionário com ID ${id}:`, error.response ? error.response.data : error.message);
+      throw new Error('Erro ao deletar o funcionário. Tente novamente.');
+    }
+  };
+
   function signOut() {
     AsyncStorage.removeItem('@token');
     AsyncStorage.removeItem('@user');
@@ -135,7 +176,7 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, tokenState, companyId, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, tokenState, companyId, signIn, signUp, signOut, updateUser, getEmployeeById, deleteEmployee }}>
       {!loading && children}
     </AuthContext.Provider>
   );

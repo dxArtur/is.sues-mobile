@@ -15,6 +15,13 @@ export declare global {
       CriarDepartment: undefined;
       EditarDepartamentos;
       DeletarDepartamentos;
+      CriarFuncionario;
+      EditarFuncionario: { id: string };
+      SelecionarFuncionarioParaEditar;
+      DeletarFuncionario;
+      CriarLabel;
+      EditarLabel;
+      DeletarLabel;
       Profile: { userId: string };
     }
   }

@@ -29,18 +29,14 @@ const CriarDepartamento = () => {
   }, []);
 
   const handleCreateDepartment = async () => {
-    console.log(name);
-    console.log(companyId);
     if (!name || !companyId) {
       Alert.alert('Erro', 'O nome do departamento e o ID da empresa são obrigatórios.');
       return;
     }
-
-    const departmentData = { name, companyId };
+    const departmentData = { name, companyId, users: [] };
 
     try {
       await createDepartment(departmentData);
-      console.log(departmentData);
       navigation.goBack();
     } catch (error) {
       console.error(error);
@@ -54,10 +50,7 @@ const CriarDepartamento = () => {
         <Modal2
             jobDetails="Criar Departamento"
             component1={require("@/src/assets/images/component-11.png")}
-            showSearchBar={false}
             component1IconLeft={93}
-            cardano2={require("@/src/assets/images/cardano-21.png")}
-            showFrameView={false}
           />
         <View style={styles.container}>
         <View style={styles.form}>
