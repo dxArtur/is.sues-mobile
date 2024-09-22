@@ -94,10 +94,7 @@ const CriarEmpresa = () => {
         <Modal2
           jobDetails="Criar Empresa"
           component1={require("@/src/assets/images/component-11.png")}
-          showSearchBar={false}
           component1IconLeft={93}
-          cardano2={require("@/src/assets/images/cardano-22.png")}
-          showFrameView={false}
         />
         <View style={[styles.container, styles.modalFlexBox]}>
           <View style={styles.heading}>

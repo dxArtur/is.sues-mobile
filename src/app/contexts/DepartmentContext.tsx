@@ -11,6 +11,7 @@ interface DepartmentContextData {
   getDepartmentById: (id: string) => Promise<DepartmentDto | undefined>;
   updateDepartment: (id: string, updatedData: Partial<DepartmentDto>) => Promise<void>;
   deleteDepartment: (id: string) => Promise<void>;
+  getUsersFromDepartment: (id: string) => Promise<void>;
 }
 
 export const DepartmentContext = createContext<DepartmentContextData>({} as DepartmentContextData);
@@ -35,6 +36,15 @@ export const DepartmentProvider: React.FC<{ children: ReactNode }> = ({ children
       if (error.response?.status === 401) {
         Alert.alert('Erro de Autenticação', 'Você precisa estar logado para acessar os departamentos.');
       }
+    }
+  };
+  const getUsersFromDepartment = async (departmentId: string) => {
+    try {
+      const response = await api.get(`/departments/${departmentId}/users`);
+      return response.data.users; // Retorna os usuários do departamento
+    } catch (error) {
+      console.error("Erro ao buscar os usuários do departamento:", error);
+      throw error;
     }
   };
 
@@ -111,7 +121,7 @@ export const DepartmentProvider: React.FC<{ children: ReactNode }> = ({ children
   };
 
   return (
-    <DepartmentContext.Provider value={{ departments, createDepartment, loadDepartments, getDepartmentById, updateDepartment, deleteDepartment }}>
+    <DepartmentContext.Provider value={{ departments, createDepartment, loadDepartments, getDepartmentById, updateDepartment, deleteDepartment, getUsersFromDepartment }}>
       {children}
     </DepartmentContext.Provider>
   );

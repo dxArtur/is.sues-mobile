@@ -39,14 +39,12 @@ const DeletarDepartamentos = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
       <Modal2
         jobDetails="Deletar Departamentos"
         component1={require("@/src/assets/images/component-11.png")}
-        showSearchBar={false}
         component1IconLeft={93}
-        cardano2={require("@/src/assets/images/cardano-22.png")}
-        showFrameView={false}
       />
       
       <Text style={styles.title}>Selecione um Departamento para Deletar</Text>
@@ -59,6 +57,7 @@ const DeletarDepartamentos = () => {
             <Text style={styles.departmentText}>{item.name}</Text>
             <Button1
               text="Deletar"
+              buttonBackgroundColor="#D91143"
               onPress={() => {
                 if (item.id) {
                   handleDeleteDepartment(item.id);
@@ -70,6 +69,7 @@ const DeletarDepartamentos = () => {
           </View>
         )}
       />
+      </View>
     </SafeAreaView>
   );
 };

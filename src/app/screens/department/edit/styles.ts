@@ -3,10 +3,13 @@ import { FontSize, FontFamily, Color, Border, Padding, Gap } from "@/GlobalStyle
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: Color.base1,
     padding: Padding.p_5xl,
-    paddingTop: Padding.p_45xl, // Adicione padding para não ficar atrás da status bar
+    paddingTop: Padding.p_45xl, // Espaço para a status bar
+    
+    flexGrow: 1,
+    paddingBottom: 20,
+    //paddingTop: 10,
+    backgroundColor: Color.base3,
   },
   title: {
     fontSize: FontSize.size_lg,

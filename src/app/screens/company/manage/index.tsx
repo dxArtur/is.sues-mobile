@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, ScrollView, SafeAreaView, Alert } from "react-native";
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useCompany } from "@/src/app/hooks/useCompany";
 import { useDepartment } from "@/src/app/hooks/useDepartment";
 import styles from "./styles";
@@ -36,7 +37,6 @@ const CompanyManagementScreen = ( ) => {
           await loadCompanies();
         }
         const foundCompany = companies.find(c => c.id === companyId);
-        console.log(foundCompany);
         if (foundCompany) {
           setCompany(foundCompany || null);
           if (foundCompany.headid === userData.id) {
@@ -80,6 +80,48 @@ const CompanyManagementScreen = ( ) => {
       Alert.alert("Erro", "ID da empresa não encontrado.");
     }
   };   
+  const handleCreateUser = () => {
+    if (company && company.id) {
+      navigation.navigate('CriarFuncionario');
+    } else {
+      Alert.alert("Erro", "ID da empresa não encontrado.");
+    }
+  };  
+  const handleSelectUser = () => {
+    if (company && company.id) {
+      navigation.navigate('SelecionarFuncionarioParaEditar');
+    } else {
+      Alert.alert("Erro", "ID da empresa não encontrado.");
+    }
+  }; 
+  const handleDeleteUser = () => {
+    if (company && company.id) {
+      navigation.navigate('DeletarFuncionario');
+    } else {
+      Alert.alert("Erro", "ID da empresa não encontrado.");
+    }
+  }; 
+  const handleCreateLabel = () => {
+    if (company && company.id) {
+      navigation.navigate('CriarLabel');
+    } else {
+      Alert.alert("Erro", "ID da empresa não encontrado.");
+    }
+  };  
+  const handleEditLabel = () => {
+    if (company && company.id) {
+      navigation.navigate('EditarLabel');
+    } else {
+      Alert.alert("Erro", "ID da empresa não encontrado.");
+    }
+  }; 
+  const handleDeleteLabel = () => {
+    if (company && company.id) {
+      navigation.navigate('DeletarLabel');
+    } else {
+      Alert.alert("Erro", "ID da empresa não encontrado.");
+    }
+  }; 
   // Carregar dados da empresa ao montar o componente
   useEffect(() => {
     loadCompanyData();
@@ -101,10 +143,7 @@ const CompanyManagementScreen = ( ) => {
             <Modal2
                 jobDetails="Gerenciamento"
                 component1={require("@/src/assets/images/component-11.png")}
-                showSearchBar={false}
                 component1IconLeft={93}
-                cardano2={require("@/src/assets/images/cardano-21.png")}
-                showFrameView={false}
             />
             {/* Mensagem de boas-vindas */}
             <Text style={styles.welcomeText}>
@@ -170,7 +209,7 @@ const CompanyManagementScreen = ( ) => {
                     <Text style={styles.sectionTitle}><FontAwesome name="user" size={20}/> Funcionários</Text>
                     <Button1
                     text="Criar Funcionário"
-                    onPress={() => console.log("Criar Funcionário")}
+                    onPress={handleCreateUser}
                     buttonWidth="100%"
                     buttonAlignSelf="center"
                     buttonBackgroundColor={Color.primaryRegular}
@@ -181,7 +220,7 @@ const CompanyManagementScreen = ( ) => {
                     />
                     <Button1
                     text="Editar Funcionário"
-                    onPress={() => console.log("Editar Funcionário")}
+                    onPress={handleSelectUser}
                     buttonWidth="100%"
                     buttonAlignSelf="center"
                     buttonBackgroundColor={Color.primaryRegular}
@@ -192,7 +231,44 @@ const CompanyManagementScreen = ( ) => {
                     />
                     <Button1
                     text="Apagar Funcionário"
-                    onPress={() => console.log("Apagar Funcionário")}
+                    onPress={handleDeleteUser}
+                    buttonWidth="100%"
+                    buttonAlignSelf="center"
+                    buttonBackgroundColor={Color.primaryRegular}
+                    marginVertical={Gap.gap_sm}
+                    paddingHorizontal={Padding.p_xs}
+                    paddingVertical={Padding.p_xs}
+                    borderRadius={Border.br_base}
+                    />
+                </View>
+                {/* Seção Label */}
+                <View style={styles.sectionContainer}>
+                    <Text style={styles.sectionTitle}><MaterialIcons name="label" size={20} /> Label</Text>
+                    <Button1
+                    text="Criar Label"
+                    onPress={handleCreateLabel}
+                    buttonWidth="100%"
+                    buttonAlignSelf="center"
+                    buttonBackgroundColor={Color.primaryRegular}
+                    marginVertical={Gap.gap_sm}
+                    paddingHorizontal={Padding.p_xs}
+                    paddingVertical={Padding.p_xs}
+                    borderRadius={Border.br_base}
+                    />
+                    <Button1
+                    text="Editar Label"
+                    onPress={handleEditLabel}
+                    buttonWidth="100%"
+                    buttonAlignSelf="center"
+                    buttonBackgroundColor={Color.primaryRegular}
+                    marginVertical={Gap.gap_sm}
+                    paddingHorizontal={Padding.p_xs}
+                    paddingVertical={Padding.p_xs}
+                    borderRadius={Border.br_base}
+                    />
+                    <Button1
+                    text="Deletar Label"
+                    onPress={handleDeleteLabel}
                     buttonWidth="100%"
                     buttonAlignSelf="center"
                     buttonBackgroundColor={Color.primaryRegular}
