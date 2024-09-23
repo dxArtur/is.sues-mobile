@@ -44,7 +44,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header userName={user?.name!} userPhoto={''} />
+      <Header userName={user?.name!} userPhoto={user?.photo!} />
       <View style={[styles.section, { flexDirection: 'row', padding: 10 }]}>
         <MaterialIcons style={styles.departmentIcon} name="maps-home-work" size={40} color="white" />
         <View>
