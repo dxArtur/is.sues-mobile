@@ -2,16 +2,11 @@ import React, { useMemo } from "react";
 import { Text, StyleSheet, View, ImageSourcePropType, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
-import FrameComponent1 from "./FrameComponent1";
 import { FontSize, FontFamily, Color, Border, Padding, Gap } from "@/GlobalStyles";
 
 export type Modal2Type = {
   jobDetails?: string;
   component1?: ImageSourcePropType;
-  showSearchBar?: boolean;
-  cardano2?: ImageSourcePropType;
-  showFrameView?: boolean;
-
   /** Style props */
   component1IconLeft?: number | string;
 };
@@ -21,7 +16,7 @@ const getStyleValue = (key: string, value: string | number | undefined) => {
   return { [key]: value === "unset" ? undefined : value };
 };
 
-const Modal2 = ({ jobDetails, component1, component1IconLeft, cardano2, showFrameView }: Modal2Type) => {
+const Modal2 = ({ jobDetails, component1, component1IconLeft }: Modal2Type) => {
   const navigation = useNavigation(); // Hook para navegação
 
   const jobDetails1Style = useMemo(() => {
@@ -44,7 +39,6 @@ const Modal2 = ({ jobDetails, component1, component1IconLeft, cardano2, showFram
         <Text style={[styles.jobDetails, jobDetails1Style]}>{jobDetails}</Text>
         <View style={[styles.component3, styles.component3Layout]} />
       </View>
-      <FrameComponent1 cardano2={cardano2} showFrameView={showFrameView} />
     </View>
   );
 };

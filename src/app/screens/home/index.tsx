@@ -8,6 +8,7 @@ import IssuesList from '@/src/components/common/IssuesList';
 import { MaterialIcons } from '@expo/vector-icons';
 import { getDepartmentName } from '@/src/api/department';
 import { useNavigation } from '@react-navigation/native'; // Adiciona o hook de navegação
+import { colors } from '@/src/styles/colors';
 
 export default function Home() {
   const { signOut, user } = useAuth();
@@ -29,14 +30,6 @@ export default function Home() {
     fetchDepartmentName();
     loadIssues();
   }, [user?.departmentId, loadIssues]);
-
-  // Função para navegar para a tela de criação de empresa
-  const handleSearchCompany = () => {
-    navigation.navigate('BuscarEmpresas');
-  };
-  const handleCreateDepartment = () => {
-    navigation.navigate('CriarDepartamento');
-  }; 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -63,10 +56,6 @@ export default function Home() {
         </View>
         <IssuesList issues={issues} />
       </View>
-
-      {/* Botão para testar a navegação para a criação de empresas */}
-      <Button title="Buscar Empresa" onPress={handleSearchCompany} />
-      <Button title="Criar Departamento" onPress={handleCreateDepartment} />
     </SafeAreaView>
   );
 }
@@ -75,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 24,
     justifyContent: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.backgroundPrincipal,
     gap: 6,
   },
   section: {

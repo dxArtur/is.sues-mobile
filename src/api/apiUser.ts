@@ -44,14 +44,14 @@ export const getMyIssues = async (userId: string) => {
     const token = await AsyncStorage.getItem('@token');
 
     // Atualizar a issue
-    const response = await api.get<UsersDto>(`/users/${userId}`, {
+    const response = await api.get<Issue>(`/users/${userId}/assigned-issues`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
 
     });
-    const user = response.data
-    return user.issues
+    const myIssues = response.data
+    return myIssues
   } catch (error) {
     
   }

@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import { FontSize, FontFamily, Color, Border, Padding, Gap } from "@/GlobalStyles";
+import { StyleSheet } from 'react-native';
+import { FontSize, FontFamily, Color, Padding, Gap } from '@/GlobalStyles'; // Estilos globais
 
 const styles = StyleSheet.create({
   container: {
@@ -17,16 +17,17 @@ const styles = StyleSheet.create({
     marginBottom: Gap.gap_md,
     marginTop: Gap.gap_lg,
   },
-  departmentItem: {
+  employeeItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: Padding.p_sm,
     borderBottomWidth: 1,
-    borderBottomColor: '#d9d9d9',
+    borderBottomColor: Color.colorGainsboro_200,
   },
-  departmentText: {
+  employeeText: {
     fontSize: FontSize.size_base,
+    color: Color.colorMidnightblue,
   },
 });
 

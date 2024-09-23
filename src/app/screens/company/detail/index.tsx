@@ -10,6 +10,7 @@ import { DepartmentDto } from "@/src/dtos/DepartmentDTO";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
 import { Padding, Border } from "@/GlobalStyles";
+import { useNavigation } from '@react-navigation/native'; // Hook de navegação
 
 const DetalhesDaEmpresaDescrio = () => {
   const { companies, loadCompanies } = useCompany();
@@ -18,7 +19,7 @@ const DetalhesDaEmpresaDescrio = () => {
   const [loading, setLoading] = useState(true);
   const [isHead, setIsHead] = useState(false);
   const [activeTab, setActiveTab] = useState("descricao");
-
+  const navigation = useNavigation(); // Hook de navegação
   // Função para buscar o companyId ou headid do AsyncStorage e carregar a empresa
   const loadCompanyData = async () => {
     try {
@@ -57,7 +58,9 @@ const DetalhesDaEmpresaDescrio = () => {
       setLoading(false);
     }
   };
-
+  const handleManage = () => {
+    navigation.navigate('ManageCompany'); // Navega para a tela de edição de empresa
+  };
   // Carregar dados da empresa ao montar o componente
   useEffect(() => {
     loadCompanyData();
@@ -169,6 +172,7 @@ const DetalhesDaEmpresaDescrio = () => {
       {isHead && (
         <Button1
           text="Gerenciar"
+          onPress={handleManage}
           buttonWidth="100%"
           buttonAlignSelf="center"
         />

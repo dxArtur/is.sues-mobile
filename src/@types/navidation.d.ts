@@ -10,8 +10,18 @@ export declare global {
       CriarEmpresa: { headid: string };
       BuscarEmpresas: undefined;
       DetalhesDaEmpresa;
+      ManageCompany;
       EditarEmpresa: { id: string };
       CriarDepartment: undefined;
+      EditarDepartamentos;
+      DeletarDepartamentos;
+      CriarFuncionario;
+      EditarFuncionario: { id: string };
+      SelecionarFuncionarioParaEditar;
+      DeletarFuncionario;
+      CriarLabel;
+      EditarLabel;
+      DeletarLabel;
       Profile: { userId: string };
     }
   }

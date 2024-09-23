@@ -55,10 +55,6 @@ type Props = {
 
       console.log(updatedIssue.status)
       console.log(updatedIssue.data)
-
-      const response = await assumeIssue(user!, updatedIssue.data)
-
-      console.log(response)
       
       setIssueState(prevState => ({ ...prevState, status: true }));
     } catch (error) {

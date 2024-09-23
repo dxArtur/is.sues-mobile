@@ -14,6 +14,7 @@ const IssuesList: React.FC<IssuesListProps> = ({ issues }) => {
 
     return (
         <FlatList
+            style ={style.container}
             data={issues}
             keyExtractor={(issue) => issue.id}
             renderItem={renderIssues}
@@ -23,14 +24,8 @@ const IssuesList: React.FC<IssuesListProps> = ({ issues }) => {
 
 const style = StyleSheet .create({
     container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
-        borderBottomWidth: 1,
-        borderBottomColor: colors.borderPrincipal,
-    },
-    title: {
-        fontSize:18,
-        fontWeight: 'bold',
+        width:'100%',
+        marginVertical: 6
     }
 })
 

@@ -62,6 +62,8 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 5,
     borderBottomWidth: 2,
+    borderColor: colors.borderPrincipal,
+    borderWidth:1,
     borderBottomColor: colors.borderPrincipal, //'#ddd',
   },
   issueTitle: {

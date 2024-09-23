@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     marginBottom: Gap.gap_md,
     marginTop: Gap.gap_lg,
   },
-  departmentItem: {
+  employeeItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#d9d9d9',
   },
-  departmentText: {
+  employeeText: {
     fontSize: FontSize.size_base,
   },
 });
