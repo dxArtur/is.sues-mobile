@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Alert, Pressable } from 'react-native';
+import { View, Text, Image, Alert, Pressable, SafeAreaView } from 'react-native';
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '@/src/app/hooks/useAuth';
 import { FontAwesome5 } from '@expo/vector-icons';
 import styles from './styles'; 
+import Modal2 from '@/src/components/company/Modal2';
 
 const UpdateProfilePictureScreen: React.FC = () => {
   const { user, updateProfilePicture } = useAuth();
@@ -53,7 +54,13 @@ const UpdateProfilePictureScreen: React.FC = () => {
   };
   
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <Modal2
+          jobDetails="Alterar foto"
+          component1={require("@/src/assets/images/component-11.png")}
+          component1IconLeft={93}
+        />
       <Text style={styles.title}>Atualizar Foto do Perfil</Text>
 
       {selectedImage ? (
@@ -72,6 +79,7 @@ const UpdateProfilePictureScreen: React.FC = () => {
         <Text style={styles.buttonText}>Atualizar Imagem</Text>
       </Pressable>
     </View>
+    </SafeAreaView>
   );
 };
 
