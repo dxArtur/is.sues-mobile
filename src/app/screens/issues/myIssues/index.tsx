@@ -12,11 +12,11 @@ import { View, Button, Text, SafeAreaView, StyleSheet, Pressable } from 'react-n
 
 const MyIssuesScreen = () => {
   const { user } = useAuth();
-  const { myIssues, loadMyIssues } = useIssues ();
+  const { myIssues, loadMyIssues, issues, loadIssues } = useIssues ();
 
-  const issues = myIssues.filter(issue => issue.isAssigned === false)
+  const myOpenIssues = myIssues.filter(issue => issue.isAssigned === false)
 
-  const issuesMadeForMe = myIssues.filter(issue => issue.authorId === user?.id)
+  const issuesMadeForMe = issues.filter(issue => issue.authorId === user?.id)
 
   const myIssuesAssigned = myIssues.filter(issue=> issue.isAssigned === true)
   
@@ -40,7 +40,7 @@ const toggleSection = (section) => {
       <SectionIssue
         title="Issues"
         subtitle="em aberto"
-        issues={issues}
+        issues={myOpenIssues}
         isOpen={isOpen.openIssues}
         toggleSection={() => toggleSection('openIssues')}
       />

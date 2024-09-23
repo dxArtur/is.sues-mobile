@@ -57,6 +57,7 @@ const IssueItem: React.FC<IssueItemProps> = ({ item }) => {
 
 const styles = StyleSheet.create({
   issue: {
+    marginVertical:6,
     backgroundColor: colors.backgroundSecundary, //'#f8f8f8', //'#f2f2f2',
     padding: 4,
     paddingLeft: 10,

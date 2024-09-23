@@ -25,7 +25,7 @@ import EditarLabel from '../screens/label/edit';
 import DeletarLabel from '../screens/label/delete';
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import MyIssuesScreen from '../screens/issues/myIssues';
-
+import CreateIssueScreen from '../screens/issues/create';
 
 
 
@@ -65,17 +65,18 @@ const CompanyStack: React.FC = () => {
   );
 };
 
+
 // Stack para a aba de criar issues
 const CreateIssueStack: React.FC = () => {
   return (
-    <Stack.Navigator initialRouteName="newIssue" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="newIssue" component={ProfileScreen} />
+    <Stack.Navigator initialRouteName="CreateIssue" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="CreateIssue" component={CreateIssueScreen} />
     </Stack.Navigator>
   );
 };
 
 // Stack para a aba de issues do usuário
-const MyIssuesStack: React.FC = () => {
+const IssuesStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="MyIssues" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MyIssues" component={MyIssuesScreen} />
@@ -157,7 +158,7 @@ const AppStack: React.FC = () => {
       />
       <Tab.Screen
         name="MyIssuesStack"
-        component={MyIssuesStack}
+        component={IssuesStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="tasks" size={24} color={color} />

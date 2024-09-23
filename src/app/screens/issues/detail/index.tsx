@@ -9,6 +9,8 @@ import IssueAction from "@/src/components/common/ButtonIssueAction";
 import { assumeIssue } from "@/src/api/apiUser";
 import { useAuth } from "@/src/app/hooks/useAuth";
 import { GoBackArrow } from "@/src/components/common/GoBackArrow";
+import IssueItem from "@/src/components/common/Issue";
+import IssueView from "@/src/components/common/IssueView";
 
 
 
@@ -102,54 +104,12 @@ type Props = {
     return (
         <SafeAreaView style={styles.container}>
           <GoBackArrow />
-            {issueState.status ? (
-                <View style={styles.actionIssue}>
-                  <IssueAction
-                    title="Assinar issue"
-                    onPress={handleAssignIssue}
-                  />
-                  <IssueAction
-                    title="Abandonar issue"
-                    backgroundColor="red"
-                    textColor="white"
-                    onPress={handleDropIssue}
-                  />
-                </View>
-            ) : (
-                <View style={styles.actionIssue}>
-                  <IssueAction
-                    title="Assumir issue"
-                    onPress={handleAssumeIssue}
-                  />
-                </View>
-            )}
+            <IssueView
+              issue={issue}
+            />
+
             
-            <View style={styles.issue}>
-            <Text >
-            aberta em {issue.createdAt}
-            </Text>
-            <View style={styles.titleIssueContainer}>
-            <Octicons name="issue-opened" size={20} color="gray" />
-            <View style={styles.titleContainer}>
-                <Text style={styles.issueTitle}>
-                {issue.title}
-                </Text>
-                
-            </View>
-                
-            </View>
-            <Text style={styles.descriptionContainer}>
-                aberta em {issue.description}
-            </Text>
-            <View style={styles.footerIssue}>
-                <Text style={issueState.status ? styles.statusInProgress : styles.statusOpen}>
-                {issueState.status?'Em progresso':'Aberta'}
-                </Text>
-                <Text style={styles.issueAuthor}>
-                por {authorName}
-                </Text>
-            </View>
-        </View>
+
       </SafeAreaView>
     )
 }
@@ -206,6 +166,7 @@ const styles = StyleSheet.create({
       },
 
       descriptionContainer: {
+        textAlign:"justify",
         backgroundColor: colors.backgroundPrincipal,
         borderRadius:5,
         padding:10,
