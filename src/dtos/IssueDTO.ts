@@ -6,6 +6,7 @@ export type Issue = {
     isAssigned: boolean;
     authorId: string;
     createdAt: string;
+    departmentId?: string;
     assignedUserId?: String | null;
 
 }

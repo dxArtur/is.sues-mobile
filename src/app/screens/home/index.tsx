@@ -9,27 +9,38 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { getDepartmentName } from '@/src/api/department';
 import { useNavigation } from '@react-navigation/native'; // Adiciona o hook de navegação
 import { colors } from '@/src/styles/colors';
+import { useCompany } from '../../hooks/useCompany';
+import { useDepartment } from '../../hooks/useDepartment';
+import { DepartmentDto } from '@/src/dtos/DepartmentDTO';
 
 export default function Home() {
   const { signOut, user } = useAuth();
+  const { getDepartmentById }= useDepartment()
   const { issues, loadIssues } = useIssues();
   const [departmentName, setDepartmentName] = useState<string>('Carregando...');
+  const [department, setDepartment] = useState<DepartmentDto>();
   const navigation = useNavigation(); // Hook de navegação
+
+  const issuesForMyDept = issues.filter(issue => issue.departmentId === user?.departmentId)
 
   const fetchDepartmentName = async () => {
     try {
-      const name = await getDepartmentName(user?.departmentId!);
-      setDepartmentName(name);
+      const dept = await getDepartmentById(user?.departmentId!)
+      if (dept) {
+        setDepartment(dept)
+        setDepartmentName(dept.name)
+      }
     } catch (error) {
-      setDepartmentName('Erro ao carregar');
-      //console.error('Erro ao carregar o nome do departamento:', error);
+      setDepartmentName('Erro ao carregar')
     }
-  };
+  }
+
+  
 
   useEffect(() => {
-    fetchDepartmentName();
+    fetchDepartmentName()
     loadIssues();
-  }, [user?.departmentId, loadIssues]);
+  }, [loadIssues]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,7 +53,7 @@ export default function Home() {
         </View>
       </View>
       <View style={[styles.section, { padding: 10 }]}>
-      <Text style={styles.titleSectionName}>Colaborador na</Text>
+      <Text style={styles.titleSectionName}>Colaborador na {}</Text>
       </View>
       <View style={[styles.section, { padding: 10 }]}>
         <View style={styles.headerSection}>
@@ -54,7 +65,7 @@ export default function Home() {
             <MaterialIcons name="keyboard-arrow-down" size={20} color="gray" />
           </View>
         </View>
-        <IssuesList issues={issues} />
+        <IssuesList issues={issuesForMyDept} />
       </View>
     </SafeAreaView>
   );

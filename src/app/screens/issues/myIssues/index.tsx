@@ -39,14 +39,14 @@ const toggleSection = (section) => {
       <Title color="" text={'Minhas Issues'} />
       <SectionIssue
         title="Issues"
-        subtitle="em aberto"
+        subtitle="para concluir"
         issues={myOpenIssues}
         isOpen={isOpen.openIssues}
         toggleSection={() => toggleSection('openIssues')}
       />
       <SectionIssue
         title="Issues"
-        subtitle="feitas por mim"
+        subtitle="criadas por mim"
         issues={issuesMadeForMe}
         isOpen={isOpen.issuesMadeForMe}
         toggleSection={() => toggleSection('issuesMadeForMe')}

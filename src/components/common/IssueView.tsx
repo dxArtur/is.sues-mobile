@@ -93,10 +93,17 @@ useEffect(() => {
              {issueState.authorId === user?.id ? (
               <View style={styles.actionIssue}>
                   <IssueAction
+                    borderWidth={1}
+                    borderColor={colors.Secondary}
+                    backgroundColor={colors.backgroundSecundary}
                     title="Editar issue"
                     onPress={handleAssignIssue}
                   />
                   <IssueAction
+                    borderWidth={1}
+                    borderColor={'red'}
+                    textColor="red"
+                    backgroundColor={colors.backgroundSecundary}
                     title="Encerrrar issue"
                     onPress={handleAssignIssue}
                   />
@@ -104,19 +111,27 @@ useEffect(() => {
             ): issueState.status ? (
                 <View style={styles.actionIssue}>
                   <IssueAction
+                    borderWidth={1}
+                    borderColor={colors.Secondary}
+                    backgroundColor={colors.backgroundSecundary}
                     title="Assinar issue"
                     onPress={handleAssignIssue}
                   />
                   <IssueAction
+                    borderWidth={1}
+                    borderColor={'red'}
+                    backgroundColor={colors.backgroundSecundary}
                     title="Abandonar issue"
-                    backgroundColor="red"
-                    textColor="white"
+                    textColor="red"
                     onPress={handleDropIssue}
                   />
                 </View>
             ) : (
                 <View style={styles.actionIssue}>
                   <IssueAction
+                    borderWidth={1}
+                    borderColor={colors.Secondary}
+                    backgroundColor={colors.backgroundSecundary}
                     title="Assumir issue"
                     onPress={handleAssumeIssue}
                   />
@@ -275,6 +290,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor:'green'
       },
+      
 })
 
   export default IssueView
