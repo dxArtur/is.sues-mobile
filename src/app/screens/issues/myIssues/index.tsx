@@ -1,3 +1,4 @@
+import { IssuesProvider, useIssues } from '@/src/app/contexts/IssuesContext';
 import { useAuth } from '@/src/app/hooks/useAuth';
 import IssuesList from '@/src/components/common/IssuesList';
 import { Issue } from '@/src/dtos/IssueDTO';
@@ -6,12 +7,15 @@ import { View, Button, Text, SafeAreaView, StyleSheet } from 'react-native';
 
 const MyIssuesScreen = () => {
   const { user } = useAuth();
-  const [myIssues, setMyIssues] = useState<Issue[]| undefined>(user?.issues)
+  const { myIssues, loadMyIssues } = useIssues ();
+  
+//  const [myIssues, setMyIssues] = useState<Issue[]| undefined>(user?.issues)
+
   
   return (
     <SafeAreaView style={styles.container}>
       <Text>Minhas issues</Text>
-        <IssuesList issues={myIssues || []} />
+        <IssuesList issues={myIssues} />
     </SafeAreaView>
   );
 };

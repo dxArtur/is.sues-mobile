@@ -1,17 +1,20 @@
 import { StyleSheet } from "react-native";
 import { FontFamily, FontSize, Border, Color } from "@/GlobalStyles";
+import { colors } from "@/src/styles/colors";
 
 const styles = StyleSheet.create({
   detalhesDaEmpresaDescri: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.backgroundPrincipal, //'#fff',
     padding: 20,
   },
   descriptionSection: {
     marginTop: 20,
     padding: 15,
-    backgroundColor: "#F5F5F5", // Cor de fundo suave
-    borderRadius: Border.br_base,
+    backgroundColor: colors.backgroundSecundary, //"#F5F5F5", // Cor de fundo suave
+    borderRadius: 5, //Border.br_base,
+    borderBottomColor: colors.borderPrincipal,
+    borderBottomWidth:2,
     shadowColor: "#000", // Sombra suave
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

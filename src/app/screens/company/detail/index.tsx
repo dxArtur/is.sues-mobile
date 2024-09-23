@@ -147,7 +147,7 @@ const DetalhesDaEmpresaDescrio = () => {
           buttonWidth="80%"
           paddingHorizontal={Padding.p_sm}
           paddingVertical={Padding.p_sm}
-          borderRadius={Border.br_47xl}
+          borderRadius={5}//Border.br_47xl}
           buttonAlignSelf="center"
         />
         <Button1
@@ -159,7 +159,7 @@ const DetalhesDaEmpresaDescrio = () => {
           buttonAlignSelf="center"
           paddingHorizontal={Padding.p_sm}
           paddingVertical={Padding.p_sm}
-          borderRadius={Border.br_47xl}
+          borderRadius={5}//Border.br_47xl}
         />
     </View>
 

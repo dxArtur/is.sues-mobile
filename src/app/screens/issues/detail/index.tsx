@@ -1,7 +1,7 @@
 import { SafeAreaView, View, StyleSheet, Text, Pressable, Alert} from "react-native";
 import { Octicons } from "@expo/vector-icons";
 import { colors } from "@/src/styles/colors";
-import { Issue } from "@/src/dtos/IssueDTO";
+import { Issue} from "@/src/dtos/IssueDTO";
 import { RouteProp } from "@react-navigation/native";
 import { getAuthorIssue, updateIssue } from "@/src/api/issues";
 import { useState, useEffect } from "react";
@@ -45,8 +45,21 @@ type Props = {
   const handleAssumeIssue = async () => {
     setLoading(true);
     try {
-      const issueUpdated = await assumeIssue(user!, issue, { status: true });
-      console.log(issueUpdated)
+      console.log('log de assume')
+      const updateData = {
+        ...issue,
+        status: true,
+        assignedUserId: user?.id ,
+    };
+      const updatedIssue = await updateIssue( updateData)
+
+      console.log(updatedIssue.status)
+      console.log(updatedIssue.data)
+
+      const response = await assumeIssue(user!, updatedIssue.data)
+
+      console.log(response)
+      
       setIssueState(prevState => ({ ...prevState, status: true }));
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao assumir a issue.');
@@ -71,14 +84,20 @@ type Props = {
 
   const handleDropIssue = async () => {
     setLoading(true);
-    console.log(issue.id)
     try {
-      const updatedIssue = await updateIssue(issue.id, {status:false});
-      console.log(updatedIssue)
+      const updateData = {
+        ...issue,
+        status: false,
+        assignedUserId: null ,
+    };
+      const updatedIssue = await updateIssue( updateData);
+      console.log('log de drop')
+      console.log(updatedIssue.status)
+      console.log(updatedIssue.data)
       setIssueState(prevState => ({ ...prevState, status: false }));
     } catch (error) {
-      console.log(error)
-      Alert.alert('Erro', 'Ocorreu um erro ao assumir a issue.');
+      console.error(error)
+      //Alert.alert('Erro', 'Ocorreu um erro ao abandonar a issue.');
     } finally {
       setLoading(false);
     }

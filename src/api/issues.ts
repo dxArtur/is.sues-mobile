@@ -17,19 +17,20 @@ export const getIssues = async (): Promise<Issue[]> => {
     }
 }
 
-export const updateIssue = async (issueId:string, updateData: Partial<Issue>) =>{
+export const updateIssue = async (updateData: Issue) =>{
     try {
-
         const token = await AsyncStorage.getItem('@token');
-        const response = await api.put<Issue>(`/issues/${issueId}`,  updateData, {
+        const response = await api.put<Issue>(`/issues/${updateData.id}`,  updateData, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
             
         })
-        const issue: Issue = response.data
-        return issue
+       const data = response.data
+       const status = response.status
+        return { status, data}
     } catch (error) {
+        console.error("Erro ao atualizar a issue:", error.response?.data || error.message);
         throw error
     }
 }

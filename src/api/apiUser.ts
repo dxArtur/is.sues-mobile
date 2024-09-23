@@ -17,43 +17,42 @@ export const verifyAdmin = async () => {
   }
 
 
-export const assumeIssue = async (user: UsersDto, issue:Issue, updateData:Partial<Issue>) => {
+export const assumeIssue = async (user: UsersDto, issue: Issue) => {
 
   try {
     const token = await AsyncStorage.getItem('@token');
 
-    // Atualizar a issue
-    const issueUpdateResponse = await api.put<Issue>(`/issues/${issue.id}`, updateData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      const updatedIssues = user.issues
+        ? [...user.issues, issue]
+        : [issue];
 
-    if (issueUpdateResponse.status === 200) {
-      // Se a atualização for bem-sucedida, adicionar a issue à lista de issues do usuário
-      const userResponse = await api.get<UsersDto>(`/users/${user.id}`, {
+
+      // Atualizar o usuário com a lista de issues modificada
+      const response = await api.put<UsersDto>(`/users/${user.id}`, { ...user, issues: updatedIssues }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (userResponse.status === 200) {
-        const user: UsersDto = userResponse.data;
+      console.log(response)
+  } catch (error) {
+    console.error("Erro ao atualizar a issue:", error.response?.data || error.message);
+  }
+}
+  
+export const getMyIssues = async (userId: string) => {
+  try {
+    const token = await AsyncStorage.getItem('@token');
 
-        // Adicionar a issue à lista de issues do usuário se não estiver presente
-        const updatedIssues = user.issues ? [...user.issues, issue] : [issue];
+    // Atualizar a issue
+    const response = await api.get<UsersDto>(`/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
 
-        // Atualizar o usuário com a lista de issues modificada
-        const response = await api.put<UsersDto>(`/users/${user.id}`, { ...user, issues: updatedIssues }, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        const userUpdate = response.data
-        return userUpdate
-      }
-    }
+    });
+    const user = response.data
+    return user.issues
   } catch (error) {
     
   }
 }
-  

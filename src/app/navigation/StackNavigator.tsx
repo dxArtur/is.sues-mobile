@@ -10,7 +10,7 @@ import SignupScreen from '../screens/signup';
 import WelcomeScreen from '../screens/welcome';
 import IssueDetailScreen from '../screens/issues/detail';
 import CriarEmpresa from '../screens/company/create'; // Tela de criação de empresa
-import BuscarEmpresas from '../screens/company/search';
+//import BuscarEmpresas from '../screens/company/search';
 import DetalhesDaEmpresaDescrio from '../screens/company/detail';
 import EditarEmpresa from '../screens/company/edit';
 import CriarDepartamento from '../screens/department/create';
@@ -30,7 +30,7 @@ const HomeStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="BuscarEmpresas" component={BuscarEmpresas} />
+      <Stack.Screen name="BuscarEmpresas" component={CompanyScreen} />
       <Stack.Screen name="DetalhesDaEmpresa" component={DetalhesDaEmpresaDescrio} />
       <Stack.Screen name="EditarEmpresa" component={EditarEmpresa} />
       <Stack.Screen name="CriarDepartamento" component={CriarDepartamento} />
