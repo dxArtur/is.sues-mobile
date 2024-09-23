@@ -23,6 +23,7 @@ import DeletarFuncionario from '../screens/usermanager/delete';
 import CriarLabel from '../screens/label/create';
 import EditarLabel from '../screens/label/edit';
 import DeletarLabel from '../screens/label/delete';
+import UpdateProfilePictureScreen from '../screens/usermanager/profile-picture';
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import MyIssuesScreen from '../screens/issues/myIssues';
 
@@ -96,6 +97,7 @@ const ProfileStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="UpdateProfilePictureScreen" component={UpdateProfilePictureScreen} />
     </Stack.Navigator>
   );
 };

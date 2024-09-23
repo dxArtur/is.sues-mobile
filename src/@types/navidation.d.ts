@@ -22,6 +22,7 @@ export declare global {
       CriarLabel;
       EditarLabel;
       DeletarLabel;
+      UpdateProfilePictureScreen;
       Profile: { userId: string };
     }
   }
