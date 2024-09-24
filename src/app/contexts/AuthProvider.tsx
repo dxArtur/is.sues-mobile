@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
+import * as FileSystem from 'expo-file-system';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../api/apiClient';
 import { UsersDto } from '../../dtos/UserDTO';
@@ -14,6 +15,7 @@ interface AuthContextData {
   updateUser: (id: string, name: string, occupation: string, email: string, departmentId: string) => Promise<void>; 
   getEmployeeById: (id: string) => Promise<UsersDto | null>;
   deleteEmployee: (id: string) => Promise<void>;
+  updateProfilePicture: (id: string, imageUri: string) => Promise<void>;
 }
 
 
@@ -66,7 +68,7 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
         const companyResponse = await api.get(`/company/head/${userData.id}`);
         companyId = companyResponse.data?.id || null;
       } catch (companyError) {
-        console.error('Erro ao buscar a empresa do usuário:', companyError);
+        //console.error('Erro ao buscar a empresa do usuário:', companyError);
       }
   
       // Armazenando dados do usuário e tokens localmente
@@ -128,6 +130,43 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
     }
   }
 
+  async function updateProfilePicture(id: string, imageUri: string): Promise<void> {
+    try {
+      const fileInfo = await FileSystem.getInfoAsync(imageUri);
+      if (!fileInfo.exists) {
+        throw new Error("O arquivo selecionado não existe.");
+      }
+
+      const formData = new FormData();
+      const fileName = imageUri.split('/').pop();
+      const fileType = fileName?.split('.').pop();
+      const mimeType = fileType === 'png' ? 'image/png' : 'image/jpeg';
+
+      formData.append('profilePicture', {
+        uri: imageUri,
+        type: mimeType,
+        name: fileName || 'profile-picture.png',
+      } as any);
+      console.log(formData);
+
+      const response = await api.post(`/users/${id}/profile-picture`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.status === 200) {
+        const updatedUser = response.data.user as UsersDto;
+        setUser(updatedUser);
+        await AsyncStorage.setItem('@user', JSON.stringify(updatedUser));
+      } else {
+        console.error('Erro na resposta da API:', response.status, response.data);
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar a foto de perfil:', error);
+    }
+  }
+
   const updateUser = async (id: string, name: string, occupation: string, email: string, departmentId: string) => {
     try {
       // Envia a atualização para a API
@@ -176,7 +215,7 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, tokenState, companyId, signIn, signUp, signOut, updateUser, getEmployeeById, deleteEmployee }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, tokenState, companyId, signIn, signUp, signOut, updateUser, getEmployeeById, deleteEmployee, updateProfilePicture }}>
       {!loading && children}
     </AuthContext.Provider>
   );

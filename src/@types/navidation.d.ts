@@ -6,7 +6,9 @@ export declare global {
       Welcome: undefined;
       Login: undefined;
       Register: undefined;
-      Home: undefined;
+      Home;
+      HomeStack;
+      TestPage;
       CriarEmpresa: { headid: string };
       BuscarEmpresas: undefined;
       DetalhesDaEmpresa;
@@ -22,6 +24,7 @@ export declare global {
       CriarLabel;
       EditarLabel;
       DeletarLabel;
+      UpdateProfilePictureScreen;
       Profile: { userId: string };
     }
   }

@@ -1,102 +1,137 @@
-import HeaderProfile from '@/src/components/common/HeaderProfile';
 import React, { useEffect, useState } from 'react';
-import { View, Button, Text, SafeAreaView, StyleSheet } from 'react-native';
+import { View, Text, SafeAreaView, Alert, Image, Pressable } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '@/src/app/hooks/useAuth';
-import { getCompanyByDep } from '@/src/api/apiCompany';
+import { useCompany } from '@/src/app/hooks/useCompany';
+import { useDepartment } from '@/src/app/hooks/useDepartment';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Para pegar o companyId
+import { FontAwesome5, AntDesign, Fontisto } from '@expo/vector-icons'; // Ícone de edição
 import { CompanyDto } from '@/src/dtos/CompanyDTO';
-import { getDepartmentName } from '@/src/api/department';
-
+import styles from './styles';
 
 const ProfileScreen: React.FC = () => {
   const { user } = useAuth();
-  const [company, setCompany] = useState<CompanyDto>()
+  const { companies, loadCompanies } = useCompany();
+  const { departments, loadDepartments, getDepartmentById } = useDepartment();
+  const [company, setCompany] = useState<CompanyDto | null>(null);
   const [departmentName, setDepartmentName] = useState<string>('Carregando...');
+  const [companyId, setCompanyId] = useState<string | null>(null);
+  const [isHead, setIsHead] = useState(false); // Define se o usuário é o líder da empresa
+  const navigation = useNavigation();
 
-  const fetchCompany = async () => {
+  const fetchCompanyData = async () => {
     try {
-      const company = await getCompanyByDep(user?.departmentId!);
-      setCompany(company);
+      const storedCompanyId = await AsyncStorage.getItem('@companyId');
+      const storedUser = await AsyncStorage.getItem('@user');
+      const user = storedUser ? JSON.parse(storedUser) : null;
+
+      let companyId = storedCompanyId;
+
+      // Caso não tenha companyId no AsyncStorage, busca pelo departmentId
+      if (!companyId && user?.departmentId) {
+        const department = await getDepartmentById(user.departmentId);
+        if (department) {
+          companyId = department.companyId;
+        }
+      }
+
+      if (companyId) {
+        setCompanyId(companyId);
+
+        // Carrega as empresas se ainda não estiverem carregadas
+        if (companies.length === 0) {
+          await loadCompanies();
+        }
+
+        // Busca a empresa pelo companyId
+        const foundCompany = companies.find(c => c.id === companyId);
+        if (foundCompany) {
+          setCompany(foundCompany);
+
+          // Verifica se o usuário logado é o líder da empresa (headId)
+          if (foundCompany.headid === user?.id) {
+            setIsHead(true);
+          }
+        }
+      } else {
+        setCompanyId(null); // Remove a empresa se o membro não tiver companyId
+      }
     } catch (error) {
-      console.error('Erro ao carregar o nome do departamento:', error);
+      Alert.alert('Erro', 'Ocorreu um erro ao buscar os dados da empresa.');
+      console.error(error);
     }
   };
 
-  const fetchDepartmentName = async () => {
+  const fetchDepartmentName = async (departmentId: string) => {
     try {
-      const name = await getDepartmentName(user?.departmentId!);
-      setDepartmentName(name);
+      const department = await getDepartmentById(departmentId);
+      setDepartmentName(department ? department.name : 'Não encontrado');
     } catch (error) {
       setDepartmentName('Erro ao carregar');
       console.error('Erro ao carregar o nome do departamento:', error);
     }
-  }
+  };
+
+  const handleEditPhoto = () => {
+    navigation.navigate('UpdateProfilePictureScreen');
+  };
 
   useEffect(() => {
-    fetchCompany()
-    fetchDepartmentName()
-  }, [user?.departmentId, user?.departmentId]);
-  
+    if (user?.departmentId) {
+      // Se o usuário tem um departamento, carregue o nome do departamento
+      fetchDepartmentName(user.departmentId);
+    }
+
+    if (!user?.departmentId) {
+      fetchCompanyData(); // Carrega dados da empresa apenas se o usuário não tiver departmentId
+    }
+    
+    loadDepartments();
+  }, [companies]);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <HeaderProfile
-      userName={user?.name!}
-      userPhoto={user?.photo!}
-      occupation={user?.occupation!}
-      onPress={()=>{}}
-      />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        {/* Header Profile integrado diretamente */}
+        <View style={styles.headerContainer}>
+          <Image
+            source={{ uri: user?.photo || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' }}
+            style={styles.photo}
+          />
+          <View style={styles.textContainer}>
+            <Text style={styles.occupation}>{`${user?.occupation},`}</Text>
+            <Text style={styles.userName}>{user?.name}</Text>
+          </View>
+          <Pressable onPress={handleEditPhoto}>
+            <FontAwesome5 name="edit" size={24} color="black" />
+          </Pressable>
+        </View>
 
-      <View style={[styles.section, { padding: 10 }]}>
-        <Text style={styles.titleSectionName}>Colaborador na, </Text>
-        <Text style={styles.titleSectionCompany}>{company?.name}</Text>
+        {/* Informações do Perfil */}
+        <View style={styles.section}>
+          <Text style={styles.label}><AntDesign name="user" size={24} color="black" />Nome:</Text>
+          <Text style={styles.value}>{user?.name}</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.label}><Fontisto name="email" size={24} color="black" /> E-mail:</Text>
+          <Text style={styles.value}>{user?.email}</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.label}><FontAwesome5 name="address-card" size={24} color="black" /> Cargo:</Text>
+          <Text style={styles.value}>{user?.occupation}</Text>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.label}><FontAwesome5 name="building" size={24} color="black" /> {isHead ? 'Líder da Empresa:' : 'Departamento:'}</Text>
+          <Text style={styles.value}>
+            {isHead ? company?.name : departmentName}
+          </Text>
+        </View>
       </View>
-
-      <View style={[styles.section, { padding: 10 }]}>
-        <Text style={styles.titleSectionName}>{user?.adm! ? ('líder no'):('membro do')}</Text>
-        <Text style={styles.titleSectionCompany}>{departmentName}</Text>
-      </View>
-
-      
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-    justifyContent: 'center',
-    backgroundColor: '#f5f5f5',
-    gap: 6,
-    marginTop:24
-  },
-
-  section: {
-    flexDirection: 'column',
-    gap: 4,
-    backgroundColor: '#f8f8f8',
-    padding: 4,
-    paddingLeft: 10,
-    borderRadius: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  headerSection: {
-    flexDirection: 'row',
-    gap: 10,
-  },
-  titleSection: {
-    paddingLeft: 6,
-    alignItems: 'center',
-    flexDirection: 'row',
-  },
-  titleSectionName: {
-    color: '#808080',
-    fontWeight: 'light',
-  },
-  titleSectionCompany: {
-    fontWeight: 'bold',
-    fontSize:16
-  },
-
-})
-
-export default ProfileScreen
+export default ProfileScreen;

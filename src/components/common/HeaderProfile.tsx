@@ -73,52 +73,6 @@ const styles = StyleSheet.create({
   occupation: {
     fontWeight:'thin'
   }
-
-  /* header: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: 16,
-    //backgroundColor: '#f8f8f8',
-    //borderBottomWidth: 1,
-    //borderBottomColor: '#ddd',
-    borderRadius:10,
-    gap:10
-  },
-  photo: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
-  container:{
-    flexDirection:'column',
-    gap:10,
-  },
-  textContainer: {
-    flex:1,
-    alignItems:'center',
-  },
-  userName: {
-    
-    fontSize: 18,
-    color:'#003366',
-    fontWeight: 'bold',
-  },
-  editContainer: {
-
-    alignItems:'center',
-    fontSize:16,
-    marginRight:10
-  },
-  iconEdit: {
-    color:'red',
-    fontSize:20
-  },
-  textEdit: {
-    fontSize:16,
-    fontWeight:'bold',
-    color:''
-  } */
 });
 
 export default HeaderProfile

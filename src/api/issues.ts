@@ -29,7 +29,7 @@ export const updateIssue = async (updateData: Issue) =>{
        const data = response.data
        const status = response.status
         return { status, data}
-    } catch (error) {
+    } catch (error: any) {
         console.error("Erro ao atualizar a issue:", error.response?.data || error.message);
         throw error
     }
@@ -58,4 +58,5 @@ export const createIssues = async (issue:Issue) => {
     } catch (error) {
         console.error("Erro ao atualizar a issue:", error.response?.data || error.message);
     }
-}
+  };
+  

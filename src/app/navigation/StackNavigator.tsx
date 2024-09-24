@@ -23,18 +23,16 @@ import DeletarFuncionario from '../screens/usermanager/delete';
 import CriarLabel from '../screens/label/create';
 import EditarLabel from '../screens/label/edit';
 import DeletarLabel from '../screens/label/delete';
+import UpdateProfilePictureScreen from '../screens/usermanager/profile-picture';
+import TestPage from '../screens/issues-screens/create';
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import MyIssuesScreen from '../screens/issues/myIssues';
-import CreateIssueScreen from '../screens/issues/create';
-
-
-
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 // Stack para a aba Home
-const HomeStack: React.FC = () => {
+/*const HomeStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -44,7 +42,16 @@ const HomeStack: React.FC = () => {
       <Stack.Screen name="DetailIssues" component={IssueDetailScreen} />
     </Stack.Navigator>
   );
+};*/
+const HomeStack: React.FC = () => {
+  return (
+    <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={HomeScreen} />
+      {/* Outras telas */}
+    </Stack.Navigator>
+  );
 };
+
 const CompanyStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="DetalhesDaEmpresa" screenOptions={{ headerShown: false }}>
@@ -65,12 +72,11 @@ const CompanyStack: React.FC = () => {
   );
 };
 
-
 // Stack para a aba de criar issues
 const CreateIssueStack: React.FC = () => {
   return (
-    <Stack.Navigator initialRouteName="CreateIssue" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="CreateIssue" component={CreateIssueScreen} />
+    <Stack.Navigator initialRouteName="TestPage" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="TestPage" component={TestPage} />
     </Stack.Navigator>
   );
 };
@@ -97,6 +103,7 @@ const ProfileStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="Profile" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="UpdateProfilePictureScreen" component={UpdateProfilePictureScreen} />
     </Stack.Navigator>
   );
 };
@@ -153,7 +160,7 @@ const AppStack: React.FC = () => {
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="plus-square-o" size={24} color={color} />
           ),
-          tabBarLabel: 'Criar Issues',
+          tabBarLabel: 'Criar Issue',
         }}
       />
       <Tab.Screen
