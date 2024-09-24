@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Alert, FlatList } from "react-native";
+import { Text, View, Alert, FlatList, ActivityIndicator } from "react-native";
 import { useCompany } from "@/src/app/hooks/useCompany";
 import { useDepartment } from "@/src/app/hooks/useDepartment";
 import CompanyMapView from "@/src/components/company/CompanyMapView";
@@ -18,23 +18,25 @@ const DetalhesDaEmpresaDescrio = () => {
   const { departments, loadDepartments, getDepartmentById } = useDepartment();
   const [loading, setLoading] = useState(true);
   const [isHead, setIsHead] = useState(false);
+  const [companiesLoaded, setCompaniesLoaded] = useState(false); 
   const [activeTab, setActiveTab] = useState("descricao");
   const navigation = useNavigation(); // Hook de navegação
-  // Função para buscar o companyId ou headid do AsyncStorage e carregar a empresa
+  
   const loadCompanyData = async () => {
     try {
       const storedCompanyId = await AsyncStorage.getItem('@companyId');
       const storedUser = await AsyncStorage.getItem('@user');
       const user = storedUser ? JSON.parse(storedUser) : null;
-      // Verifica se o usuário é chefe (headid) ou funcionário (departmentId)
-      let companyId: string | null = storedCompanyId;
       
-      if (!companyId && user && user.departmentId) {
+      let companyId: string | null = storedCompanyId;
+
+      if (!companyId && user?.departmentId) {
         const department = await getDepartmentById(user.departmentId);
         if (department) {
           companyId = department.companyId;
         }
       }
+
       if (companyId) {
         if (companies.length === 0) {
           await loadCompanies();
@@ -43,7 +45,6 @@ const DetalhesDaEmpresaDescrio = () => {
 
         if (foundCompany) {
           setCompany(foundCompany || null);
-          // Verifica se o usuário logado é o headid da empresa
           if (foundCompany.headid === user.id) {
             setIsHead(true);
           }
@@ -58,25 +59,35 @@ const DetalhesDaEmpresaDescrio = () => {
       setLoading(false);
     }
   };
-  const handleManage = () => {
-    navigation.navigate('ManageCompany'); // Navega para a tela de edição de empresa
+
+  const handleCompaniesLoaded = async () => {
+    await loadCompanies();
+    setCompaniesLoaded(true);
   };
-  // Carregar dados da empresa ao montar o componente
+
+  const handleManage = () => {
+    navigation.navigate('ManageCompany');
+  };
+
   useEffect(() => {
+    handleCompaniesLoaded();
     loadCompanyData();
     loadDepartments();
   }, [companies]);
 
-  useEffect(() => {
-  }, [departments]);
-
-  if (loading) {
-    return <Text>Carregando empresa...</Text>;
+  if (loading || !companiesLoaded) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#765AC6" />
+        <Text style={styles.loadingText}>Carregando empresa...</Text>
+      </View>
+    );
   }
 
   if (!company) {
     return <Text>Empresa não encontrada.</Text>;
   }
+
   const renderDepartments = () => {
     const companyDepartments = departments.filter(
       (department: DepartmentDto) => department.companyId === company?.id
@@ -90,14 +101,14 @@ const DetalhesDaEmpresaDescrio = () => {
       <View style={styles.descriptionSection}>
         <Text style={styles.descriptionTitle}>Departamentos</Text>
         <View style={styles.departmentListContainer}>
-        <FlatList
-          data={companyDepartments}
-          keyExtractor={(item) => item.id!}
-          renderItem={({ item }) => (
-            <Text style={styles.descriptionText}><FontAwesome name="circle" size={15} /> {item.name}</Text>
-          )}
-          showsVerticalScrollIndicator={true}
-        />
+          <FlatList
+            data={companyDepartments}
+            keyExtractor={(item) => item.id!}
+            renderItem={({ item }) => (
+              <Text style={styles.descriptionText}><FontAwesome name="circle" size={15} /> {item.name}</Text>
+            )}
+            showsVerticalScrollIndicator={true}
+          />
         </View>
       </View>
     );
@@ -150,7 +161,7 @@ const DetalhesDaEmpresaDescrio = () => {
           buttonWidth="80%"
           paddingHorizontal={Padding.p_sm}
           paddingVertical={Padding.p_sm}
-          borderRadius={5}//Border.br_47xl}
+          borderRadius={5}
           buttonAlignSelf="center"
         />
         <Button1
@@ -162,23 +173,22 @@ const DetalhesDaEmpresaDescrio = () => {
           buttonAlignSelf="center"
           paddingHorizontal={Padding.p_sm}
           paddingVertical={Padding.p_sm}
-          borderRadius={5}//Border.br_47xl}
+          borderRadius={5}
         />
-    </View>
+      </View>
 
-    {renderContent()}
+      {renderContent()}
 
-    <View style={{ marginTop: 20 }}> 
-      {isHead && (
-        <Button1
-          text="Gerenciar"
-          onPress={handleManage}
-          buttonWidth="100%"
-          buttonAlignSelf="center"
-        />
-      )}
-    </View>
-
+      <View style={{ marginTop: 20 }}>
+        {isHead && (
+          <Button1
+            text="Gerenciar"
+            onPress={handleManage}
+            buttonWidth="100%"
+            buttonAlignSelf="center"
+          />
+        )}
+      </View>
     </View>
   );
 };

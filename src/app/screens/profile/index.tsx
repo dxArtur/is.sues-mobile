@@ -18,7 +18,7 @@ const ProfileScreen: React.FC = () => {
   const [companyId, setCompanyId] = useState<string | null>(null);
   const [isHead, setIsHead] = useState(false); // Define se o usuário é o líder da empresa
   const navigation = useNavigation();
-  
+
   const fetchCompanyData = async () => {
     try {
       const storedCompanyId = await AsyncStorage.getItem('@companyId');
@@ -54,29 +54,38 @@ const ProfileScreen: React.FC = () => {
           }
         }
       } else {
-        Alert.alert('Erro', 'Não foi possível carregar os dados da empresa.');
+        setCompanyId(null); // Remove a empresa se o membro não tiver companyId
       }
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao buscar os dados da empresa.');
       console.error(error);
     }
   };
-  const handleEditPhoto = () => {
-    navigation.navigate('UpdateProfilePictureScreen');
-  }; 
 
   const fetchDepartmentName = async (departmentId: string) => {
     try {
-      const name = await getDepartmentById(departmentId);
-      setDepartmentName(name ? name.name : 'Não encontrado');
+      const department = await getDepartmentById(departmentId);
+      setDepartmentName(department ? department.name : 'Não encontrado');
     } catch (error) {
       setDepartmentName('Erro ao carregar');
       console.error('Erro ao carregar o nome do departamento:', error);
     }
   };
 
+  const handleEditPhoto = () => {
+    navigation.navigate('UpdateProfilePictureScreen');
+  };
+
   useEffect(() => {
-    fetchCompanyData();
+    if (user?.departmentId) {
+      // Se o usuário tem um departamento, carregue o nome do departamento
+      fetchDepartmentName(user.departmentId);
+    }
+
+    if (!user?.departmentId) {
+      fetchCompanyData(); // Carrega dados da empresa apenas se o usuário não tiver departmentId
+    }
+    
     loadDepartments();
   }, [companies]);
 
