@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, ScrollView, SafeAreaView, Alert } from "react-native";
+import { Text, View, ScrollView, SafeAreaView, Alert, ActivityIndicator } from "react-native";
 import { FontAwesome, FontAwesome6 } from '@expo/vector-icons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { useCompany } from "@/src/app/hooks/useCompany";
@@ -129,7 +129,12 @@ const CompanyManagementScreen = ( ) => {
   }, []);
 
   if (loading) {
-    return <Text>Carregando dados da empresa...</Text>;
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color={Color.primaryRegular} />
+        <Text style={styles.loadingText}>Carregando dados da empresa...</Text>
+      </View>
+    );
   }
 
   if (!company) {

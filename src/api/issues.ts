@@ -29,7 +29,7 @@ export const updateIssue = async (updateData: Issue) =>{
        const data = response.data
        const status = response.status
         return { status, data}
-    } catch (error) {
+    } catch (error: any) {
         console.error("Erro ao atualizar a issue:", error.response?.data || error.message);
         throw error
     }
@@ -46,10 +46,21 @@ export const getAuthorIssue = async (authorId:string): Promise<string> =>{
 }
 
 
-export const createIssues = async () => {
+// Atualize a função createIssues para aceitar o parâmetro issueData
+export const createIssues = async (issueData: Partial<Issue>) => {
     try {
-
-    } catch (error) {
-        
+      const token = await AsyncStorage.getItem('@token');
+      
+      const response = await api.post('/issues', issueData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
+      return response.data;
+    } catch (error: any) {
+      console.error("Erro ao criar a issue:", error.response?.data || error.message);
+      throw error;
     }
-}
+  };
+  

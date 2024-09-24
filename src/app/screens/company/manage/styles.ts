@@ -34,6 +34,16 @@ const styles = StyleSheet.create({
     color: Color.colorMidnightblue,
     marginBottom: Gap.gap_sm,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 18,
+    color: '#765AC6',
+  },
 });
 
 export default styles;
