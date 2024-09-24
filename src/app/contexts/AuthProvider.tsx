@@ -68,7 +68,7 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
         const companyResponse = await api.get(`/company/head/${userData.id}`);
         companyId = companyResponse.data?.id || null;
       } catch (companyError) {
-        console.error('Erro ao buscar a empresa do usuário:', companyError);
+        //console.error('Erro ao buscar a empresa do usuário:', companyError);
       }
   
       // Armazenando dados do usuário e tokens localmente
@@ -133,7 +133,6 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
   async function updateProfilePicture(id: string, imageUri: string): Promise<void> {
     try {
       const fileInfo = await FileSystem.getInfoAsync(imageUri);
-      console.log(fileInfo);
       if (!fileInfo.exists) {
         throw new Error("O arquivo selecionado não existe.");
       }
@@ -141,8 +140,6 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
       const formData = new FormData();
       const fileName = imageUri.split('/').pop();
       const fileType = fileName?.split('.').pop();
-      console.log(fileName);
-      console.log(fileType);
       const mimeType = fileType === 'png' ? 'image/png' : 'image/jpeg';
 
       formData.append('profilePicture', {
