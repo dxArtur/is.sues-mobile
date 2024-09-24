@@ -10,7 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useCompany } from '../../hooks/useCompany';
 import { useDepartment } from '../../hooks/useDepartment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './styles';  // Importação do arquivo de estilos separado
+import styles from './styles';
 
 export default function Home() {
   const { signOut, user } = useAuth();
@@ -20,7 +20,7 @@ export default function Home() {
   
   const [departmentName, setDepartmentName] = useState<string>('Carregando...');
   const [companyName, setCompanyName] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); 
   const [isHead, setIsHead] = useState(false);
   const navigation = useNavigation();
 
@@ -77,8 +77,10 @@ export default function Home() {
   useEffect(() => {
     fetchDepartmentName();
     fetchCompanyData();
-    loadIssues();
-  }, [loadIssues, companies]);
+    if (issues.length === 0) {
+      loadIssues();
+    }
+  }, [companies]);
 
   if (loading) {
     return (
@@ -100,16 +102,6 @@ export default function Home() {
           <Text style={styles.titleSectionStatus}>{isHead ? companyName : departmentName}</Text>
         </View>
       </View>
-
-      {isHead ? (
-        <View style={[styles.section, { padding: 10 }]}>
-          <Text style={styles.titleSectionName}>Líder da empresa: {companyName}</Text>
-        </View>
-      ) : (
-        <View style={[styles.section, { padding: 10 }]}>
-          <Text style={styles.titleSectionName}>Colaborador na empresa {companyName}</Text>
-        </View>
-      )}
 
       <View style={[styles.section, { padding: 10 }]}>
         <View style={styles.headerSection}>

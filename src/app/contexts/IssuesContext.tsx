@@ -1,67 +1,117 @@
-import React, { createContext, useState, ReactNode, useContext, useEffect } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { getIssues } from '../../api/issues'
-import { Issue } from '../../dtos/IssueDTO'
-import { useAuth } from '../hooks/useAuth'
-import { getMyIssues } from '@/src/api/apiUser'
+import React, { createContext, useState, ReactNode, useContext, useEffect } from 'react';
+import { getIssues, updateIssue, createIssues, getAuthorIssue } from '@/src/api/issues';
+import { Issue } from '@/src/dtos/IssueDTO';
+import { useAuth } from '@/src/app/hooks/useAuth';
+import { getMyIssues } from '@/src/api/apiUser';
 
 type IssuesContextData = {
-    issues: Issue[];
-    myIssues: Issue[];
-    loadMyIssues: () => Promise<void>
-    loadIssues: () => Promise<void>
-}
+  issues: Issue[];
+  myIssues: Issue[];
+  loadIssues: () => Promise<void>;
+  loadMyIssues: () => Promise<void>;
+  createNewIssue: (issueData: Partial<Issue>) => Promise<void>;
+  updateExistingIssue: (issueData: Issue) => Promise<void>;
+  getAuthorName: (authorId: string) => Promise<string>;
+};
 
-export const IssuesContext = createContext<IssuesContextData|undefined>(undefined)
+export const IssuesContext = createContext<IssuesContextData | undefined>(undefined);
 
 type IssuesProviderProps = {
-    children: ReactNode;
-}
+  children: ReactNode;
+};
 
-export const IssuesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const {user} = useAuth()
-    const [issues, setIssues] = useState<Issue[]>([])
-    const [myIssues, setMyIssues] = useState<Issue[]>([])
+export const IssuesProvider: React.FC<IssuesProviderProps> = ({ children }) => {
+  const { user } = useAuth();
+  const [issues, setIssues] = useState<Issue[]>([]);
+  const [myIssues, setMyIssues] = useState<Issue[]>([]);
 
-    
-    
-    const loadIssues = async () => {
-        try {
-            const issues = await getIssues()
-            setIssues(issues)
-        } catch (error) {
-            throw error
-        }
+  // Carrega todas as issues
+  const loadIssues = async () => {
+    try {
+      const allIssues = await getIssues();
+      setIssues(allIssues);
+    } catch (error) {
+      console.error('Erro ao carregar issues:', error);
     }
+  };
 
-    const loadMyIssues = async () => {
-        try {
-            const issues = await getMyIssues(user?.id!)
-            setMyIssues(issues!)
-        } catch (error) {
-            throw error
+  // Carrega as issues do usuário
+  const loadMyIssues = async () => {
+    try {
+      if (user?.id) {
+        const myIssuesResponse = await getMyIssues(user.id);
+        
+        // Verifica se myIssuesResponse é uma matriz
+        if (Array.isArray(myIssuesResponse)) {
+          setMyIssues(myIssuesResponse.filter((issue: Issue) => issue !== undefined) as Issue[]);
+        } else {
+          // Se não for uma matriz, define como uma matriz vazia
+          setMyIssues([]);
         }
+      }
+    } catch (error) {
+      console.error('Erro ao carregar minhas issues:', error);
     }
-    
-    
-    useEffect(() => {
-        loadIssues()
-        loadMyIssues()
-    }, [])
+  };
+  
 
+  // Cria uma nova issue
+  const createNewIssue = async (issueData: Partial<Issue>) => {
+    try {
+      await createIssues(issueData);  // Agora a função createIssues aceita issueData como argumento
+      await loadIssues(); // Atualiza a lista de issues após criar uma nova
+    } catch (error) {
+      console.error('Erro ao criar issue:', error);
+    }
+  };
 
-    return (
-        <IssuesContext.Provider value={{issues, myIssues, loadMyIssues, loadIssues}}>
-            {children}
-        </IssuesContext.Provider>
-    )
-}
+  // Atualiza uma issue existente
+  const updateExistingIssue = async (issueData: Issue) => {
+    try {
+      await updateIssue(issueData);
+      await loadIssues(); // Atualiza a lista de issues após a atualização
+    } catch (error) {
+      console.error('Erro ao atualizar a issue:', error);
+    }
+  };
 
+  // Obtém o nome do autor de uma issue
+  const getAuthorName = async (authorId: string) => {
+    try {
+      return await getAuthorIssue(authorId);
+    } catch (error) {
+      console.error('Erro ao buscar o autor da issue:', error);
+      throw error;
+    }
+  };
 
+  useEffect(() => {
+    loadIssues();
+    loadMyIssues();
+  }, []);
+
+  return (
+    <IssuesContext.Provider
+      value={{
+        issues,
+        myIssues,
+        loadIssues,
+        loadMyIssues,
+        createNewIssue,
+        updateExistingIssue,
+        getAuthorName,
+      }}
+    >
+      {children}
+    </IssuesContext.Provider>
+  );
+};
+
+// Hook customizado para acessar o contexto de Issues
 export const useIssues = () => {
-    const context = useContext(IssuesContext);
-    if (!context) {
-        throw new Error('useIssues must be used within an IssuesProvider');
-    }
-    return context;
+  const context = useContext(IssuesContext);
+  if (!context) {
+    throw new Error('useIssues deve ser usado dentro de um IssuesProvider');
+  }
+  return context;
 };
