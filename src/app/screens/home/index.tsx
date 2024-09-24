@@ -95,7 +95,7 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <Header userName={user?.name!} userPhoto={user?.photo!} />
       
-      <View style={[styles.section, { flexDirection: 'row', padding: 10 }]}>
+      <View style={[styles.section, { alignItems:'center', flexDirection: 'row', padding: 10 }]}>
         <MaterialIcons style={styles.departmentIcon} name="maps-home-work" size={40} color="white" />
         <View>
           <Text style={styles.titleSectionName}>{isHead ? 'Líder da ' : 'Membro do '}</Text>
