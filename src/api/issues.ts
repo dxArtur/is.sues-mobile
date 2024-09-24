@@ -46,10 +46,16 @@ export const getAuthorIssue = async (authorId:string): Promise<string> =>{
 }
 
 
-export const createIssues = async () => {
+export const createIssues = async (issue:Issue) => {
     try {
-
+        const token = await AsyncStorage.getItem('@token');
+        const response = await api.post('/issues/new', issue, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
     } catch (error) {
-        
+        console.error("Erro ao atualizar a issue:", error.response?.data || error.message);
     }
 }

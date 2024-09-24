@@ -3,7 +3,7 @@ import { Checkbox as PaperCheckbox} from 'react-native-paper';
 import { StyleSheet, Text} from 'react-native';
 
 interface TitleProps {
-  color: string;
+  color?: string;
   text: string;
   fontWeight?: 'normal' | 'bold' | 'light';
   size?: number;

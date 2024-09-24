@@ -14,6 +14,7 @@ const IssuesList: React.FC<IssuesListProps> = ({ issues }) => {
 
     return (
         <FlatList
+            scrollEnabled={true}
             style ={style.container}
             data={issues}
             keyExtractor={(issue) => issue.id}
@@ -22,7 +23,7 @@ const IssuesList: React.FC<IssuesListProps> = ({ issues }) => {
     )
 }
 
-const style = StyleSheet .create({
+const style = StyleSheet.create({
     container: {
         width:'100%',
         marginVertical: 6
