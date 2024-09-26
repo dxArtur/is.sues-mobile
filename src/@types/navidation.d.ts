@@ -28,7 +28,7 @@ export declare global {
       UpdateProfilePictureScreen;
       Profile: { userId: string };
       DetailIssues: {issue: Issue};
-      EditIssues;
+      EditIssues:{issue: Issue};
     }
   }
 }

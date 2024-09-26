@@ -7,10 +7,8 @@ import { getAuthorIssue, getIssue, getIssues, updateIssue } from "@/src/api/issu
 import { useAuth } from "@/src/app/hooks/useAuth";
 import { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
-import OpenIssuesActionsAuthor from "./actionInIssuesForUsers/author/InProgressIssuesActionsAuthor";
-import OpenIssuesActionsUser from "./actionInIssuesForUsers/user/OpenIssuesActionsUsers";
-import InProgressIssuesActionsUser from "./actionInIssuesForUsers/user/InProgressActionsUsers";
-import InProgressIssuesActionsAuthor from "./actionInIssuesForUsers/author/InProgressIssuesActionsAuthor";
+import { useIssues } from "@/src/app/contexts/IssuesContext";
+
 
 
 
@@ -21,6 +19,7 @@ interface IssueViewProps {
 const IssueView: React.FC<IssueViewProps> = ({ issue }) => {
 const navigation = useNavigation();
 const { user } =useAuth()
+const { issues, loadIssues } = useIssues();
 const [authorName, setAuthorName] = useState<string>('Carregando...');
 const [issueState, setIssueState] = useState<Issue>(issue)
 const [loading, setLoading] = useState<boolean>(false);
@@ -64,7 +63,7 @@ useEffect(() => {
       console.log(updatedIssue.data)
 
       setIssueState(prevState => ({ ...prevState, status: true }));
-      await getIssues()
+      await loadIssues()
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao assumir a issue.');
     } finally {
@@ -75,16 +74,17 @@ useEffect(() => {
   const handleAssignIssue = async () => {
     setLoading(true);
     try {
-      const updatedIssue = {
+      const updatedIssue:Issue = {
         ...issue,
         isAssigned: true,
         status: true,
+        assignedUserId: user?.id
       }
       const response = await updateIssue(updatedIssue);
-      setIssueState(prevState => ({ ...prevState, isAssigned: true, status: true, }));
+      setIssueState(prevState => ({ ...prevState, isAssigned: true, status: true, assignedUserId: user?.id}));
       console.log(response.data)
-      await getIssues()
-      Alert.alert('Sucesso', 'Issue assumida com sucesso!');
+      await loadIssues()
+      Alert.alert('Sucesso', 'Issue assinada com sucesso!');
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao assinar a sua issue.');
     } finally {
@@ -105,7 +105,7 @@ useEffect(() => {
             console.log(updatedIssue.status)
             console.log(updatedIssue.data)
             setIssueState(prevState => ({ ...prevState, status: false, assignedUserId: null, }));
-            await getIssues() 
+            await loadIssues() 
           } catch (error) {
             console.error(error)
             //Alert.alert('Erro', 'Ocorreu um erro ao abandonar a issue.');

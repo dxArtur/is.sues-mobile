@@ -1,40 +1,43 @@
 import { IssuesProvider, useIssues } from '@/src/app/contexts/IssuesContext';
 import { useAuth } from '@/src/app/hooks/useAuth';
-import IssuesList from '@/src/components/common/IssuesList';
 import SectionIssue from '@/src/components/common/SectionIssue';
-import SectionIssues from '@/src/components/common/SectionIssue';
 import Title from '@/src/components/common/Title';
-import { Issue } from '@/src/dtos/IssueDTO';
 import { colors } from '@/src/styles/colors';
-import { MaterialIcons } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { View, Button, Text, SafeAreaView, StyleSheet, Pressable } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 const MyIssuesScreen = () => {
   const { user } = useAuth();
-  const { myIssues, loadMyIssues, issues, loadIssues } = useIssues ();
+  const { myIssues, loadMyIssues, issues, loadIssues } = useIssues();
 
-  const myOpenIssues = myIssues.filter(issue => issue.isAssigned === false)
+  useEffect(() => {
+    loadMyIssues(); // Carrega as minhas issues sempre que o usuário mudar
+  }, [user]);
 
-  const issuesMadeForMe = issues.filter(issue => issue.authorId === user?.id)
+  useEffect(() => {
+    // Se as issues mudarem, recarregue as minhas issues
+    loadMyIssues();
+  }, [issues]);
 
-  const myIssuesAssigned = issues.filter(issue=> issue.isAssigned === true && issue.assignedUserId=== user?.id) 
-  console.log(myIssuesAssigned)
-  
-//  const [myIssues, setMyIssues] = useState<Issue[]| undefined>(user?.issues)
-const [isOpen, setIsOpen] = useState({
-  openIssues: true,
-  issuesMadeForMe: false,
-  myIssuesAssigned: false,
-})
+  const myOpenIssues = myIssues.filter(issue => issue.isAssigned === false);
+  const issuesMadeForMe = issues.filter(issue => issue.authorId === user?.id);
+  const MyIssuesAssigned = issues.filter(issue => 
+    issue.assignedUserId === user?.id && issue.isAssigned === true
+  );
 
-const toggleSection = (section) => {
-  setIsOpen(prevState => ({
-    ...prevState,
-    [section]: !prevState[section],
-  }));
-};
-  
+  const [isOpen, setIsOpen] = useState({
+    openIssues: true,
+    issuesMadeForMe: false,
+    myIssuesAssigned: false,
+  });
+
+  const toggleSection = (section) => {
+    setIsOpen(prevState => ({
+      ...prevState,
+      [section]: !prevState[section],
+    }));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Title color="" text={'Minhas Issues'} />
@@ -55,7 +58,7 @@ const toggleSection = (section) => {
       <SectionIssue
         title="Issues"
         subtitle="assinadas"
-        issues={myIssuesAssigned}
+        issues={MyIssuesAssigned}
         isOpen={isOpen.myIssuesAssigned}
         toggleSection={() => toggleSection('myIssuesAssigned')}
       />
@@ -63,20 +66,14 @@ const toggleSection = (section) => {
   );
 };
 
-const styles= StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
-      flex:1,
-      padding: 24,
-      justifyContent: 'center',
-      backgroundColor: colors.backgroundPrincipal,
-      gap: 10,
-    },
-    section: {
-      flexDirection: 'row',
-      alignItems:'center',
-      backgroundColor: colors.backgroundSecundary,
-    },
-    
-})
+    flex: 1,
+    padding: 24,
+    justifyContent: 'center',
+    backgroundColor: colors.backgroundPrincipal,
+    gap: 10,
+  },
+});
 
-export default MyIssuesScreen
+export default MyIssuesScreen;

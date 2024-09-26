@@ -49,6 +49,7 @@ const HomeStack: React.FC = () => {
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="DetailIssues" component={DetailIssueScreen} />
+      <Stack.Screen name="EditIssues" component={EditIssuesScreen} />
       {/* Outras telas */}
     </Stack.Navigator>
   );
