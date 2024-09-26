@@ -4,7 +4,7 @@ import { Gap, FontFamily, FontSize, Padding, Border, Color } from "@/GlobalStyle
 const styles = StyleSheet.create({
   container: {
     padding: Padding.p_5xl,
-    paddingTop: Padding.p_45xl, // Espaço para a status bar
+    paddingTop: Padding.p_45xl,
     
     flexGrow: 1,
     paddingBottom: 20,

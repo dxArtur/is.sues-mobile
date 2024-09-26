@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Alert, FlatList, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useDepartment } from "@/src/app/hooks/useDepartment"; // Hook de departamento
+import { useDepartment } from "@/src/app/hooks/useDepartment";
 import Modal2 from "@/src/components/company/Modal2";
 import Button1 from "@/src/components/company/Button1";
 import TextInput1 from "@/src/components/company/TextInput1";
@@ -17,9 +17,9 @@ const EditarDepartamentos = () => {
 
   useEffect(() => {
     const fetchDepartments = async () => {
-      await loadDepartments(); // Carrega os departamentos
+      await loadDepartments(); 
 
-      const storedCompanyId = await AsyncStorage.getItem('@companyId'); // Obtém o ID da empresa
+      const storedCompanyId = await AsyncStorage.getItem('@companyId');
       if (storedCompanyId) {
         setCompanyId(storedCompanyId);
       } else {
@@ -39,7 +39,7 @@ const EditarDepartamentos = () => {
     try {
       await updateDepartment(selectedDepartmentId, { name: departmentName });
       Alert.alert('Sucesso', 'Departamento atualizado com sucesso!');
-      navigation.goBack(); // Volta para a tela anterior
+      navigation.goBack();
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao atualizar o departamento.');
       console.error(error);

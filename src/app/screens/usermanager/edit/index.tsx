@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Alert, SafeAreaView, TouchableOpacity } from "react-native";
 import { useRoute, useNavigation, CommonActions } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
-import { useAuth } from "@/src/app/hooks/useAuth"; // Hook para autenticação
-import { useDepartment } from "@/src/app/hooks/useDepartment"; // Hook de departamento para carregar departamentos
+import { useAuth } from "@/src/app/hooks/useAuth";
+import { useDepartment } from "@/src/app/hooks/useDepartment";
 import Modal2 from "@/src/components/company/Modal2";
 import TextInput1 from "@/src/components/company/TextInput1";
 import Button1 from "@/src/components/company/Button1";
@@ -11,44 +11,40 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
 import { DepartmentDto } from "@/src/dtos/DepartmentDTO";
 
-// Rotas esperadas para edição
 type EditarFuncionarioRouteProp = {
   id: string;
 };
 
 const EditarFuncionario = () => {
-  const { updateUser, getEmployeeById } = useAuth(); // Função para atualizar o usuário no contexto Auth
-  const { departments, loadDepartments } = useDepartment(); // Carrega os departamentos
-  const [filteredDepartments, setFilteredDepartments] = useState<DepartmentDto[]>([]); // Definir tipo correto
+  const { updateUser, getEmployeeById } = useAuth();
+  const { departments, loadDepartments } = useDepartment();
+  const [filteredDepartments, setFilteredDepartments] = useState<DepartmentDto[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [occupation, setOccupation] = useState("");
-  const [departmentId, setDepartmentId] = useState<string | null>(null); // Departamento selecionado
+  const [departmentId, setDepartmentId] = useState<string | null>(null);
   const [companyId, setCompanyId] = useState<string | null>(null);
-  const [showDepartments, setShowDepartments] = useState(false); // Estado para controlar exibição da lista
-  const route = useRoute(); // Para obter parâmetros de rota
+  const [showDepartments, setShowDepartments] = useState(false);
+  const route = useRoute();
   const navigation = useNavigation();
   
-  const { id } = route.params as EditarFuncionarioRouteProp; // Pegando o ID do funcionário pela rota
+  const { id } = route.params as EditarFuncionarioRouteProp; 
 
-  // Carrega o companyId do AsyncStorage e dados do funcionário
   useEffect(() => {
     const fetchCompanyIdAndUser = async () => {
       const storedCompanyId = await AsyncStorage.getItem("@companyId");
       if (storedCompanyId) {
         setCompanyId(storedCompanyId);
-        await loadDepartments(); // Carrega todos os departamentos
+        await loadDepartments();
         
-        // Filtra os departamentos com base no companyId
         const filtered = departments.filter(dept => dept.companyId === storedCompanyId);
-        setFilteredDepartments(filtered); // Define os departamentos filtrados
+        setFilteredDepartments(filtered);
       } else {
         Alert.alert("Erro", "ID da empresa não encontrado.");
       }
 
-      // Simulando a busca dos dados do funcionário existente
-      const employeeData = await getEmployeeById(id); // Função que simula busca por ID
+      const employeeData = await getEmployeeById(id);
       if (employeeData) {
         setName(employeeData.name);
         setEmail(employeeData.email);
@@ -57,7 +53,7 @@ const EditarFuncionario = () => {
       }
     };
     fetchCompanyIdAndUser();
-    loadDepartments(); // Carrega os departamentos
+    loadDepartments();
   }, [id]);
 
   const handleUpdateUser = async () => {
@@ -92,7 +88,6 @@ const EditarFuncionario = () => {
         />
         <Text style={styles.title}>Edite os dados do Funcionário</Text>
 
-        {/* Campos de input para editar os dados */}
         <Text style={styles.label}>Nome do Funcionário</Text>
         <TextInput1
           value={name}
@@ -129,7 +124,6 @@ const EditarFuncionario = () => {
           textInputPaddingVertical="unset"
         />
 
-        {/* Selecionar Departamento */}
         <Text style={styles.label}>Departamento</Text>
         <TouchableOpacity
           style={styles.selectButton}

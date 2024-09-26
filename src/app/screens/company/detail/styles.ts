@@ -5,17 +5,17 @@ import { colors } from "@/src/styles/colors";
 const styles = StyleSheet.create({
   detalhesDaEmpresaDescri: {
     flex: 1,
-    backgroundColor: colors.backgroundPrincipal, //'#fff',
+    backgroundColor: colors.backgroundPrincipal,
     padding: 20,
   },
   descriptionSection: {
     marginTop: 20,
     padding: 15,
-    backgroundColor: colors.backgroundSecundary, //"#F5F5F5", // Cor de fundo suave
-    borderRadius: 5, //Border.br_base,
+    backgroundColor: colors.backgroundSecundary,
+    borderRadius: 5,
     borderBottomColor: colors.borderPrincipal,
     borderBottomWidth:2,
-    shadowColor: "#000", // Sombra suave
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     color: Color.colorGray_200,
   },
   buttonContainer: {
-    marginTop: 20, // Para garantir espaçamento após as tabs
+    marginTop: 20,
     width: "100%",
     alignItems: "center",
   },

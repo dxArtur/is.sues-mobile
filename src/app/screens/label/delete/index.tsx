@@ -1,29 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Alert, FlatList, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useLabel } from "@/src/app/hooks/useLabel"; // Hook para labels
-import { useDepartment } from "@/src/app/hooks/useDepartment"; // Hook de departamentos
+import { useLabel } from "@/src/app/hooks/useLabel";
+import { useDepartment } from "@/src/app/hooks/useDepartment";
 import Button1 from "@/src/components/company/Button1";
 import Modal2 from "@/src/components/company/Modal2";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Para pegar o companyId
+import AsyncStorage from "@react-native-async-storage/async-storage"; 
 import styles from "./styles";
 
 const DeletarLabel = () => {
   const [companyId, setCompanyId] = useState<string | null>(null);
 
   const { labels, loadLabels, deleteLabel } = useLabel();
-  const { departments, loadDepartments } = useDepartment(); // Carrega os departamentos
+  const { departments, loadDepartments } = useDepartment(); 
   const navigation = useNavigation();
 
-  // Carrega o companyId, labels e departamentos ao iniciar a screen
   useEffect(() => {
     const fetchCompanyData = async () => {
       try {
         const storedCompanyId = await AsyncStorage.getItem('@companyId');
         if (storedCompanyId) {
           setCompanyId(storedCompanyId);
-          await loadLabels(); // Carrega todas as labels
-          await loadDepartments(); // Carrega todos os departamentos
+          await loadLabels();
+          await loadDepartments();
         } else {
           Alert.alert('Erro', 'ID da empresa não encontrado.');
         }
@@ -36,13 +35,11 @@ const DeletarLabel = () => {
     fetchCompanyData();
   }, []);
 
-  // Filtra as labels que pertencem aos departamentos da empresa do headId
   const filteredLabels = labels.filter((label) => {
     const department = departments.find(dep => dep.id === label.departmentId);
     return department && department.companyId === companyId;
   });
 
-  // Função para deletar a label
   const handleDeleteLabel = async (labelId: number) => {
     Alert.alert(
       'Confirmação',
@@ -77,12 +74,10 @@ const DeletarLabel = () => {
         <View style={styles.container}>
         <Text style={styles.title}>Selecione uma Label para Deletar</Text>
 
-        {/* Lista de Labels */}
         <FlatList
-          data={filteredLabels} // Exibe apenas as labels da empresa do headId
+          data={filteredLabels}
           keyExtractor={(item) => item.id!.toString()}
           renderItem={({ item }) => {
-            // Encontrar o departamento ao qual a label pertence
             const department = departments.find(dep => dep.id === item.departmentId);
             return (
               <View style={styles.labelItem}>

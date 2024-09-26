@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Alert, FlatList, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useDepartment } from "@/src/app/hooks/useDepartment"; // Hook de departamento
+import { useDepartment } from "@/src/app/hooks/useDepartment";
 import Modal2 from "@/src/components/company/Modal2";
 import Button1 from "@/src/components/company/Button1";
 import styles from "./styles";
@@ -14,9 +14,9 @@ const DeletarDepartamentos = () => {
 
   useEffect(() => {
     const fetchDepartments = async () => {
-      await loadDepartments(); // Carrega os departamentos
+      await loadDepartments();
 
-      const storedCompanyId = await AsyncStorage.getItem('@companyId'); // Obtém o ID da empresa
+      const storedCompanyId = await AsyncStorage.getItem('@companyId');
       if (storedCompanyId) {
         setCompanyId(storedCompanyId);
       } else {
@@ -31,7 +31,7 @@ const DeletarDepartamentos = () => {
     try {
       await deleteDepartment(departmentId);
       Alert.alert('Sucesso', 'Departamento deletado com sucesso!');
-      loadDepartments(); // Recarrega os departamentos
+      loadDepartments();
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao deletar o departamento.');
       console.error(error);

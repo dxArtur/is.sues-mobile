@@ -28,7 +28,7 @@ const UpdateProfilePictureScreen: React.FC = () => {
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
-      const uri = result.assets[0].uri ?? '';  // Define uma string vazia se o uri for undefined
+      const uri = result.assets[0].uri ?? ''; 
       setSelectedImage(uri);
     }
   };

@@ -12,6 +12,7 @@ import { Padding, Border, FontSize, Color, Gap } from "@/GlobalStyles";
 import Button1 from "@/src/components/company/Button1";
 import Modal2 from "@/src/components/company/Modal2";
 import { useNavigation } from '@react-navigation/native';
+import LoadingIndicator from "@/src/components/company/LoadingIndicator";
 
 const CompanyManagementScreen = ( ) => {
   const { companies, loadCompanies } = useCompany();
@@ -20,9 +21,10 @@ const CompanyManagementScreen = ( ) => {
   const [isHead, setIsHead] = useState(false);
   const [user, setUser] = useState<UsersDto | null>(null);
   const [loading, setLoading] = useState(true);
+  const [departmentsLoaded, setDepartmentsLoaded] = useState(false);
+  const [companiesLoaded, setCompaniesLoaded] = useState(false);
   const navigation = useNavigation(); 
 
-  // Função para buscar o companyId do AsyncStorage e carregar a empresa
   const loadCompanyData = async () => {
     try {
       const storedCompanyId = await AsyncStorage.getItem('@companyId');
@@ -33,8 +35,9 @@ const CompanyManagementScreen = ( ) => {
       let companyId: string | null = storedCompanyId;
 
       if (companyId) {
-        if (companies.length === 0) {
+        if (!companiesLoaded) {
           await loadCompanies();
+          setCompaniesLoaded(true);
         }
         const foundCompany = companies.find(c => c.id === companyId);
         if (foundCompany) {
@@ -122,19 +125,15 @@ const CompanyManagementScreen = ( ) => {
       Alert.alert("Erro", "ID da empresa não encontrado.");
     }
   }; 
-  // Carregar dados da empresa ao montar o componente
   useEffect(() => {
     loadCompanyData();
-    loadDepartments();
+    if (!departmentsLoaded) {
+      loadDepartments().then(() => setDepartmentsLoaded(true));
+    }
   }, []);
 
   if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={Color.primaryRegular} />
-        <Text style={styles.loadingText}>Carregando dados da empresa...</Text>
-      </View>
-    );
+    return <LoadingIndicator message="Carregando dados da empresa..." />;
   }
 
   if (!company) {
@@ -144,18 +143,15 @@ const CompanyManagementScreen = ( ) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.managementScreenContainer}>
-            {/* Modal2 para voltar à página anterior */}
             <Modal2
                 jobDetails="Gerenciamento"
                 component1={require("@/src/assets/images/component-11.png")}
                 component1IconLeft={93}
             />
-            {/* Mensagem de boas-vindas */}
             <Text style={styles.welcomeText}>
                 Olá, {user?.name}, bem-vindo(a) à página de gerenciamento da empresa {company.name}.
             </Text>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                {/* Seção Empresa */}
                 <View style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}><FontAwesome name="building" size={20} /> Empresa</Text>
                     <Button1
@@ -171,7 +167,6 @@ const CompanyManagementScreen = ( ) => {
                     />
                 </View>
 
-                {/* Seção Departamentos */}
                 <View style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}><FontAwesome6 name="building-user" size={20}/> Departamentos</Text>
                     <Button1
@@ -208,8 +203,6 @@ const CompanyManagementScreen = ( ) => {
                     borderRadius={Border.br_base}
                     />
                 </View>
-
-                {/* Seção Funcionários */}
                 <View style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}><FontAwesome name="user" size={20}/> Funcionários</Text>
                     <Button1
@@ -246,7 +239,7 @@ const CompanyManagementScreen = ( ) => {
                     borderRadius={Border.br_base}
                     />
                 </View>
-                {/* Seção Label */}
+                
                 <View style={styles.sectionContainer}>
                     <Text style={styles.sectionTitle}><MaterialIcons name="label" size={20} /> Label</Text>
                     <Button1

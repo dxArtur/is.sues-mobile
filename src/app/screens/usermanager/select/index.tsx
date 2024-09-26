@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, SafeAreaView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '@/src/app/hooks/useAuth'; // Hook para autenticação
-import { useDepartment } from '@/src/app/hooks/useDepartment'; // Hook de departamento
+import { useAuth } from '@/src/app/hooks/useAuth'; 
+import { useDepartment } from '@/src/app/hooks/useDepartment'; 
 import Modal2 from '@/src/components/company/Modal2';
 import Button1 from '@/src/components/company/Button1';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import styles from './styles'; // Estilos personalizados
-import { UsersDto } from '@/src/dtos/UserDTO'; // Certifique-se de ter o tipo UsersDto importado
+import styles from './styles'; 
+import { UsersDto } from '@/src/dtos/UserDTO'; 
 
 const SelecionarFuncionarioParaEditar = () => {
-  const { user } = useAuth(); // Hook para pegar o usuário logado
-  const { departments, loadDepartments } = useDepartment(); // Hook de departamento
-  const [employees, setEmployees] = useState<UsersDto[]>([]); // Lista de funcionários tipada
-  const [loading, setLoading] = useState(true); // Estado de carregamento
+  const { user } = useAuth(); 
+  const { departments, loadDepartments } = useDepartment(); 
+  const [employees, setEmployees] = useState<UsersDto[]>([]); 
+  const [loading, setLoading] = useState(true); 
   const [companyId, setCompanyId] = useState<string | null>(null);
-  const navigation = useNavigation(); // Navegação
+  const navigation = useNavigation(); 
 
-  // Carrega o companyId do AsyncStorage
   useEffect(() => {
     const fetchCompanyId = async () => {
       try {
@@ -34,16 +33,13 @@ const SelecionarFuncionarioParaEditar = () => {
     fetchCompanyId();
   }, []);
 
-  // Carrega departamentos e busca funcionários
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         if (!companyId) return;
 
-        // Carrega os departamentos associados à empresa
         await loadDepartments();
 
-        // Filtra os departamentos da empresa
         const companyDepartments = departments.filter(
           (department) => department.companyId === companyId && department.users && department.users.length > 0
         );

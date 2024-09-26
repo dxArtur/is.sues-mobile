@@ -10,17 +10,19 @@ import { DepartmentDto } from "@/src/dtos/DepartmentDTO";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
 import { Padding, Border } from "@/GlobalStyles";
-import { useNavigation } from '@react-navigation/native'; // Hook de navegação
+import { useNavigation } from '@react-navigation/native';
+import LoadingIndicator from "@/src/components/company/LoadingIndicator";
 
 const DetalhesDaEmpresaDescrio = () => {
   const { companies, loadCompanies } = useCompany();
-  const [company, setCompany] = useState<CompanyDto | null>(null);
   const { departments, loadDepartments, getDepartmentById } = useDepartment();
+  const [company, setCompany] = useState<CompanyDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [isHead, setIsHead] = useState(false);
+  const [departmentsLoaded, setDepartmentsLoaded] = useState(false);
   const [companiesLoaded, setCompaniesLoaded] = useState(false); 
   const [activeTab, setActiveTab] = useState("descricao");
-  const navigation = useNavigation(); // Hook de navegação
+  const navigation = useNavigation();
   
   const loadCompanyData = async () => {
     try {
@@ -38,9 +40,11 @@ const DetalhesDaEmpresaDescrio = () => {
       }
 
       if (companyId) {
-        if (companies.length === 0) {
+        if (!companiesLoaded) {
           await loadCompanies();
+          setCompaniesLoaded(true);
         }
+        
         const foundCompany = companies.find(c => c.id === companyId);
 
         if (foundCompany) {
@@ -60,28 +64,20 @@ const DetalhesDaEmpresaDescrio = () => {
     }
   };
 
-  const handleCompaniesLoaded = async () => {
-    await loadCompanies();
-    setCompaniesLoaded(true);
-  };
-
   const handleManage = () => {
     navigation.navigate('ManageCompany');
   };
 
   useEffect(() => {
-    handleCompaniesLoaded();
     loadCompanyData();
-    loadDepartments();
-  }, [companies]);
+
+    if (!departmentsLoaded) {
+      loadDepartments().then(() => setDepartmentsLoaded(true));
+    }
+  }, []);
 
   if (loading || !companiesLoaded) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#765AC6" />
-        <Text style={styles.loadingText}>Carregando empresa...</Text>
-      </View>
-    );
+    return <LoadingIndicator message="Carregando empresa.." />;
   }
 
   if (!company) {
