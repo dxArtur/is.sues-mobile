@@ -1,4 +1,5 @@
 import { ParamListBase } from '@react-navigation/native';
+import { Issue } from '../dtos/IssueDTO';
 
 export declare global {
   namespace ReactNavigation {
@@ -26,6 +27,8 @@ export declare global {
       DeletarLabel;
       UpdateProfilePictureScreen;
       Profile: { userId: string };
+      DetailIssues: {issue: Issue};
+      EditIssues;
     }
   }
 }

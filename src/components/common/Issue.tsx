@@ -25,7 +25,7 @@ const IssueItem: React.FC<IssueItemProps> = ({ item }) => {
   }, [item.authorId]);
 
   const handleViewIssue = () => {
-    navigation.navigate('DetailIssues', { issue: item }); // Navega para a tela de criação de empresa
+    navigation.navigate( 'DetailIssues',  { issue: item } ) //'DetailIssues', { issue: item } Navega para a tela de criação de empresa
   };
 
   return (
@@ -43,9 +43,13 @@ const IssueItem: React.FC<IssueItemProps> = ({ item }) => {
           </View>
         </View>
         <View style={styles.footerIssue}>
-            <Text style={item.status ? styles.statusInProgress : styles.statusOpen}>
-            {item.status?'Em progresso':'Aberta'}
-            </Text>
+        <Text style={item.status ? styles.statusInProgress : styles.statusOpen}>
+                        {item.isAssigned ? (
+                          'Concluída'
+                        ):(
+                          item.status ? 'Em progresso' : 'Aberta'
+                        )}
+                    </Text>
             <Text style={styles.issueAuthor}>
             por {authorName}
             </Text>

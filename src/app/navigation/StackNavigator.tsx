@@ -8,7 +8,6 @@ import ProfileScreen from '../screens/profile';
 import SigninScreen from '../screens/signin';
 import SignupScreen from '../screens/signup';
 import WelcomeScreen from '../screens/welcome';
-import IssueDetailScreen from '../screens/issues/detail';
 import CriarEmpresa from '../screens/company/create';
 import DetalhesDaEmpresaDescrio from '../screens/company/detail';
 import CompanyManagementScreen from '../screens/company/manage';
@@ -24,9 +23,11 @@ import CriarLabel from '../screens/label/create';
 import EditarLabel from '../screens/label/edit';
 import DeletarLabel from '../screens/label/delete';
 import UpdateProfilePictureScreen from '../screens/usermanager/profile-picture';
-import TestPage from '../screens/issues-screens/create';
+import CreateIssues from '../screens/issues/create';
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import MyIssuesScreen from '../screens/issues/myIssues';
+import EditIssuesScreen from '../screens/issues/edit';
+import DetailIssueScreen from '../screens/issues/detail';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -47,6 +48,7 @@ const HomeStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="DetailIssues" component={DetailIssueScreen} />
       {/* Outras telas */}
     </Stack.Navigator>
   );
@@ -75,8 +77,8 @@ const CompanyStack: React.FC = () => {
 // Stack para a aba de criar issues
 const CreateIssueStack: React.FC = () => {
   return (
-    <Stack.Navigator initialRouteName="TestPage" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="TestPage" component={TestPage} />
+    <Stack.Navigator initialRouteName="CreateIssues" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="CreateIssues" component={CreateIssues} />
     </Stack.Navigator>
   );
 };
@@ -86,6 +88,8 @@ const IssuesStack: React.FC = () => {
   return (
     <Stack.Navigator initialRouteName="MyIssues" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MyIssues" component={MyIssuesScreen} />
+      <Stack.Screen name="EditIssues" component={EditIssuesScreen} />
+      
     </Stack.Navigator>
   );
 };

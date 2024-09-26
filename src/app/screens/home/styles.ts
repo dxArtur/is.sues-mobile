@@ -4,6 +4,7 @@ import { colors } from "@/src/styles/colors";
 
 export default StyleSheet.create({
   container: {
+    flex:1,
     padding: Padding.p_base,
     marginVertical:32,
     justifyContent: 'center',
@@ -11,9 +12,10 @@ export default StyleSheet.create({
     gap: Padding.p_xs,
   },
   section: {
+    flex:1,
     flexDirection: 'column',
     gap: 10,
-    backgroundColor: Color.base3,
+    backgroundColor: colors.backgroundTertiary,
     padding: Padding.p_xs,
     paddingLeft: Padding.p_base,
     borderRadius: 5,
@@ -66,4 +68,13 @@ export default StyleSheet.create({
     fontFamily: FontFamily.plusJakartaSansBold,
     color: Color.primaryRegular,
   },
+  card: {
+    height:'15%',
+    alignItems:'center',
+    flexDirection: 'row',
+    padding: 10 ,
+    backgroundColor: colors.backgroundTertiary,
+    gap:10,
+    borderRadius:5,
+  }
 });

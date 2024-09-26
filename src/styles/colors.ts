@@ -13,6 +13,7 @@ export const colors = {
     Secondary: "#003366", //azul marinho
     backgroundPrincipal: "#f5f5f5", //white
     backgroundSecundary: "#f8f8f8", //white
-    borderPrincipal: '#ddd'
+    backgroundTertiary: "#fafafa", //white
+    borderPrincipal: '#ddd',
   
 }

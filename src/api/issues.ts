@@ -17,6 +17,21 @@ export const getIssues = async (): Promise<Issue[]> => {
     }
 }
 
+
+export const getIssue = async (id:string): Promise<Issue> => {
+    try {
+        const token = await AsyncStorage.getItem('@token');
+        const issues = await api.get(`/issues/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return issues.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export const updateIssue = async (updateData: Issue) =>{
     try {
         const token = await AsyncStorage.getItem('@token');
