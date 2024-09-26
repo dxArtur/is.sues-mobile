@@ -1,27 +1,30 @@
-import { IssuesProvider, useIssues } from '@/src/app/contexts/IssuesContext';
+import { useIssues } from '@/src/app/contexts/IssuesContext';
 import { useAuth } from '@/src/app/hooks/useAuth';
 import SectionIssue from '@/src/components/common/SectionIssue';
 import Title from '@/src/components/common/Title';
-import { colors } from '@/src/styles/colors';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, View } from 'react-native';
+import styles from './styles';
 
 const MyIssuesScreen = () => {
   const { user } = useAuth();
   const { myIssues, loadMyIssues, issues, loadIssues } = useIssues();
 
   useEffect(() => {
-    loadMyIssues(); // Carrega as minhas issues sempre que o usuário mudar
+    if (user) {
+      loadMyIssues();
+    }
   }, [user]);
 
   useEffect(() => {
-    // Se as issues mudarem, recarregue as minhas issues
-    loadMyIssues();
+    if (issues.length > 0) {
+      loadMyIssues();
+    }
   }, [issues]);
 
   const myOpenIssues = myIssues.filter(issue => issue.isAssigned === false);
   const issuesMadeForMe = issues.filter(issue => issue.authorId === user?.id);
-  const MyIssuesAssigned = issues.filter(issue => 
+  const myIssuesAssigned = issues.filter(issue => 
     issue.assignedUserId === user?.id && issue.isAssigned === true
   );
 
@@ -31,7 +34,7 @@ const MyIssuesScreen = () => {
     myIssuesAssigned: false,
   });
 
-  const toggleSection = (section) => {
+  const toggleSection = (section: string) => {
     setIsOpen(prevState => ({
       ...prevState,
       [section]: !prevState[section],
@@ -39,8 +42,9 @@ const MyIssuesScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Title color="" text={'Minhas Issues'} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+      <Title color={styles.titleColor.color} text={'Minhas Issues'} />
       <SectionIssue
         title="Issues"
         subtitle="para concluir"
@@ -58,22 +62,13 @@ const MyIssuesScreen = () => {
       <SectionIssue
         title="Issues"
         subtitle="assinadas"
-        issues={MyIssuesAssigned}
+        issues={myIssuesAssigned}
         isOpen={isOpen.myIssuesAssigned}
         toggleSection={() => toggleSection('myIssuesAssigned')}
       />
+      </View>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    justifyContent: 'center',
-    backgroundColor: colors.backgroundPrincipal,
-    gap: 10,
-  },
-});
 
 export default MyIssuesScreen;
