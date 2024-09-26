@@ -82,6 +82,13 @@ const CompanyManagementScreen = ( ) => {
     } else {
       Alert.alert("Erro", "ID da empresa não encontrado.");
     }
+  };
+  const handleSelectDepartment = () => {
+    if (company && company.id) {
+      navigation.navigate('SelectDepartment');
+    } else {
+      Alert.alert("Erro", "ID da empresa não encontrado.");
+    }
   };   
   const handleCreateUser = () => {
     if (company && company.id) {
@@ -194,6 +201,17 @@ const CompanyManagementScreen = ( ) => {
                     <Button1
                     text="Apagar Departamento"
                     onPress={handleDeleteDepartment}
+                    buttonWidth="100%"
+                    buttonAlignSelf="center"
+                    buttonBackgroundColor={Color.primaryRegular}
+                    marginVertical={Gap.gap_sm}
+                    paddingHorizontal={Padding.p_xs}
+                    paddingVertical={Padding.p_xs}
+                    borderRadius={Border.br_base}
+                    />
+                    <Button1
+                    text="Informações do departamento"
+                    onPress={handleSelectDepartment}
                     buttonWidth="100%"
                     buttonAlignSelf="center"
                     buttonBackgroundColor={Color.primaryRegular}

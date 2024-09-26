@@ -8,6 +8,7 @@ import Button1 from '@/src/components/company/Button1';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles'; 
 import { UsersDto } from '@/src/dtos/UserDTO'; 
+import LoadingIndicator from '@/src/components/company/LoadingIndicator';
 
 const SelecionarFuncionarioParaEditar = () => {
   const { user } = useAuth(); 
@@ -71,7 +72,7 @@ const SelecionarFuncionarioParaEditar = () => {
   };
 
   if (loading) {
-    return <Text>Carregando funcionários...</Text>;
+    return <LoadingIndicator message="Carregando funcionários..." />;
   }
 
   if (employees.length === 0) {

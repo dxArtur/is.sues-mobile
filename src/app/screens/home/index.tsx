@@ -11,6 +11,7 @@ import { useCompany } from '../../hooks/useCompany';
 import { useDepartment } from '../../hooks/useDepartment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
+import LoadingIndicator from '@/src/components/company/LoadingIndicator';
 
 export default function Home() {
   const { signOut, user } = useAuth();
@@ -83,12 +84,7 @@ export default function Home() {
   }, [companies]);
 
   if (loading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={styles.loadingText.color} />
-        <Text style={styles.loadingText}>Carregando dados...</Text>
-      </View>
-    );
+    return <LoadingIndicator message="Carregando dados..." />;
   }
 
   return (
