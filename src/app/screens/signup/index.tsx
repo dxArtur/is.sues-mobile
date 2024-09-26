@@ -35,6 +35,7 @@ const handleSignup = async () => {
     }
     try {
       const user = await signUp(name, occupation, email, password, isAdmin);
+      console.log(user);
       if (user?.id) {
         // Redireciona para a tela de criar empresa, passando o userId como headId
         navigation.navigate('CriarEmpresa', { headid: user.id });

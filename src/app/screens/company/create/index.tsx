@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Alert, Text } from 'react-native';
+import { View, Alert, Text, SafeAreaView } from 'react-native';
 import { useRoute, RouteProp, useNavigation, CommonActions } from '@react-navigation/native';
 import { Image } from 'expo-image';
 import * as Location from 'expo-location'; // Importando expo-location para pegar a localização atual
@@ -89,8 +89,8 @@ const CriarEmpresa = () => {
   };
 
   return (
-    <View style={styles.criarEmpresa}>
-      <View style={[styles.modal, styles.modalFlexBox]}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
         <Modal2
           jobDetails="Criar Empresa"
           component1={require("@/src/assets/images/component-11.png")}
@@ -174,7 +174,7 @@ const CriarEmpresa = () => {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
