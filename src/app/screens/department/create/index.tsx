@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Text, View, Alert, SafeAreaView } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
-import { useDepartment } from "@/src/app/hooks/useDepartment"; // Hook de departamento
+import { useDepartment } from "@/src/app/hooks/useDepartment";
 import TextInput1 from "@/src/components/company/TextInput1";
 import Button1 from "@/src/components/company/Button1";
 import Modal2 from "@/src/components/company/Modal2";

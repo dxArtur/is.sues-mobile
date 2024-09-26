@@ -100,7 +100,7 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
     return { userData: {} as UsersDto, companyId: null };
   }  
 
-  async function signUp(name: string, occupation: string, email: string, password: string, isAdmin: boolean, departmentId: string | null) {
+  async function signUp(name: string, occupation: string, email: string, password: string, isAdmin: boolean, departmentId?: string | null) {
     try {
       const response = await api.post('/users', {
         name,
@@ -110,7 +110,6 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
         adm: isAdmin,
         departmentId,
       });
-
       if (response.status === 200) {
         const createdUser: UsersDto = response.data; // Captura o usuário criado
         return createdUser; // Retorna o usuário para uso posterior
@@ -129,7 +128,7 @@ export const AuthProviderContext = ({ children }: AuthProviderProps) => {
       }
     }
   }
-
+  
   async function updateProfilePicture(id: string, imageUri: string): Promise<void> {
     try {
       const fileInfo = await FileSystem.getInfoAsync(imageUri);

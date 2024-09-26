@@ -27,6 +27,8 @@ export declare global {
       DeletarLabel;
       UpdateProfilePictureScreen;
       Profile: { userId: string };
+      DepartmentDetails: { departmentId: string };
+      SelectDepartmentScreen;
       DetailIssues: {issue: Issue};
       EditIssues:{issue: Issue};
     }

@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { FontSize, FontFamily, Color, Padding, Gap } from '@/GlobalStyles'; // Estilos globais
+import { FontSize, FontFamily, Color, Padding, Gap } from '@/GlobalStyles'; 
 
 const styles = StyleSheet.create({
   container: {
     padding: Padding.p_5xl,
-    paddingTop: Padding.p_45xl, // Espaço para a status bar
+    paddingTop: Padding.p_45xl, 
     flexGrow: 1,
     paddingBottom: 20,
     backgroundColor: Color.base3,

@@ -7,6 +7,7 @@ import MapView, { Marker } from 'react-native-maps';
 import Button1 from '@/src/components/company/Button1';
 import Modal2 from '@/src/components/company/Modal2';
 import TextInput1 from '@/src/components/company/TextInput1';
+import LoadingIndicator from '@/src/components/company/LoadingIndicator';
 import styles from './styles';
 
 type EditarEmpresaRouteProp = RouteProp<ReactNavigation.RootParamList, 'EditarEmpresa'>;
@@ -43,8 +44,11 @@ const EditarEmpresa = () => {
       }
       setLoading(false);
     };
-    loadCompanyDetails();
-  }, [id, companies]);
+
+    if (loading) {
+      loadCompanyDetails();
+    }
+  }, [id, companies, loading]);
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -89,7 +93,7 @@ const EditarEmpresa = () => {
   };
 
   if (loading) {
-    return <Text>Carregando informações da empresa...</Text>;
+    return <LoadingIndicator message="Carregando informações da empresa..." />;
   }
 
   return (
@@ -156,7 +160,7 @@ const EditarEmpresa = () => {
                   })
                 }
               >
-              <Marker
+                <Marker
                   coordinate={{
                     latitude: company.latitude,
                     longitude: company.longitude,
@@ -169,17 +173,17 @@ const EditarEmpresa = () => {
                       longitude: e.nativeEvent.coordinate.longitude,
                     })
                   }
-                />     
+                />
               </MapView>
             </View>
             <Button1
-            text="Salvar Alterações"
-            onPress={handleSaveChanges}
-            buttonPosition="relative"
-            buttonTop={1}
-            buttonWidth="90%"
-            buttonAlignSelf="center"
-          />
+              text="Salvar Alterações"
+              onPress={handleSaveChanges}
+              buttonPosition="relative"
+              buttonTop={1}
+              buttonWidth="90%"
+              buttonAlignSelf="center"
+            />
           </View>
         </View>
       </ScrollView>

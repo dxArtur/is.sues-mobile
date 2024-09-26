@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Alert, Text } from 'react-native';
+import { View, Alert, Text, SafeAreaView } from 'react-native';
 import { useRoute, RouteProp, useNavigation, CommonActions } from '@react-navigation/native';
 import { Image } from 'expo-image';
-import * as Location from 'expo-location'; // Importando expo-location para pegar a localização atual
-import MapView, { Marker } from 'react-native-maps'; // Importando MapView e Marker
+import * as Location from 'expo-location';
+import MapView, { Marker } from 'react-native-maps';
 import TextInput1 from "@/src/components/company/TextInput1";
 import Modal2 from '@/src/components/company/Modal2';
 import Button1 from "@/src/components/company/Button1";
@@ -30,7 +30,7 @@ const CriarEmpresa = () => {
   const { headid } = route.params;
 
   const { createCompany } = useCompany(); 
-  const navigation = useNavigation(); // Hook de navegação
+  const navigation = useNavigation();
 
   // Obtém a localização atual do dispositivo
   useEffect(() => {
@@ -66,7 +66,7 @@ const CriarEmpresa = () => {
       name,
       email,
       password,
-      headid: headid, // Adiciona o headid ao objeto da empresa
+      headid: headid,
       latitude: location.latitude,
       longitude: location.longitude,
       ...(description ? { description } : {}),
@@ -75,7 +75,6 @@ const CriarEmpresa = () => {
     try {
       await createCompany(companyData);
       Alert.alert('Sucesso', 'Empresa criada com sucesso!');
-      // Limpa o histórico de navegação e redireciona para a tela de Welcome
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
@@ -89,8 +88,8 @@ const CriarEmpresa = () => {
   };
 
   return (
-    <View style={styles.criarEmpresa}>
-      <View style={[styles.modal, styles.modalFlexBox]}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
         <Modal2
           jobDetails="Criar Empresa"
           component1={require("@/src/assets/images/component-11.png")}
@@ -143,8 +142,6 @@ const CriarEmpresa = () => {
               textInputBorderColor="#765ac6"
               textInputPaddingVertical="unset"
             />
-
-            {/* Mapa com o marcador */}
             {location && (
               <MapView
                 style={styles.map}
@@ -174,7 +171,7 @@ const CriarEmpresa = () => {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

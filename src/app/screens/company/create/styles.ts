@@ -2,6 +2,14 @@ import { StyleSheet } from "react-native";
 import { Gap, FontFamily, FontSize, Padding, Border, Color } from "@/GlobalStyles";
 
 const styles = StyleSheet.create({
+  container: {
+    padding: Padding.p_5xl,
+    paddingTop: Padding.p_45xl,
+    
+    flexGrow: 1,
+    paddingBottom: 20,
+    backgroundColor: Color.base3,
+  },
   modalFlexBox: {
     alignItems: "center",
     gap: Gap.gap_lg,
@@ -49,9 +57,6 @@ const styles = StyleSheet.create({
   },
   form: {
     alignSelf: "stretch",
-    gap: Gap.gap_lg,
-  },
-  container: {
     gap: Gap.gap_lg,
   },
   modal: {

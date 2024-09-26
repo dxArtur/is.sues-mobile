@@ -4,11 +4,10 @@ import { FontSize, FontFamily, Color, Border, Padding, Gap } from "@/GlobalStyle
 const styles = StyleSheet.create({
   container: {
     padding: Padding.p_5xl,
-    paddingTop: Padding.p_45xl, // Espaço para a status bar
+    paddingTop: Padding.p_45xl,
     
     flexGrow: 1,
     paddingBottom: 20,
-    //paddingTop: 10,
     backgroundColor: Color.base3,
   },
   title: {

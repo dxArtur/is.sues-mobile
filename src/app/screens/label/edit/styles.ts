@@ -1,4 +1,3 @@
-// styles.ts
 import { StyleSheet } from "react-native";
 import { Color, Border, Padding, FontFamily, FontSize } from "@/GlobalStyles";
 

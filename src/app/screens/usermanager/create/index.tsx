@@ -2,40 +2,38 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Alert, SafeAreaView, TouchableOpacity } from "react-native";
 import { useNavigation, CommonActions } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
-import { useAuth } from "@/src/app/hooks/useAuth"; // Importa o contexto de autenticação
-import { useDepartment } from "@/src/app/hooks/useDepartment"; // Hook de departamento para carregar departamentos
+import { useAuth } from "@/src/app/hooks/useAuth";
+import { useDepartment } from "@/src/app/hooks/useDepartment";
 import Modal2 from "@/src/components/company/Modal2";
 import TextInput1 from "@/src/components/company/TextInput1";
 import Button1 from "@/src/components/company/Button1";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
-import { DepartmentDto } from "@/src/dtos/DepartmentDTO"; // Certifique-se de que o DTO está sendo importado
+import { DepartmentDto } from "@/src/dtos/DepartmentDTO";
 
 const CriarFuncionario = () => {
-  const { signUp } = useAuth(); // Função de cadastro do contexto Auth
-  const { departments, loadDepartments } = useDepartment(); // Carrega os departamentos
-  const [filteredDepartments, setFilteredDepartments] = useState<DepartmentDto[]>([]); // Definir tipo correto
+  const { signUp } = useAuth();
+  const { departments, loadDepartments } = useDepartment();
+  const [filteredDepartments, setFilteredDepartments] = useState<DepartmentDto[]>([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [occupation, setOccupation] = useState("");
-  const [departmentId, setDepartmentId] = useState<string | null>(null); // Departamento selecionado
+  const [departmentId, setDepartmentId] = useState<string | null>(null);
   const [companyId, setCompanyId] = useState<string | null>(null);
-  const [showDepartments, setShowDepartments] = useState(false); // Estado para controlar exibição da lista
+  const [showDepartments, setShowDepartments] = useState(false);
   const navigation = useNavigation();
 
-  // Carrega o companyId do AsyncStorage e filtra departamentos
   useEffect(() => {
     const fetchCompanyIdAndDepartments = async () => {
       try {
         const storedCompanyId = await AsyncStorage.getItem("@companyId");
         if (storedCompanyId) {
           setCompanyId(storedCompanyId);
-          await loadDepartments(); // Carrega todos os departamentos
+          await loadDepartments();
           
-          // Filtra os departamentos com base no companyId
           const filtered = departments.filter(dept => dept.companyId === storedCompanyId);
-          setFilteredDepartments(filtered); // Define os departamentos filtrados
+          setFilteredDepartments(filtered);
         } else {
           Alert.alert("Erro", "ID da empresa não encontrado.");
         }
@@ -77,8 +75,6 @@ const CriarFuncionario = () => {
           component1IconLeft={93}
         />
         <Text style={styles.title}>Preencha os dados do Funcionário</Text>
-
-        {/* Rótulos e campos de input */}
         <Text style={styles.label}>Nome do Funcionário</Text>
         <TextInput1
           value={name}
@@ -127,7 +123,6 @@ const CriarFuncionario = () => {
           textInputPaddingVertical="unset"
         />
 
-        {/* Selecionar Departamento */}
         <Text style={styles.label}>Departamento</Text>
         <TouchableOpacity
           style={styles.selectButton}

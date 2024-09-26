@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Alert, SafeAreaView, FlatList } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useLabel } from "@/src/app/hooks/useLabel"; // Hook de label
-import { useDepartment } from "@/src/app/hooks/useDepartment"; // Hook de departamento
+import { useLabel } from "@/src/app/hooks/useLabel";
+import { useDepartment } from "@/src/app/hooks/useDepartment";
 import TextInput1 from "@/src/components/company/TextInput1";
 import Button1 from "@/src/components/company/Button1";
 import Modal2 from "@/src/components/company/Modal2";
@@ -17,16 +17,15 @@ const CriarLabel = () => {
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
 
   const { createLabel } = useLabel();
-  const { departments, loadDepartments } = useDepartment(); // Carrega os departamentos
+  const { departments, loadDepartments } = useDepartment()
   const navigation = useNavigation();
 
-  // Carrega o companyId e os departamentos ao iniciar
   useEffect(() => {
     const fetchCompanyIdAndDepartments = async () => {
       const storedCompanyId = await AsyncStorage.getItem('@companyId');
       if (storedCompanyId) {
         setCompanyId(storedCompanyId);
-        await loadDepartments(); // Carrega os departamentos ao inicializar
+        await loadDepartments(); 
       } else {
         Alert.alert('Erro', 'ID da empresa não encontrado.');
       }
@@ -62,7 +61,7 @@ const CriarLabel = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Selecione um Departamento</Text>
           <FlatList
-            data={departments.filter(department => department.companyId === companyId)} // Filtra os departamentos da empresa
+            data={departments.filter(department => department.companyId === companyId)}
             keyExtractor={(item) => item.id!}
             renderItem={({ item }) => (
               <View style={styles.departmentItem}>
@@ -71,7 +70,7 @@ const CriarLabel = () => {
                   text="Selecionar"
                   onPress={() => {
                     if(item.id){
-                    setSelectedDepartment(item.id); // Define o departamento selecionado
+                    setSelectedDepartment(item.id);
                     }
                   }}
                 />
@@ -79,7 +78,6 @@ const CriarLabel = () => {
             )}
           />
 
-          {/* Formulário de criação de Label só aparece após selecionar o departamento */}
           {selectedDepartment && (
             <View style={styles.form}>
               <Text style={styles.label}>Nome da label</Text>

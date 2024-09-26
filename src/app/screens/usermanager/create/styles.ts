@@ -4,7 +4,7 @@ import { FontSize, FontFamily, Color, Border, Padding, Gap } from "@/GlobalStyle
 const styles = StyleSheet.create({
   container: {
     padding: Padding.p_5xl,
-    paddingTop: Padding.p_45xl, // Espaço para a status bar
+    paddingTop: Padding.p_45xl,
     
     flexGrow: 1,
     paddingBottom: 20,
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
     borderColor: Color.colorGainsboro_200,
     borderRadius: Border.br_xs,
     backgroundColor: Color.base3,
-    maxHeight: 150, // Limita a altura da lista de departamentos
-    overflow: "scroll", // Adiciona rolagem
+    maxHeight: 150,
+    overflow: "scroll",
   },
   departmentItem: {
     padding: Padding.p_sm,

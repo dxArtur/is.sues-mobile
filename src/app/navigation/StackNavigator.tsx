@@ -26,6 +26,8 @@ import UpdateProfilePictureScreen from '../screens/usermanager/profile-picture';
 import CreateIssues from '../screens/issues/create';
 import { FontAwesome, FontAwesome5, FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import MyIssuesScreen from '../screens/issues/myIssues';
+import SelectDepartmentScreen from '../screens/department/select';
+import DepartmentDetailsScreen from '../screens/department/detail';
 import EditIssuesScreen from '../screens/issues/edit';
 import DetailIssueScreen from '../screens/issues/detail';
 
@@ -70,6 +72,8 @@ const CompanyStack: React.FC = () => {
       <Stack.Screen name="CriarLabel" component={CriarLabel} />
       <Stack.Screen name="EditarLabel" component={EditarLabel} />
       <Stack.Screen name="DeletarLabel" component={DeletarLabel} />
+      <Stack.Screen name="SelectDepartment" component={SelectDepartmentScreen} />
+      <Stack.Screen name="DepartmentDetails" component={DepartmentDetailsScreen} />
       <Stack.Screen name="ManageCompany" component={CompanyManagementScreen} />
     </Stack.Navigator>
   );

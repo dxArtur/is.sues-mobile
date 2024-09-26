@@ -4,8 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '@/src/app/hooks/useAuth';
 import { useCompany } from '@/src/app/hooks/useCompany';
 import { useDepartment } from '@/src/app/hooks/useDepartment';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Para pegar o companyId
-import { FontAwesome5, AntDesign, Fontisto } from '@expo/vector-icons'; // Ícone de edição
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FontAwesome5, AntDesign, Fontisto } from '@expo/vector-icons';
 import { CompanyDto } from '@/src/dtos/CompanyDTO';
 import styles from './styles';
 
@@ -16,7 +16,7 @@ const ProfileScreen: React.FC = () => {
   const [company, setCompany] = useState<CompanyDto | null>(null);
   const [departmentName, setDepartmentName] = useState<string>('Carregando...');
   const [companyId, setCompanyId] = useState<string | null>(null);
-  const [isHead, setIsHead] = useState(false); // Define se o usuário é o líder da empresa
+  const [isHead, setIsHead] = useState(false);
   const navigation = useNavigation();
 
   const fetchCompanyData = async () => {
@@ -27,7 +27,6 @@ const ProfileScreen: React.FC = () => {
 
       let companyId = storedCompanyId;
 
-      // Caso não tenha companyId no AsyncStorage, busca pelo departmentId
       if (!companyId && user?.departmentId) {
         const department = await getDepartmentById(user.departmentId);
         if (department) {
@@ -38,23 +37,19 @@ const ProfileScreen: React.FC = () => {
       if (companyId) {
         setCompanyId(companyId);
 
-        // Carrega as empresas se ainda não estiverem carregadas
         if (companies.length === 0) {
           await loadCompanies();
         }
 
-        // Busca a empresa pelo companyId
         const foundCompany = companies.find(c => c.id === companyId);
         if (foundCompany) {
           setCompany(foundCompany);
-
-          // Verifica se o usuário logado é o líder da empresa (headId)
           if (foundCompany.headid === user?.id) {
             setIsHead(true);
           }
         }
       } else {
-        setCompanyId(null); // Remove a empresa se o membro não tiver companyId
+        setCompanyId(null);
       }
     } catch (error) {
       Alert.alert('Erro', 'Ocorreu um erro ao buscar os dados da empresa.');
@@ -78,12 +73,11 @@ const ProfileScreen: React.FC = () => {
 
   useEffect(() => {
     if (user?.departmentId) {
-      // Se o usuário tem um departamento, carregue o nome do departamento
       fetchDepartmentName(user.departmentId);
     }
 
     if (!user?.departmentId) {
-      fetchCompanyData(); // Carrega dados da empresa apenas se o usuário não tiver departmentId
+      fetchCompanyData();
     }
     
     loadDepartments();
@@ -92,7 +86,6 @@ const ProfileScreen: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        {/* Header Profile integrado diretamente */}
         <View style={styles.headerContainer}>
           <Image
             source={{ uri: user?.photo || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png' }}
@@ -107,7 +100,6 @@ const ProfileScreen: React.FC = () => {
           </Pressable>
         </View>
 
-        {/* Informações do Perfil */}
         <View style={styles.section}>
           <Text style={styles.label}><AntDesign name="user" size={24} color="black" />Nome:</Text>
           <Text style={styles.value}>{user?.name}</Text>

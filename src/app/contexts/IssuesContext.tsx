@@ -35,17 +35,14 @@ export const IssuesProvider: React.FC<IssuesProviderProps> = ({ children }) => {
     }
   };
 
-  // Carrega as issues do usuário
   const loadMyIssues = async () => {
     try {
       if (user?.id) {
         const myIssuesResponse = await getMyIssues(user.id);
         
-        // Verifica se myIssuesResponse é uma matriz
         if (Array.isArray(myIssuesResponse)) {
           setMyIssues(myIssuesResponse.filter((issue: Issue) => issue !== undefined) as Issue[]);
         } else {
-          // Se não for uma matriz, define como uma matriz vazia
           setMyIssues([]);
         }
       }
@@ -58,8 +55,8 @@ export const IssuesProvider: React.FC<IssuesProviderProps> = ({ children }) => {
   // Cria uma nova issue
   const createNewIssue = async (issueData: Partial<Issue>) => {
     try {
-      await createIssues(issueData);  // Agora a função createIssues aceita issueData como argumento
-      await loadIssues(); // Atualiza a lista de issues após criar uma nova
+      await createIssues(issueData);
+      await loadIssues();
     } catch (error) {
       console.error('Erro ao criar issue:', error);
     }
@@ -69,7 +66,7 @@ export const IssuesProvider: React.FC<IssuesProviderProps> = ({ children }) => {
   const updateExistingIssue = async (issueData: Issue) => {
     try {
       await updateIssue(issueData);
-      await loadIssues(); // Atualiza a lista de issues após a atualização
+      await loadIssues();
     } catch (error) {
       console.error('Erro ao atualizar a issue:', error);
     }
@@ -107,7 +104,6 @@ export const IssuesProvider: React.FC<IssuesProviderProps> = ({ children }) => {
   );
 };
 
-// Hook customizado para acessar o contexto de Issues
 export const useIssues = () => {
   const context = useContext(IssuesContext);
   if (!context) {
