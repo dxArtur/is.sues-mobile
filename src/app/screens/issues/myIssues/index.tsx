@@ -18,7 +18,8 @@ const MyIssuesScreen = () => {
 
   const issuesMadeForMe = issues.filter(issue => issue.authorId === user?.id)
 
-  const myIssuesAssigned = myIssues.filter(issue=> issue.isAssigned === true)
+  const myIssuesAssigned = issues.filter(issue=> issue.isAssigned === true && issue.assignedUserId=== user?.id) 
+  console.log(myIssuesAssigned)
   
 //  const [myIssues, setMyIssues] = useState<Issue[]| undefined>(user?.issues)
 const [isOpen, setIsOpen] = useState({
@@ -64,6 +65,7 @@ const toggleSection = (section) => {
 
 const styles= StyleSheet.create({
   container: {
+      flex:1,
       padding: 24,
       justifyContent: 'center',
       backgroundColor: colors.backgroundPrincipal,
@@ -74,6 +76,7 @@ const styles= StyleSheet.create({
       alignItems:'center',
       backgroundColor: colors.backgroundSecundary,
     },
+    
 })
 
 export default MyIssuesScreen

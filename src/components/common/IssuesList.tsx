@@ -22,8 +22,9 @@ const IssuesList: React.FC<IssuesListProps> = ({ issues }) => {
     )
 }
 
-const style = StyleSheet .create({
+const style = StyleSheet.create({
     container: {
+        flex:1,
         width:'100%',
         marginVertical: 6
     }

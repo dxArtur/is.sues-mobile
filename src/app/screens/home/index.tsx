@@ -24,8 +24,10 @@ export default function Home() {
   const [loading, setLoading] = useState(true); 
   const [isHead, setIsHead] = useState(false);
   const navigation = useNavigation();
+  
+  const openIssues = issues.filter(issue => issue.status === false)
 
-  const issuesForMyDept = issues.filter(issue => issue.departmentId === user?.departmentId);
+  const issuesForMyDept = openIssues.filter(issue => issue.departmentId === user?.departmentId);
 
   const fetchCompanyData = async () => {
     try {
@@ -91,7 +93,7 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <Header userName={user?.name!} userPhoto={user?.photo!} />
       
-      <View style={[styles.section, { flexDirection: 'row', padding: 10 }]}>
+      <View style={styles.card}>
         <MaterialIcons style={styles.departmentIcon} name="maps-home-work" size={40} color="white" />
         <View>
           <Text style={styles.titleSectionName}>{isHead ? 'Líder da ' : 'Membro do '}</Text>

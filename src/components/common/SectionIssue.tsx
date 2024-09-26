@@ -12,18 +12,19 @@ interface SectionIssuesProps {
     isOpen: boolean;
     title: string;
     subtitle: string;
+    style?: object;
     toggleSection: () => void;
 }
 
 
 
-const SectionIssues: React.FC<SectionIssuesProps> = ({ title, subtitle, isOpen, toggleSection, issues }) => {
+const SectionIssues: React.FC<SectionIssuesProps> = ({ title, subtitle, isOpen, toggleSection, issues, style }) => {
   return (
-      <View style={styles.section}>
+      <View style={[styles.section, { height: isOpen ? 'auto' : 50 }]}>
           <Pressable style={{ flexDirection: 'row', alignItems: 'center' , gap:6}} onPress={toggleSection}>       
                 <Title size={16} color="" fontWeight='light' text={title} />
                 <Title size={16} color="" text={subtitle} />
-                <MaterialIcons name={isOpen ? "keyboard-arrow-up" : "keyboard-arrow-down"} size={20} color="gray" />
+                {isOpen ? (<MaterialIcons name={"keyboard-arrow-down"} size={20} color="gray" /> ): (<MaterialIcons name={"keyboard-arrow-up"} size={20} color="gray" />)}
           </Pressable>
               {isOpen && <IssuesList issues={issues} />}
       </View>
@@ -33,6 +34,7 @@ const SectionIssues: React.FC<SectionIssuesProps> = ({ title, subtitle, isOpen, 
 
 const styles = StyleSheet.create({
     section: {
+      flex:1,
         marginLeft:4,
         flexDirection: 'column',
         alignItems:'flex-start',

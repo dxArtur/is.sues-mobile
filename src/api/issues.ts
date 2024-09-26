@@ -17,6 +17,21 @@ export const getIssues = async (): Promise<Issue[]> => {
     }
 }
 
+
+export const getIssue = async (id:string): Promise<Issue> => {
+    try {
+        const token = await AsyncStorage.getItem('@token');
+        const issues = await api.get(`/issues/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return issues.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export const updateIssue = async (updateData: Issue) =>{
     try {
         const token = await AsyncStorage.getItem('@token');
@@ -46,21 +61,17 @@ export const getAuthorIssue = async (authorId:string): Promise<string> =>{
 }
 
 
-// Atualize a função createIssues para aceitar o parâmetro issueData
-export const createIssues = async (issueData: Partial<Issue>) => {
+export const createIssues = async (issue:Issue) => {
     try {
-      const token = await AsyncStorage.getItem('@token');
-      
-      const response = await api.post('/issues', issueData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      
-      return response.data;
-    } catch (error: any) {
-      console.error("Erro ao criar a issue:", error.response?.data || error.message);
-      throw error;
+        const token = await AsyncStorage.getItem('@token');
+        const response = await api.post('/issues/new', issue, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        return response.data
+    } catch (error) {
+        console.error("Erro ao atualizar a issue:", error.response?.data || error.message);
     }
   };
   

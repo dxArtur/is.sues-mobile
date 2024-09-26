@@ -1,4 +1,5 @@
 import { ParamListBase } from '@react-navigation/native';
+import { Issue } from '../dtos/IssueDTO';
 
 export declare global {
   namespace ReactNavigation {
@@ -28,6 +29,8 @@ export declare global {
       Profile: { userId: string };
       DepartmentDetails: { departmentId: string };
       SelectDepartmentScreen;
+      DetailIssues: {issue: Issue};
+      EditIssues;
     }
   }
 }
